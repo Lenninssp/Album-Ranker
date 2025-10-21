@@ -6,6 +6,7 @@ import Image from "next/image";
 
 export const NavBar = () => {
   const [open, setOpen] = useState(false);
+  const authorized = useSession((state) => state.authorized);
   const toggle = useSession((state) => state.toggle);
 
   return (
@@ -39,20 +40,31 @@ export const NavBar = () => {
           />
         </div>
 
-        <div className="hidden md:flex gap-4 items-center">
-          <Link href={"/"}>
-            <div>HOME</div>
-          </Link>
-          <Link href={"/playground"}>
-            <div>PLAYGROUND</div>
-          </Link>
-          <Link href={"/my-account"}>
-            <div>MY ACCOUNT</div>
-          </Link>
-          <Button onClick={toggle} className=" cursor-pointer">
-            LOGOUT
-          </Button>
-        </div>
+        {!authorized ? (
+          <div className="hidden md:flex gap-4 items-center">
+            <Link href={"/login"}>
+              <div>LOGIN</div>
+            </Link>
+            <Link href={"/signup"}>
+              <div>SIGNUP</div>
+            </Link>
+          </div>
+        ) : (
+          <div className="hidden md:flex gap-4 items-center">
+            <Link href={"/"}>
+              <div>HOME</div>
+            </Link>
+            <Link href={"/playground"}>
+              <div>PLAYGROUND</div>
+            </Link>
+            <Link href={"/my-account"}>
+              <div>MY ACCOUNT</div>
+            </Link>
+            <Button onClick={toggle} className=" cursor-pointer">
+              LOGOUT
+            </Button>
+          </div>
+        )}
       </div>
     </nav>
   );
