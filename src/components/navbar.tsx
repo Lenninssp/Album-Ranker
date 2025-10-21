@@ -46,6 +46,9 @@ export const NavBar = () => {
           <Link href={"/playground"}>
             <div>PLAYGROUND</div>
           </Link>
+          <Link href={"/my-account"}>
+            <div>MY ACCOUNT</div>
+          </Link>
           <Button onClick={toggle} className=" cursor-pointer">
             LOGOUT
           </Button>

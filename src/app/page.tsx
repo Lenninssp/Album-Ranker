@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <DefaultFrame>
-      <div className="h-screen w-full flex items-center justify-center flex-col">
+      <div className="h-full w-full flex items-center justify-center flex-col">
         <div className="text-4xl font-bold">This is your homepage</div>
       </div>
     </DefaultFrame>
