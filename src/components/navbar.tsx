@@ -43,16 +43,16 @@ export const NavBar = () => {
         {!authorized ? (
           <div className="hidden md:flex gap-4 items-center">
             <Link href={"/login"}>
-              <div>LOGIN</div>
-            </Link>
-            <Link href={"/signup"}>
-              <div>SIGNUP</div>
+              <div>SIGN ING</div>
             </Link>
           </div>
         ) : (
           <div className="hidden md:flex gap-4 items-center">
             <Link href={"/"}>
               <div>HOME</div>
+            </Link>
+            <Link href={"/search"}>
+              <div>SEARCH</div>
             </Link>
             <Link href={"/playground"}>
               <div>PLAYGROUND</div>
