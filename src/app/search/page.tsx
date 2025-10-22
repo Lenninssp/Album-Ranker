@@ -36,7 +36,7 @@ const Search = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
 
       const data = await response.json();
-      setResult({type: searchType, ...data});
+      setResult({ type: searchType, ...data });
     } catch (err) {
       console.error("Search failed:", err);
     } finally {
@@ -63,7 +63,9 @@ const Search = () => {
 
             {(searchType === "album" || searchType === "track") && (
               <>
-              <div className="font-bold flex">Artist|{searchType === "track" ? "Track" : "Album"}</div>
+                <div className="font-bold flex">
+                  Artist|{searchType === "track" ? "Track" : "Album"}
+                </div>
                 <Input
                   className="font-bold"
                   value={loading ? "Data is loading" : searchQuery2}
@@ -79,10 +81,17 @@ const Search = () => {
         </div>
       </div>
       <div className="flex-2 w-full max-w-6xl overflow-auto">
-        {result?.type === "artist" && <ArtistCard artist={result.artists[0]} />}
-        {result?.type === "album" && <AlbumCard album={result.album[0]} />}
-        {result?.type === "track" && <TrackCard track={result.track[0]} />}
+        {result?.type === "artist" &&
+          Array.isArray(result.artists) &&
+          result.artists[0] && <ArtistCard artist={result.artists[0]} />}
 
+        {result?.type === "album" &&
+          Array.isArray(result.album) &&
+          result.album[0] && <AlbumCard album={result.album[0]} />}
+
+        {result?.type === "track" &&
+          Array.isArray(result.track) &&
+          result.track[0] && <TrackCard track={result.track[0]} />}
       </div>
     </DefaultFrame>
   );

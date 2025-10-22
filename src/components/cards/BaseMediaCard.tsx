@@ -60,13 +60,15 @@ export const BaseMediaCard = ({
       </div>
 
       <div className="flex gap-4">
-        {headerImage && (
+        {headerImage ? (
           <img
             src={headerImage}
             alt={title}
             className="h-32 w-32 rounded object-cover"
           />
-        )}
+        ) :
+          <div className="h-32 w-32 rounded object-cover text-center bg-gray-50 items-center justify-center flex">No image available</div>
+        }
         <div className="flex flex-col flex-1 justify-center">
           <div className="text-3xl font-bold truncate">{title}</div>
           {subtitle && <div>{subtitle}</div>}
