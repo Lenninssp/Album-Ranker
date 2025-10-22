@@ -12,6 +12,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 interface BaseMediaCardProps {
   children: ReactNode;
@@ -29,34 +31,61 @@ export const BaseMediaCard = ({
   year,
 }: BaseMediaCardProps) => {
   const [selectedColor, setSelectedColor] = useState<Rating>(Rating.Undefined);
+  const [addTag, setAddTag] = useState<boolean>(false);
+  const [tag, setTag] = useState<string>("");
+
+  const handleSaveTag = () => {
+    setAddTag((prev) => !prev);
+  };
 
   return (
     <div
       className={cn(
-        "w-full h-fit p-5 flex flex-col gap-4 rounded-md transition",
+        "w-full h-fit p-5 flex flex-col gap-4 rounded-md transition relative",
         RatingDimmerBackground[selectedColor]
       )}
     >
-      <div className="flex w-full justify-end gap-2">
-        {(Object.entries(RatingBackground) as [Rating, string][]).map(
-          ([key, bg]) => (
-            <TooltipProvider key={key}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div
-                    role="button"
-                    onClick={() => setSelectedColor(key)}
-                    className={cn(
-                      "h-8 w-8 rounded-full transition hover:scale-110 cursor-pointer border border-white hover:brightness-125",
-                      bg
-                    )}
-                  />
-                </TooltipTrigger>
-                <TooltipContent>{key}</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )
-        )}
+      <div className="flex flex-col w-full justify-end gap-2 absolute top-3 -left-3">
+        <div className="flex w-full justify-end gap-2">
+          {(Object.entries(RatingBackground) as [Rating, string][]).map(
+            ([key, bg]) => (
+              <TooltipProvider key={key}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div
+                      role="button"
+                      onClick={() => setSelectedColor(key)}
+                      className={cn(
+                        "h-8 w-8 rounded-full transition hover:scale-110 cursor-pointer border border-white hover:brightness-125",
+                        bg
+                      )}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>{key}</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )
+          )}
+        </div>
+        <div className="flex w-full justify-end gap-2">
+          {addTag ? (
+            <div className=" flex flex-col gap-2">
+              <Input
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
+                className=" bg-white"
+              />
+              <Button onClick={handleSaveTag}>Save</Button>
+            </div>
+          ) : (
+            <div className=" flex gap-3 items-center">
+              <div className="max-w-16 text-xs truncate">{tag}</div>
+              <Button onClick={() => setAddTag((prev) => !prev)}>
+                Add Tag
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="flex gap-4">
@@ -66,9 +95,11 @@ export const BaseMediaCard = ({
             alt={title}
             className="h-32 w-32 rounded object-cover"
           />
-        ) :
-          <div className="h-32 w-32 rounded object-cover text-center bg-gray-50 items-center justify-center flex">No image available</div>
-        }
+        ) : (
+          <div className="h-32 w-32 rounded object-cover text-center bg-gray-50 items-center justify-center flex">
+            No image available
+          </div>
+        )}
         <div className="flex flex-col flex-1 justify-center">
           <div className="text-3xl font-bold truncate">{title}</div>
           {subtitle && <div>{subtitle}</div>}
