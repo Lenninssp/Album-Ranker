@@ -4,9 +4,10 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { User } from "@/generated/prisma";
 
 export const LoginComponent = () => {
-  const { authorized, toggle } = useSession();
+  const { authorized, toggle, setId } = useSession();
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -28,9 +29,12 @@ export const LoginComponent = () => {
       });
       if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
+      const data:{user: User} = await response.json();
       setErrorVisible(null);
       router.push("/");
       toggle();
+      console.log(data)
+      setId(data.user.id);
       toast("Login successful");
       return true;
     } catch (e) {

@@ -20,14 +20,6 @@ model User {
   artists ArtistEdited[]
 }
 
-enum Rating {
-  Hate
-  Neutral
-  Love
-  Adore
-  Undefined
-}
-
 model TrackEdited {
   id                  Int     @id @default(autoincrement())
   idTrack             String
@@ -50,10 +42,12 @@ model TrackEdited {
   intTrackNumber      String?
   commentary          String
   tag                 String
-  rating              Rating
+  rating              String
   includesMetadata    Boolean @default(true)
   User                User?   @relation(fields: [userId], references: [id])
   userId              Int?
+
+  @@unique([idTrack, userId]) 
 }
 
 model AlbumEdited {
@@ -77,10 +71,12 @@ model AlbumEdited {
   strWikipediaID   String?
   commentary       String
   tag              String
-  rating           Rating
+  rating           String
   includesMetadata Boolean @default(true)
   User             User?   @relation(fields: [userId], references: [id])
   userId           Int?
+  @@unique([idAlbum, userId])
+
 }
 
 model ArtistEdited {
@@ -105,8 +101,9 @@ model ArtistEdited {
   strArtistBanner    String?
   commentary         String
   tag                String
-  rating             Rating
+  rating             String
   includesMetadata   Boolean @default(true)
   User               User?   @relation(fields: [userId], references: [id])
   userId             Int?
+  @@unique([idArtist, userId]) 
 }

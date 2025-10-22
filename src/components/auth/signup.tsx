@@ -3,9 +3,10 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { User } from "@/generated/prisma";
 
 export const SignupComponent = () => {
-  const { authorized, toggle } = useSession();
+  const { authorized, toggle, setId } = useSession();
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -31,6 +32,8 @@ export const SignupComponent = () => {
       if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
       toggle();
+      const data:User = await response.json();
+      setId(data.id);
     } catch (e) {
       console.error("There was an error creating the user", e);
     }

@@ -1,3 +1,4 @@
+import { useSession } from "@/context/auth";
 import { useSavedItems } from "@/context/savedItems";
 import {
   AlbumEdited,
@@ -11,14 +12,22 @@ import { Rating } from "@/types/ratingColor";
 import { useState } from "react";
 import { toast } from "sonner";
 
-
-export const useBaseMediaCard = (type: TypeOfElement, element: AllElements, metadata?: UserMetadata) => {
+export const useBaseMediaCard = (
+  type: TypeOfElement,
+  element: AllElements,
+  metadata?: UserMetadata
+) => {
   const { addAlbum, addArtist, addTrack } = useSavedItems();
+  const userId = useSession();
 
-  const [selectedColor, setSelectedColor] = useState<Rating>(metadata?.rating ?? Rating.Undefined);
+  const [selectedColor, setSelectedColor] = useState<Rating>(
+    metadata?.rating ?? Rating.Undefined
+  );
   const [addTag, setAddTag] = useState<boolean>(false);
   const [tag, setTag] = useState<string>(metadata?.tag ?? "");
-  const [commentary, setCommentary] = useState<string>(metadata?.commentary ?? "");
+  const [commentary, setCommentary] = useState<string>(
+    metadata?.commentary ?? ""
+  );
 
   const saveProgress = (
     overrides?: Partial<{ tag: string; commentary: string; rating: Rating }>
@@ -30,18 +39,18 @@ export const useBaseMediaCard = (type: TypeOfElement, element: AllElements, meta
       rating: overrides?.rating ?? selectedColor,
       includesMetadata: true,
     };
-
-    console.log(baseData);
-
+    const myUserId = userId.getId();
+    console.warn("lets go", userId);
+    if (!myUserId) return;
     switch (type) {
       case TypeOfElement.ALBUM:
-        addAlbum(baseData as AlbumEdited);
+        addAlbum(baseData as AlbumEdited, myUserId);
         break;
       case TypeOfElement.ARTIST:
-        addArtist(baseData as ArtistEdited);
+        addArtist(baseData as ArtistEdited, myUserId);
         break;
       case TypeOfElement.TRACK:
-        addTrack(baseData as TrackEdited);
+        addTrack(baseData as TrackEdited, myUserId);
         break;
     }
 

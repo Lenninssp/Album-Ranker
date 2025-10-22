@@ -22,10 +22,13 @@ export const useSession = create<State & Actions>()(
       userId: null,
       userName: "",
       toggle: () => set((state) => ({ authorized: !state.authorized })),
-      setId: (id: number) => set(() => ({ userId: id })),
+      setId: (id: number) => {
+        set(() => ({ userId: id }));
+        console.log("ID", id);
+      },
       setName: (name: string) => set(() => ({ userName: name })),
       getName: () => get().userName,
-      getId: ()=>get().userId,
+      getId: () => get().userId,
     }),
 
     {

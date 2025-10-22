@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { ArtistEdited, AlbumEdited, TrackEdited } from "@/types/music";
+import { useSession } from "./auth";
 
 type State = {
   savedArtists: ArtistEdited[];
@@ -8,9 +9,9 @@ type State = {
 };
 
 type Actions = {
-  addArtist: (addition: ArtistEdited) => Promise<void>;
-  addAlbum: (addition: AlbumEdited) => Promise<void>;
-  addTrack: (addition: TrackEdited) => Promise<void>;
+  addArtist: (addition: ArtistEdited, userId: number) => Promise<void>;
+  addAlbum: (addition: AlbumEdited, userId: number) => Promise<void>;
+  addTrack: (addition: TrackEdited, userId: number) => Promise<void>;
 
   deleteArtist: (id: string) => Promise<void>;
   deleteAlbum: (id: string) => Promise<void>;
@@ -34,9 +35,9 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
 
   loadUserData: async (userId: Number) => {
     const [artistRes, albumRes, trackRes] = await Promise.all([
-      fetch(`/api/artist?userId=${userId}`),
-      fetch(`/api/albums?userId=${userId}`),
-      fetch(`/api/tracks?userId=${userId}`),
+      fetch(`/api/elements/artists?userId=${userId}`),
+      fetch(`/api/elements/albums?userId=${userId}`),
+      fetch(`/api/elements/tracks?userId=${userId}`),
     ]);
 
     const [artists, albums, tracks] = await Promise.all([
@@ -52,7 +53,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     });
   },
 
-  addArtist: async (artist) => {
+  addArtist: async (artist, userId) => {
     set((state) => ({
       savedArtists: [
         ...state.savedArtists.filter((a) => a.idArtist !== artist.idArtist),
@@ -62,11 +63,11 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     await fetch("/api/elements/artists", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(artist),
+      body: JSON.stringify({...artist, userId: userId}),
     });
   },
 
-  addAlbum: async (album) => {
+  addAlbum: async (album, userId) => {
     set((state) => ({
       savedAlbums: [
         ...state.savedAlbums.filter((a) => a.idAlbum !== album.idAlbum),
@@ -80,7 +81,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     });
   },
 
-  addTrack: async (track) => {
+  addTrack: async (track, userId) => {
     set((state) => ({
       savedTracks: [
         ...state.savedTracks.filter((t) => t.idTrack !== track.idTrack),
