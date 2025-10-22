@@ -10,15 +10,37 @@ export const SignupComponent = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [password2, setPassword2] = useState<string>("");
+    const [name, setName] = useState<string>("");
+
 
     const [errorVisible, setErrorVisible] = useState<string | null>(null);
 
     const router = useRouter();
+
+    const createUser = async () => {
+      try{
+        const response = await fetch("/api/auth", {
+          method: "POST",
+          headers: { "Content-type": "application/json"},
+          body: JSON.stringify({
+            action: "register",
+            email: username,
+            password: password,
+            name: name,
+          })
+        })
+        if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
+        toggle();
+      } catch(e) {
+        throw new Error("There was an error creating the user")
+      }
+    }
   
     const authorize = () => {
       if (password === password2 ) {
-        toggle();
         setErrorVisible(null);
+        createUser();
         router.push("/")
       } else {
         setErrorVisible("Sorry, the passwords are not the same");
@@ -38,16 +60,25 @@ export const SignupComponent = () => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="email"
+          />
+           <Input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="name"
           />
           <Input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="password"
           />
           <Input
             type="password"
             value={password2}
             onChange={(e) => setPassword2(e.target.value)}
+            placeholder="repeat password"
           />
         </div>
 
