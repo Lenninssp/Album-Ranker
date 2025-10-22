@@ -28,7 +28,10 @@ export const useBaseMediaCard = (type: TypeOfElement, element: AllElements, meta
       commentary: overrides?.commentary ?? commentary,
       tag: overrides?.tag ?? tag,
       rating: overrides?.rating ?? selectedColor,
+      includesMetadata: true,
     };
+
+    console.log(baseData);
 
     switch (type) {
       case TypeOfElement.ALBUM:

@@ -1,21 +1,24 @@
 // components/cards/ArtistCard.tsx
-import { ArtistEdited, RawArtist, TypeOfElement, UserMetadata } from "@/types/music";
+import { Artist, TypeOfElement, UserMetadata } from "@/types/music";
 import { BaseMediaCard } from "./BaseMediaCard";
 
 interface ArtistCardProps {
-  artist: RawArtist | ArtistEdited;
+  artist: Artist;
 }
 
 export const ArtistCard = ({ artist }: ArtistCardProps) => {
-    let metadata: UserMetadata | undefined;
-    if (artist.includesMetadata) {
-      metadata = {
-        commentary: (artist as ArtistEdited).commentary,
-        tag: (artist as ArtistEdited).tag,
-        rating: (artist as ArtistEdited).rating
-      };
-    }
-    
+  let metadata: UserMetadata | undefined;
+  console.log(artist)
+  if (artist.includesMetadata) {
+  console.log("It includes it")
+
+    metadata = {
+      commentary: artist.commentary,
+      tag: artist.tag,
+      rating: artist.rating
+    };
+    console.log(metadata)
+  }
   return (
     <BaseMediaCard
       type={TypeOfElement.ARTIST}

@@ -25,14 +25,17 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
     );
   }
   return (
-    <div className=" flex flex-col w-full">
+    <div className=" flex flex-col w-full gap-3 h-full">
       <div className=" text-2xl font-semibold">Artists</div>
       {savedArtists.map((artist) => (
         <ArtistCard artist={artist} key={artist.idArtist} />
       ))}
+      <div className=" text-2xl font-semibold">Albums</div>
+
        {savedAlbums.map((album) => (
         <AlbumCard album={album} key={album.idArtist} />
       ))}
+      <div className=" text-2xl font-semibold">Songs</div>
        {savedTracks.map((track) => (
         <TrackCard track={track} key={track.idTrack} />
       ))}

@@ -19,7 +19,7 @@ export interface ArtistResponse {
 }
 
 
-export interface RawAlbum {
+export interface RawAlbumBase {
   idAlbum: string;
   idArtist: string;
   strAlbum: string;
@@ -37,10 +37,9 @@ export interface RawAlbum {
   strMood?: string | null;
   strSpeed?: string | null;
   strWikipediaID?: string | null;
-  includesMetadata?: false; 
 }
 
-export interface RawTrack {
+export interface RawTrackBase {
   idTrack: string;
   idAlbum: string;
   idArtist: string;
@@ -50,7 +49,7 @@ export interface RawTrack {
   strGenre?: string | null;
   strMood?: string | null;
   strStyle?: string | null;
-  intDuration?: string | null; // in milliseconds
+  intDuration?: string | null; 
   strDescriptionEN?: string | null;
   strTrackThumb?: string | null;
   strMusicVid?: string | null;
@@ -59,10 +58,9 @@ export interface RawTrack {
   intMusicVidViews?: string | null;
   intMusicVidLikes?: string | null;
   intTrackNumber?: string | null;
-  includesMetadata?: false; // The discriminant
 }
 
-export interface RawArtist {
+export interface RawArtistBase {
   idArtist: string;
   strArtist: string;
   strArtistAlternate?: string | null;
@@ -81,28 +79,27 @@ export interface RawArtist {
   strArtistWideThumb?: string | null;
   strArtistFanart?: string | null;
   strArtistBanner?: string | null;
-  includesMetadata?: false; 
 }
 
 
+export type RawAlbum = RawAlbumBase & { includesMetadata: false };
+export type RawTrack = RawTrackBase & { includesMetadata: false };
+export type RawArtist = RawArtistBase & { includesMetadata: false };
 
-export type AlbumEdited = RawAlbum & UserMetadata & {
-  includesMetadata?: true;
-};
+export type AlbumEdited = RawAlbumBase & UserMetadata & { includesMetadata: true };
+export type TrackEdited = RawTrackBase & UserMetadata & { includesMetadata: true };
+export type ArtistEdited = RawArtistBase & UserMetadata & { includesMetadata: true };
 
-export type TrackEdited = RawTrack & UserMetadata & {
-  includesMetadata?: true;
-};
 
-export type ArtistEdited = RawArtist & UserMetadata & {
-  includesMetadata?: true;
-};
+export type Artist = RawArtist | ArtistEdited;
+export type Album = RawAlbum | AlbumEdited;
+export type Track = TrackEdited | RawTrack;
 
-export type AllElements = RawAlbum | RawTrack | RawArtist;
+
+export type AllElements = Artist | Album | Track;
 export type AllElementsEdited = AlbumEdited | TrackEdited | ArtistEdited;
 
 export type AudioElement = AllElements | AllElementsEdited;
-
 
 
 export type AudioDBResponse =

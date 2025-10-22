@@ -1,8 +1,8 @@
-import { AlbumEdited, RawAlbum, TypeOfElement, UserMetadata } from "@/types/music";
+import { Album, AlbumEdited, RawAlbum, TypeOfElement, UserMetadata } from "@/types/music";
 import { BaseMediaCard } from "./BaseMediaCard";
 
 interface AlbumCardProps {
-  album: RawAlbum | AlbumEdited;
+  album: Album;
 }
 
 export const AlbumCard = ({ album }: AlbumCardProps) => {

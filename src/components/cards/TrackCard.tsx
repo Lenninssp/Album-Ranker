@@ -1,18 +1,18 @@
 // components/cards/TrackCard.tsx
-import {  RawTrack, TrackEdited, TypeOfElement, UserMetadata } from "@/types/music";
+import {  RawTrack, Track, TrackEdited, TypeOfElement, UserMetadata } from "@/types/music";
 import { BaseMediaCard } from "./BaseMediaCard";
 
 interface TrackCardProps {
-  track: RawTrack | TrackEdited;
+  track: Track;
 }
 
 export const TrackCard = ({ track }: TrackCardProps) => {
   let metadata: UserMetadata | undefined;
   if (track.includesMetadata) {
     metadata = {
-      commentary: (track as TrackEdited).commentary,
-      tag: (track as TrackEdited).tag,
-      rating: (track as TrackEdited).rating
+      commentary: track.commentary,
+      tag: track.tag,
+      rating: track.rating
     };
   }
   

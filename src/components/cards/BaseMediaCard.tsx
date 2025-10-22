@@ -1,4 +1,3 @@
-// components/cards/BaseMediaCard.tsx
 import { ReactNode, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
