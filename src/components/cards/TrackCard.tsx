@@ -1,5 +1,5 @@
 // components/cards/TrackCard.tsx
-import { Track } from "@/types/music";
+import { Track, TypeOfElement } from "@/types/music";
 import { BaseMediaCard } from "./BaseMediaCard";
 
 interface TrackCardProps {
@@ -9,6 +9,8 @@ interface TrackCardProps {
 export const TrackCard = ({ track }: TrackCardProps) => {
   return (
     <BaseMediaCard
+      type={TypeOfElement.TRACK}
+      element={track}
       headerImage={track.strTrackThumb}
       title={track.strTrack}
       subtitle={track.strAlbum}

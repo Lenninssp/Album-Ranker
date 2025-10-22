@@ -1,5 +1,11 @@
 import { Rating } from "./ratingColor";
 
+export interface UserMetadata {
+  commentary: string;
+  tag: string;
+  rating: Rating;
+}
+
 export interface AlbumResponse {
   album: Album[];
 }
@@ -24,13 +30,7 @@ export interface Album {
   strWikipediaID?: string | null;
 }
 
-
-export interface AlbumEdited extends Album {
-  commentary?: string;
-  tag?: string;
-  rating?: Rating;
-}
-
+export interface AlbumEdited extends Album, UserMetadata {}
 
 export interface TrackResponse {
   track: Track[];
@@ -57,12 +57,7 @@ export interface Track {
   intTrackNumber?: string | null;
 }
 
-export interface TrackEdited extends Track {
-  commentary?: string;
-  tag?: string;
-  rating?: Rating;
-}
-
+export interface TrackEdited extends Track, UserMetadata {}
 
 export interface ArtistResponse {
   artists: Artist[];
@@ -89,15 +84,20 @@ export interface Artist {
   strArtistBanner?: string | null;
 }
 
+export interface ArtistEdited extends Artist, UserMetadata {}
 
-export interface ArtistEdited extends Artist {
-  commentary?: string;
-  tag?: string;
-  rating?: Rating;
+export type AudioDBResponse =
+  | ({ type: "album" } & AlbumResponse)
+  | ({ type: "track" } & TrackResponse)
+  | ({ type: "artist" } & ArtistResponse);
+
+export enum TypeOfElement {
+  ALBUM = "album",
+  ARTIST = "artist",
+  TRACK = "track",
 }
 
+export type AllElements = Album | Track | Artist;
+export type AllElementsEdited = AlbumEdited | TrackEdited | ArtistEdited;
 
-export type AudioDBResponse =  
-| ({type: "album"} & AlbumResponse) 
-| ({type: "track"} & TrackResponse) 
-| ({type: "artist"} & ArtistResponse);
+

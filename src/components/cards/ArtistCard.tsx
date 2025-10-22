@@ -1,5 +1,5 @@
 // components/cards/ArtistCard.tsx
-import { Artist } from "@/types/music";
+import { Artist, TypeOfElement } from "@/types/music";
 import { BaseMediaCard } from "./BaseMediaCard";
 
 interface ArtistCardProps {
@@ -9,6 +9,8 @@ interface ArtistCardProps {
 export const ArtistCard = ({ artist }: ArtistCardProps) => {
   return (
     <BaseMediaCard
+      type={TypeOfElement.ARTIST}
+      element={artist}
       headerImage={artist.strArtistThumb}
       title={artist.strArtist}
       subtitle={artist.strLabel}

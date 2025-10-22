@@ -9,9 +9,13 @@ import {
 import { CardActions } from "./CardActions";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
+import { useBaseMediaCard } from "@/hooks/useBaseMediaCard";
+import { AllElements, TypeOfElement } from "@/types/music";
 
 interface BaseMediaCardProps {
   children: ReactNode;
+  type: TypeOfElement;
+  element: AllElements;
   headerImage?: string | null;
   title: string;
   subtitle?: string | null;
@@ -24,23 +28,20 @@ export const BaseMediaCard = ({
   title,
   subtitle,
   year,
+  type,
+  element
 }: BaseMediaCardProps) => {
-  const [selectedColor, setSelectedColor] = useState<Rating>(Rating.Undefined);
-  const [addTag, setAddTag] = useState<boolean>(false);
-  const [tag, setTag] = useState<string>("");
-  const [commentary, setCommentary] = useState<string>("");
-
-  const handleSaveTag = () => {
-    setAddTag((prev) => !prev);
-  };
-
-  const handleSaveCommentary = (value: string) => {
-    if (value === "") return;
-    setCommentary(value);
-    toast("Success", {
-      description: "The commentary has been saved",
-    });
-  };
+  const {
+    selectedColor,
+    handleChangeSelectedColor,
+    addTag,
+    tag,
+    handleSaveTag,
+    commentary,
+    handleSaveCommentary,
+    handleChangeTag,
+    toggleTag,
+  } = useBaseMediaCard(type, element);
   return (
     <Dialog>
       <div
@@ -50,12 +51,12 @@ export const BaseMediaCard = ({
         )}
       >
         <CardActions
-          handleSelectColor={(key) => setSelectedColor(key)}
+          handleSelectColor={(key) => handleChangeSelectedColor(key)}
           addTag={addTag}
           tag={tag}
-          handleModifyTag={(value) => setTag(value)}
+          handleModifyTag={(value) => handleChangeTag(value)}
           handleSaveTag={handleSaveTag}
-          handleActivateTag={() => setAddTag((prev) => !prev)}
+          handleActivateTag={toggleTag}
           commentary={commentary}
           handleSaveCommentary={(value) => handleSaveCommentary(value)}
         />

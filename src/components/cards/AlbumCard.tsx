@@ -1,5 +1,4 @@
-
-import { Album } from "@/types/music";
+import { Album, TypeOfElement } from "@/types/music";
 import { BaseMediaCard } from "./BaseMediaCard";
 
 interface AlbumCardProps {
@@ -9,6 +8,8 @@ interface AlbumCardProps {
 export const AlbumCard = ({ album }: AlbumCardProps) => {
   return (
     <BaseMediaCard
+      type={TypeOfElement.ALBUM}
+      element={album}
       headerImage={album.strAlbumThumb}
       title={album.strAlbum}
       subtitle={album.strArtist}
