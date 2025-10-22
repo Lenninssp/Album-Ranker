@@ -1,5 +1,8 @@
 import { useSavedItems } from "@/context/savedItems";
 import { cn } from "@/lib/utils";
+import { ArtistCard } from "../cards/ArtistCard";
+import { AlbumCard } from "../cards/AlbumCard";
+import { TrackCard } from "../cards/TrackCard";
 
 interface LibraryComponentProps {
   className?: string;
@@ -22,8 +25,17 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
     );
   }
   return (
-    <div>
-      <div>Is not empty then</div>
+    <div className=" flex flex-col w-full">
+      <div className=" text-2xl font-semibold">Artists</div>
+      {savedArtists.map((artist) => (
+        <ArtistCard artist={artist} key={artist.idArtist} />
+      ))}
+       {savedAlbums.map((album) => (
+        <AlbumCard album={album} key={album.idArtist} />
+      ))}
+       {savedTracks.map((track) => (
+        <TrackCard track={track} key={track.idTrack} />
+      ))}
     </div>
   );
 };

@@ -7,10 +7,19 @@ export interface UserMetadata {
 }
 
 export interface AlbumResponse {
-  album: Album[];
+  album: RawAlbum[];
 }
 
-export interface Album {
+export interface TrackResponse {
+  track: RawTrack[];
+}
+
+export interface ArtistResponse {
+  artists: RawArtist[];
+}
+
+
+export interface RawAlbum {
   idAlbum: string;
   idArtist: string;
   strAlbum: string;
@@ -28,15 +37,10 @@ export interface Album {
   strMood?: string | null;
   strSpeed?: string | null;
   strWikipediaID?: string | null;
+  includesMetadata?: false; 
 }
 
-export interface AlbumEdited extends Album, UserMetadata {}
-
-export interface TrackResponse {
-  track: Track[];
-}
-
-export interface Track {
+export interface RawTrack {
   idTrack: string;
   idAlbum: string;
   idArtist: string;
@@ -55,15 +59,10 @@ export interface Track {
   intMusicVidViews?: string | null;
   intMusicVidLikes?: string | null;
   intTrackNumber?: string | null;
+  includesMetadata?: false; // The discriminant
 }
 
-export interface TrackEdited extends Track, UserMetadata {}
-
-export interface ArtistResponse {
-  artists: Artist[];
-}
-
-export interface Artist {
+export interface RawArtist {
   idArtist: string;
   strArtist: string;
   strArtistAlternate?: string | null;
@@ -82,9 +81,29 @@ export interface Artist {
   strArtistWideThumb?: string | null;
   strArtistFanart?: string | null;
   strArtistBanner?: string | null;
+  includesMetadata?: false; 
 }
 
-export interface ArtistEdited extends Artist, UserMetadata {}
+
+
+export type AlbumEdited = RawAlbum & UserMetadata & {
+  includesMetadata?: true;
+};
+
+export type TrackEdited = RawTrack & UserMetadata & {
+  includesMetadata?: true;
+};
+
+export type ArtistEdited = RawArtist & UserMetadata & {
+  includesMetadata?: true;
+};
+
+export type AllElements = RawAlbum | RawTrack | RawArtist;
+export type AllElementsEdited = AlbumEdited | TrackEdited | ArtistEdited;
+
+export type AudioElement = AllElements | AllElementsEdited;
+
+
 
 export type AudioDBResponse =
   | ({ type: "album" } & AlbumResponse)
@@ -96,8 +115,3 @@ export enum TypeOfElement {
   ARTIST = "artist",
   TRACK = "track",
 }
-
-export type AllElements = Album | Track | Artist;
-export type AllElementsEdited = AlbumEdited | TrackEdited | ArtistEdited;
-
-

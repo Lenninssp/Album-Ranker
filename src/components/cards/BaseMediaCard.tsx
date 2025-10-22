@@ -10,7 +10,7 @@ import { CardActions } from "./CardActions";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
 import { useBaseMediaCard } from "@/hooks/useBaseMediaCard";
-import { AllElements, TypeOfElement } from "@/types/music";
+import { AllElements, TypeOfElement, UserMetadata } from "@/types/music";
 
 interface BaseMediaCardProps {
   children: ReactNode;
@@ -20,6 +20,7 @@ interface BaseMediaCardProps {
   title: string;
   subtitle?: string | null;
   year?: string | number | null;
+  metadata?: UserMetadata;
 }
 
 export const BaseMediaCard = ({
@@ -29,7 +30,8 @@ export const BaseMediaCard = ({
   subtitle,
   year,
   type,
-  element
+  element,
+  metadata
 }: BaseMediaCardProps) => {
   const {
     selectedColor,
@@ -41,7 +43,7 @@ export const BaseMediaCard = ({
     handleSaveCommentary,
     handleChangeTag,
     toggleTag,
-  } = useBaseMediaCard(type, element);
+  } = useBaseMediaCard(type, element, metadata);
   return (
     <Dialog>
       <div

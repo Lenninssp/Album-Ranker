@@ -1,12 +1,21 @@
 // components/cards/TrackCard.tsx
-import { Track, TypeOfElement } from "@/types/music";
+import {  RawTrack, TrackEdited, TypeOfElement, UserMetadata } from "@/types/music";
 import { BaseMediaCard } from "./BaseMediaCard";
 
 interface TrackCardProps {
-  track: Track;
+  track: RawTrack | TrackEdited;
 }
 
 export const TrackCard = ({ track }: TrackCardProps) => {
+  let metadata: UserMetadata | undefined;
+  if (track.includesMetadata) {
+    metadata = {
+      commentary: (track as TrackEdited).commentary,
+      tag: (track as TrackEdited).tag,
+      rating: (track as TrackEdited).rating
+    };
+  }
+  
   return (
     <BaseMediaCard
       type={TypeOfElement.TRACK}
@@ -14,6 +23,7 @@ export const TrackCard = ({ track }: TrackCardProps) => {
       headerImage={track.strTrackThumb}
       title={track.strTrack}
       subtitle={track.strAlbum}
+      metadata={metadata}
     >
       <div className="text-sm leading-relaxed max-h-44 overflow-auto">
         {track.strDescriptionEN || "No description available."}

@@ -1,18 +1,28 @@
 import { useSavedItems } from "@/context/savedItems";
-import { AlbumEdited, AllElements, ArtistEdited, TrackEdited, TypeOfElement } from "@/types/music";
+import {
+  AlbumEdited,
+  AllElements,
+  ArtistEdited,
+  TrackEdited,
+  TypeOfElement,
+  UserMetadata,
+} from "@/types/music";
 import { Rating } from "@/types/ratingColor";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const useBaseMediaCard = (type: TypeOfElement, element: AllElements) => {
+
+export const useBaseMediaCard = (type: TypeOfElement, element: AllElements, metadata?: UserMetadata) => {
   const { addAlbum, addArtist, addTrack } = useSavedItems();
 
-  const [selectedColor, setSelectedColor] = useState<Rating>(Rating.Undefined);
+  const [selectedColor, setSelectedColor] = useState<Rating>(metadata?.rating ?? Rating.Undefined);
   const [addTag, setAddTag] = useState<boolean>(false);
-  const [tag, setTag] = useState<string>("");
-  const [commentary, setCommentary] = useState<string>("");
+  const [tag, setTag] = useState<string>(metadata?.tag ?? "");
+  const [commentary, setCommentary] = useState<string>(metadata?.commentary ?? "");
 
-  const saveProgress = (overrides?: Partial<{ tag: string; commentary: string; rating: Rating }>) => {
+  const saveProgress = (
+    overrides?: Partial<{ tag: string; commentary: string; rating: Rating }>
+  ) => {
     const baseData = {
       ...element,
       commentary: overrides?.commentary ?? commentary,
@@ -37,7 +47,7 @@ export const useBaseMediaCard = (type: TypeOfElement, element: AllElements) => {
 
   const handleSaveTag = () => {
     setAddTag((prev) => !prev);
-    saveProgress(); 
+    saveProgress();
   };
 
   const handleSaveCommentary = (value: string) => {
