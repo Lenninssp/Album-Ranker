@@ -10,19 +10,24 @@ type State = {
 type Actions = {
   toggle: () => void;
   setId: (id: number) => void;
+  getId: () => number | null;
   setName: (name: string) => void;
+  getName: () => string;
 };
 
 export const useSession = create<State & Actions>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       authorized: false,
       userId: null,
       userName: "",
       toggle: () => set((state) => ({ authorized: !state.authorized })),
-      setId: (id: number) => set(() => ({ userId: id})),
-      setName: (name: string) => set(() => ({userName: name})),
+      setId: (id: number) => set(() => ({ userId: id })),
+      setName: (name: string) => set(() => ({ userName: name })),
+      getName: () => get().userName,
+      getId: ()=>get().userId,
     }),
+
     {
       name: "session-storage",
     }
