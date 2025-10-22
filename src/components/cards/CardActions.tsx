@@ -1,8 +1,5 @@
 import { cn } from "@/lib/utils";
-import {
-  Rating,
-  RatingBackground,
-} from "@/types/ratingColor";
+import { Rating, RatingBackground } from "@/types/ratingColor";
 import {
   Tooltip,
   TooltipContent,
@@ -12,8 +9,17 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Icon } from "@iconify/react";
-import { DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,DialogContent } from "../ui/dialog";
+import {
+  DialogClose,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogContent,
+} from "../ui/dialog";
 import { useState } from "react";
+import { Textarea } from "../ui/textarea";
 
 interface CardActionsProps {
   handleSelectColor: (key: Rating) => void;
@@ -23,7 +29,7 @@ interface CardActionsProps {
   tag: string;
   addTag: boolean;
   commentary: string;
-  handleSaveCommentary: (value:string) => void
+  handleSaveCommentary: (value: string) => void;
 }
 export const CardActions = ({
   handleSelectColor,
@@ -33,7 +39,7 @@ export const CardActions = ({
   tag,
   addTag,
   commentary,
-  handleSaveCommentary
+  handleSaveCommentary,
 }: CardActionsProps) => {
   const [newDialog, setNewDialog] = useState<string>(commentary);
   return (
@@ -101,12 +107,20 @@ export const CardActions = ({
               done.
             </DialogDescription>
           </DialogHeader>
-          <Input value={newDialog} onChange={(e) => setNewDialog(e.target.value)} />
+          <Textarea
+            value={newDialog}
+            onChange={(e) => setNewDialog(e.target.value)}
+          />
           <DialogFooter>
             <DialogClose asChild>
               <Button className=" cursor-pointer">Cancel</Button>
             </DialogClose>
-            <Button className=" cursor-pointer" onClick={() => handleSaveCommentary(newDialog)}>Save changes</Button>
+            <Button
+              className=" cursor-pointer"
+              onClick={() => handleSaveCommentary(newDialog)}
+            >
+              Save changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </div>

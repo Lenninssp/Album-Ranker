@@ -54,6 +54,9 @@ export const NavBar = () => {
             <Link href={"/search"}>
               <div>SEARCH</div>
             </Link>
+            <Link href={"/library"}>
+              <div>LIBRARY</div>
+            </Link>
             <Link href={"/playground"}>
               <div>PLAYGROUND</div>
             </Link>
