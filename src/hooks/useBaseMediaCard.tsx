@@ -12,41 +12,12 @@ export const useBaseMediaCard = (type: TypeOfElement, element: AllElements) => {
   const [tag, setTag] = useState<string>("");
   const [commentary, setCommentary] = useState<string>("");
 
-  const handleSaveTag = () => {
-    setAddTag((prev) => !prev);
-    saveProgress();
-  };
-
-  const handleSaveCommentary = (value: string) => {
-    if (value === "") return;
-    setCommentary(value);
-    saveProgress();
-    toast("Success", {
-      description: "The commentary has been saved",
-    });
-  };
-
-  const handleChangeSelectedColor = (newColor: Rating) => {
-    setSelectedColor(newColor);
-    saveProgress();
-  };
-
-  const handleChangeTag = (newTag: string) => {
-    setTag(newTag);
-    saveProgress();
-  };
-
-  const toggleTag = () => {
-    setAddTag((prev) => !prev);
-  };
-
-
-  const saveProgress = () => {
+  const saveProgress = (overrides?: Partial<{ tag: string; commentary: string; rating: Rating }>) => {
     const baseData = {
       ...element,
-      commentary,
-      tag,
-      rating: selectedColor,
+      commentary: overrides?.commentary ?? commentary,
+      tag: overrides?.tag ?? tag,
+      rating: overrides?.rating ?? selectedColor,
     };
 
     switch (type) {
@@ -63,6 +34,30 @@ export const useBaseMediaCard = (type: TypeOfElement, element: AllElements) => {
 
     toast("Saved!", { description: "Item saved successfully." });
   };
+
+  const handleSaveTag = () => {
+    setAddTag((prev) => !prev);
+    saveProgress(); 
+  };
+
+  const handleSaveCommentary = (value: string) => {
+    if (value === "") return;
+    setCommentary(value);
+    saveProgress({ commentary: value });
+    toast("Success", { description: "The commentary has been saved" });
+  };
+
+  const handleChangeSelectedColor = (newColor: Rating) => {
+    setSelectedColor(newColor);
+    saveProgress({ rating: newColor });
+  };
+
+  const handleChangeTag = (newTag: string) => {
+    setTag(newTag);
+  };
+
+  const toggleTag = () => setAddTag((prev) => !prev);
+
   return {
     handleSaveTag,
     handleSaveCommentary,
