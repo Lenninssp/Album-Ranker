@@ -1,3 +1,5 @@
+import { Rating } from "./ratingColor";
+
 export interface AlbumResponse {
   album: Album[];
 }
@@ -20,6 +22,13 @@ export interface Album {
   strMood?: string | null;
   strSpeed?: string | null;
   strWikipediaID?: string | null;
+}
+
+
+export interface AlbumEdited extends Album {
+  commentary?: string;
+  tag?: string;
+  rating?: Rating;
 }
 
 
@@ -48,6 +57,12 @@ export interface Track {
   intTrackNumber?: string | null;
 }
 
+export interface TrackEdited extends Track {
+  commentary?: string;
+  tag?: string;
+  rating?: Rating;
+}
+
 
 export interface ArtistResponse {
   artists: Artist[];
@@ -72,6 +87,13 @@ export interface Artist {
   strArtistWideThumb?: string | null;
   strArtistFanart?: string | null;
   strArtistBanner?: string | null;
+}
+
+
+export interface ArtistEdited extends Artist {
+  commentary?: string;
+  tag?: string;
+  rating?: Rating;
 }
 
 

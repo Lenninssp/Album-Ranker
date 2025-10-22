@@ -1,25 +1,25 @@
-import { Album, Artist, Track } from "@/types/music";
-import { create } from "zustand";
+import { create } from "zustand"
+import type { ArtistEdited, AlbumEdited, TrackEdited } from "@/types/music"
 
 type State = {
-  savedArtists: Artist[];
-  savedTracks: Track[];
-  savedAlbums: Album[];
-};
+  savedArtists: ArtistEdited[]
+  savedTracks: TrackEdited[]
+  savedAlbums: AlbumEdited[]
+}
 
 type Actions = {
-  addArtist: (addition: Artist) => void;
-  addAlbum: (addition: Album) => void;
-  addTrack: (addition: Track) => void;
+  addArtist: (addition: ArtistEdited) => void
+  addAlbum: (addition: AlbumEdited) => void
+  addTrack: (addition: TrackEdited) => void
 
-  getArtists: () => Artist[];
-  getAlbums: () => Album[];
-  getTracks: () => Track[];
+  getArtists: () => ArtistEdited[]
+  getAlbums: () => AlbumEdited[]
+  getTracks: () => TrackEdited[]
 
-  searchArtist: (id: string) => Artist | undefined;
-  searchAlbum: (id: string) => Album | undefined;
-  searchTrack: (id: string) => Track | undefined;
-};
+  searchArtist: (id: string) => ArtistEdited | undefined
+  searchAlbum: (id: string) => AlbumEdited | undefined
+  searchTrack: (id: string) => TrackEdited | undefined
+}
 
 export const useSavedItems = create<State & Actions>((set, get) => ({
   savedArtists: [],
@@ -27,22 +27,28 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
   savedAlbums: [],
 
   addArtist: (addition) =>
-    set((state) => ({
-      savedArtists: [...state.savedArtists, addition],
-    })),
+    set((state) => {
+      if (state.savedArtists.some(a => a.idArtist === addition.idArtist)) return state
+      return { savedArtists: [...state.savedArtists, addition] }
+    }),
+
   addAlbum: (addition) =>
-    set((state) => ({ savedAlbums: [...state.savedAlbums, addition] })),
+    set((state) => {
+      if (state.savedAlbums.some(a => a.idAlbum === addition.idAlbum)) return state
+      return { savedAlbums: [...state.savedAlbums, addition] }
+    }),
+
   addTrack: (addition) =>
-    set((state) => ({ savedTracks: [...state.savedTracks, addition] })),
+    set((state) => {
+      if (state.savedTracks.some(t => t.idTrack === addition.idTrack)) return state
+      return { savedTracks: [...state.savedTracks, addition] }
+    }),
 
   getArtists: () => get().savedArtists,
   getAlbums: () => get().savedAlbums,
   getTracks: () => get().savedTracks,
 
-  searchArtist: (id: string) => get().savedArtists.find((a) => a.idArtist === id),
-  searchAlbum: (id: string) => get().savedAlbums.find((a) => a.idAlbum === id),
-  searchTrack: (id: string) => get().savedTracks.find((a) => a.idTrack === id),
-
-  
-
-}));
+  searchArtist: (id) => get().savedArtists.find((a) => a.idArtist === id),
+  searchAlbum: (id) => get().savedAlbums.find((a) => a.idAlbum === id),
+  searchTrack: (id) => get().savedTracks.find((t) => t.idTrack === id),
+}))
