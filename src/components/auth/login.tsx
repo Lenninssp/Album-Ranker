@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const LoginComponent = () => {
   const { authorized, toggle } = useSession();
@@ -12,17 +13,27 @@ export const LoginComponent = () => {
 
   const [errorVisible, setErrorVisible] = useState<string | null>(null);
 
-  const correctUser = process.env.NEXT_PUBLIC_USER;
-  const correctPassword = process.env.NEXT_PUBLIC_PASSWORD;
-
   const router = useRouter();
 
-  const authorize = () => {
-    if (username === correctUser && password === correctPassword) {
-      toggle();
+  const authorize = async () => {
+    try {
+      const response = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-type": "applications/json" },
+        body: JSON.stringify({
+          action: "login",
+          email: username,
+          password: password,
+        }),
+      });
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
       setErrorVisible(null);
       router.push("/");
-    } else {
+      toggle();
+      toast("Login successful");
+      return true;
+    } catch (e) {
       setErrorVisible("Sorry, either your username or password are incorrect");
     }
   };
