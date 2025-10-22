@@ -8,6 +8,7 @@ import {
 } from "@/types/ratingColor";
 import { CardActions } from "./CardActions";
 import { Dialog } from "../ui/dialog";
+import { toast } from "sonner";
 
 interface BaseMediaCardProps {
   children: ReactNode;
@@ -35,8 +36,11 @@ export const BaseMediaCard = ({
 
   const handleSaveCommentary = (value: string) => {
     if (value === "") return;
-    setCommentary(value)
-  }
+    setCommentary(value);
+    toast("Success", {
+      description: "The commentary has been saved",
+    });
+  };
   return (
     <Dialog>
       <div
