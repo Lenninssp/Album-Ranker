@@ -2,6 +2,7 @@
 import { DefaultFrame } from "@/components/default-frame";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/context/auth";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -9,6 +10,7 @@ export default function Home() {
   return (
     <DefaultFrame>
       <div className="h-full w-full flex items-center justify-center flex-col gap-5">
+        <Image src={'logo.svg'} height={250} width={250} alt="main logo"/>
         <div className="text-4xl font-bold">Welcome</div>
         <div className="text-2xl text-center">
           This is the one and only place where you can find your favourite music
