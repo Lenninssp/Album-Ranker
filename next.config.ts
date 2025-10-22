@@ -7,4 +7,10 @@ const nextConfig: NextConfig = {
   },
 };
 
+module.exports = {
+  images: {
+    remotePatterns: [new URL('https://r2.theaudiodb.com/images/media/**')],
+  },
+}
+
 export default nextConfig;

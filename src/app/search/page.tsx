@@ -1,5 +1,8 @@
 "use client";
 
+import { AlbumCard } from "@/components/cards/AlbumCard";
+import { ArtistCard } from "@/components/cards/ArtistCard";
+import { TrackCard } from "@/components/cards/TrackCard";
 import { DefaultFrame } from "@/components/default-frame";
 import { RadioSearch } from "@/components/search/radio-search";
 import { Button } from "@/components/ui/button";
@@ -33,7 +36,7 @@ const Search = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
 
       const data = await response.json();
-      setResult(data);
+      setResult({type: searchType, ...data});
     } catch (err) {
       console.error("Search failed:", err);
     } finally {
@@ -76,7 +79,10 @@ const Search = () => {
         </div>
       </div>
       <div className="flex-2 w-full max-w-6xl overflow-auto">
-        {result && <pre>{JSON.stringify(result, null, 5)}</pre>}
+        {result?.type === "artist" && <ArtistCard artist={result.artists[0]} />}
+        {result?.type === "album" && <AlbumCard album={result.album[0]} />}
+        {result?.type === "track" && <TrackCard track={result.track[0]} />}
+
       </div>
     </DefaultFrame>
   );
