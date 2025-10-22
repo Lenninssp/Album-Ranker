@@ -1,20 +1,30 @@
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { SearchType } from "@/app/search/page";
 
-export const RadioSearch = () => {
+interface RadioSearchProps {
+  value: SearchType;
+  onValueChange: (value: SearchType) => void;
+}
+
+export const RadioSearch = ({ value, onValueChange }: RadioSearchProps) => {
   return (
-    <RadioGroup defaultValue="comfortable">
-      <div className="flex items-center gap-3">
-        <RadioGroupItem value="default" id="r1" />
-        <Label >Album</Label>
+    <RadioGroup
+      value={value}
+      onValueChange={(val) => onValueChange(val as SearchType)} // ✅ notify parent
+      className="flex flex-col items-center gap-6"
+    >
+      <div className="flex items-center gap-2">
+        <RadioGroupItem className="cursor-pointer" value="album" id="r1" />
+        <Label htmlFor="r1">Album</Label>
       </div>
-      <div className="flex items-center gap-3">
-        <RadioGroupItem value="comfortable" id="r2" />
-        <Label >Track</Label>
+      <div className="flex items-center gap-2">
+        <RadioGroupItem className="cursor-pointer" value="track" id="r2" />
+        <Label htmlFor="r2">Track</Label>
       </div>
-      <div className="flex items-center gap-3">
-        <RadioGroupItem value="compact" id="r3" />
-        <Label >Artist</Label>
+      <div className="flex items-center gap-2">
+        <RadioGroupItem className="cursor-pointer" value="artist" id="r3" />
+        <Label htmlFor="r3">Artist</Label>
       </div>
     </RadioGroup>
   );

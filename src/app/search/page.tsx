@@ -4,12 +4,16 @@ import { DefaultFrame } from "@/components/default-frame";
 import { RadioSearch } from "@/components/search/radio-search";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { AudioDBResponse } from "@/types/music";
 import { useState } from "react";
+
+export type SearchType = "album" | "track" | "artist";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [searchType, setSearchType] = useState<"album" | "track" | "artist">("album");
-  const [result, setResult] = useState<string | null>(null);
+  const [searchQuery2, setSearchQuery2] = useState<string>("");
+  const [searchType, setSearchType] = useState<SearchType>("artist");
+  const [result, setResult] = useState<AudioDBResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleExecuteSearch = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -17,11 +21,17 @@ const Search = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `https://www.theaudiodb.com/api/v1/json/123/search.php?s=${searchQuery}`
-      );
+      const url =
+        searchType === "artist"
+          ? `https://www.theaudiodb.com/api/v1/json/123/search.php?s=${searchQuery}`
+          : searchType === "album"
+          ? `https://www.theaudiodb.com/api/v1/json/123/searchalbum.php?s=${searchQuery}&a=${searchQuery2}`
+          : `https://www.theaudiodb.com/api/v1/json/123/searchtrack.php?s=${searchQuery}&t=${searchQuery2}`;
+
+      const response = await fetch(url);
       if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
+
       const data = await response.json();
       setResult(data);
     } catch (err) {
@@ -30,6 +40,7 @@ const Search = () => {
       setLoading(false);
     }
   };
+
   return (
     <DefaultFrame className="flex flex-col items-center justify-center gap-4">
       <div className="flex-1 w-full justify-end flex-col flex">
@@ -39,13 +50,25 @@ const Search = () => {
             className="w-full flex gap-4 px-10 items-center"
             onSubmit={handleExecuteSearch}
           >
-            <RadioSearch />
+            <RadioSearch value={searchType} onValueChange={setSearchType} />
             <Input
               className="font-bold"
               value={loading ? "Data is loading" : searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               disabled={loading}
             />
+
+            {(searchType === "album" || searchType === "track") && (
+              <>
+              <div className="font-bold flex">Artist|{searchType === "track" ? "Track" : "Album"}</div>
+                <Input
+                  className="font-bold"
+                  value={loading ? "Data is loading" : searchQuery2}
+                  onChange={(e) => setSearchQuery2(e.target.value)}
+                  disabled={loading}
+                />
+              </>
+            )}
             <Button type="submit" disabled={loading}>
               {loading ? "Searching..." : "Search"}
             </Button>
@@ -53,7 +76,7 @@ const Search = () => {
         </div>
       </div>
       <div className="flex-2 w-full max-w-6xl overflow-auto">
-        {result && <pre>{JSON.stringify(result, null, 2)}</pre>}
+        {result && <pre>{JSON.stringify(result, null, 5)}</pre>}
       </div>
     </DefaultFrame>
   );
