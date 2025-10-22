@@ -59,7 +59,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
         artist,
       ],
     }));
-    await fetch("api/elements/artists", {
+    await fetch("/api/elements/artists", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(artist),
@@ -73,7 +73,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
         album,
       ],
     }));
-    await fetch("/api/elemsnts/albumsd", {
+    await fetch("/api/elemsnts/albums", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(album),

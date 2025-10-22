@@ -11,7 +11,31 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const data = await req.json();
-  const newArtist = await prisma.artistEdited.create({ data });
-  return NextResponse.json(newArtist);
+  try {
+    const data = await req.json();
+    if (!data.idArtist || !data.strArtist || !data.userId) {
+      return NextResponse.json(
+        { error: "Missing required fields: idArtist, strArtist, or userId." },
+        { status: 400 }
+      );
+    }
+    const newArtist = await prisma.artistEdited.create({ data });
+    return NextResponse.json(newArtist, { status: 201 });
+
+  } catch (error: any) {
+    console.error("Error creating artist:", error);
+    if (error.code === "P2002") {
+      return NextResponse.json(
+        { error: "Artist already exists (duplicate entry)." },
+        { status: 409 }
+      );
+    }
+    return NextResponse.json(
+      {
+        error: "Internal server error while creating artist.",
+        details: process.env.NODE_ENV === "development" ? error.message : undefined,
+      },
+      { status: 500 }
+    );
+  }
 }
