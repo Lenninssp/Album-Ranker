@@ -20,7 +20,7 @@ export const TrackCard = ({ track }: TrackCardProps) => {
     <BaseMediaCard
       type={TypeOfElement.TRACK}
       element={track}
-      headerImage={track.strTrackThumb}
+      headerImage={track.strTrackThumb }
       title={track.strTrack}
       subtitle={track.strAlbum}
       metadata={metadata}

@@ -2,8 +2,8 @@ import { useSession } from "@/context/auth";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
-import { User } from "@/generated/prisma";
+
+import { toast } from "sonner";
 
 export const SignupComponent = () => {
   const { authorized, toggle, setId } = useSession();
@@ -14,8 +14,6 @@ export const SignupComponent = () => {
   const [name, setName] = useState<string>("");
 
   const [errorVisible, setErrorVisible] = useState<string | null>(null);
-
-  const router = useRouter();
 
   const createUser = async () => {
     try {
@@ -31,19 +29,16 @@ export const SignupComponent = () => {
       });
       if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
-      toggle();
-      const data:User = await response.json();
-      setId(data.id);
+      toast("Success, no go to the login page and log in")
     } catch (e) {
       console.error("There was an error creating the user", e);
     }
   };
 
-  const authorize = () => {
+  const authorize = async() => {
     if (password === password2) {
       setErrorVisible(null);
-      createUser();
-      router.push("/");
+       await createUser();
     } else {
       setErrorVisible("Sorry, the passwords are not the same");
     }
