@@ -39,9 +39,9 @@ function reducer(state: SimplifiedState, action: Action): SimplifiedState {
 export const LibraryComponent = ({ className }: LibraryComponentProps) => {
   const { savedArtists, savedAlbums, savedTracks } = useSavedItems();
   const [state, dispatch] = useReducer(reducer, {
-    trackSimplified: false,
-    albumSimplified: false,
-    artistSimplified: false,
+    trackSimplified: true,
+    albumSimplified: true,
+    artistSimplified: true,
   });
 
   const artistsEmpty = savedArtists.length === 0;
