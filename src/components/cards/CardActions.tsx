@@ -30,6 +30,7 @@ interface CardActionsProps {
   addTag: boolean;
   commentary: string;
   handleSaveCommentary: (value: string) => void;
+  handleDeleteElement: () => void;
 }
 export const CardActions = ({
   handleSelectColor,
@@ -40,6 +41,7 @@ export const CardActions = ({
   addTag,
   commentary,
   handleSaveCommentary,
+  handleDeleteElement
 }: CardActionsProps) => {
   const [newDialog, setNewDialog] = useState<string>(commentary);
   return (
@@ -91,6 +93,12 @@ export const CardActions = ({
       </div>
 
       <div className="flex w-full justify-end gap-2">
+        <Button className="cursor-pointer" onClick={handleDeleteElement} >
+            <Icon
+              icon={"material-symbols:delete-forever"}
+              className="text-red-400 cursor-pointer"
+            />
+          </Button>
         <DialogTrigger asChild>
           <Button className="cursor-pointer">
             <Icon

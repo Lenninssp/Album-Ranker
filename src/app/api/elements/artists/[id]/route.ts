@@ -20,7 +20,34 @@ export async function PUT(req: Request, { params }: Params) {
   return NextResponse.json(updated);
 }
 
-export async function DELETE(_: Request, { params }: Params) {
-  await prisma.artistEdited.delete({ where: { id: Number(params.id) } });
-  return NextResponse.json({ success: true });
+export async function DELETE(req: Request, { params }: Params) {
+  const { searchParams } = new URL(req.url);
+  const userId = Number(searchParams.get("userId"));
+  if (!userId) {
+    return NextResponse.json({ error: "userId is required" }, { status: 400 });
+  }
+  try {
+    await prisma.artistEdited.delete({
+      where: {
+        idArtist_userId: {
+          idArtist: params.id,
+          userId,
+        },
+      },
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    console.error("Error deleting artist:", error);
+    if (error.code === "P2025") {
+      return NextResponse.json(
+        { error: "Artist not found for this user." },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(
+      { error: "Internal server error while deleting artist." },
+      { status: 500 }
+    );
+  }
 }

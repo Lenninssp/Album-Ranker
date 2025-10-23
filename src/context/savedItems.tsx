@@ -13,9 +13,9 @@ type Actions = {
   addAlbum: (addition: AlbumEdited, userId: number) => Promise<void>;
   addTrack: (addition: TrackEdited, userId: number) => Promise<void>;
 
-  deleteArtist: (id: string) => Promise<void>;
-  deleteAlbum: (id: string) => Promise<void>;
-  deleteTrack: (id: string) => Promise<void>;
+  deleteArtist: (id: string, userId: number) => Promise<void>;
+  deleteAlbum: (id: string, userId: number) => Promise<void>;
+  deleteTrack: (id: string, userId: number) => Promise<void>;
 
   getArtists: () => ArtistEdited[];
   getAlbums: () => AlbumEdited[];
@@ -74,10 +74,10 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
         album,
       ],
     }));
-    await fetch("/api/elemsnts/albums", {
+    await fetch("/api/elements/albums", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(album),
+      body: JSON.stringify({...album, userId: userId}),
     });
   },
 
@@ -91,29 +91,29 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     await fetch("/api/elements/tracks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(track),
+      body: JSON.stringify({...track, userId: userId}),
     });
   },
 
-  deleteArtist: async (id) => {
+  deleteArtist: async (id, userId) => {
     set((state) => ({
       savedArtists: state.savedArtists.filter((a) => a.idArtist !== id),
     }));
-    await fetch(`/api/artists/${id}`, { method: "DELETE" });
+    await fetch(`/api/elements/artists/${id}?userId=${userId}`, { method: "DELETE" });
   },
 
-  deleteAlbum: async (id) => {
+  deleteAlbum: async (id, userId) => {
     set((state) => ({
       savedAlbums: state.savedAlbums.filter((a) => a.idAlbum !== id),
     }));
-    await fetch(`/api/albums/${id}`, { method: "DELETE" });
+    await fetch(`/api/elements/albums/${id}?userId=${userId}`, { method: "DELETE" });
   },
 
-  deleteTrack: async (id) => {
+  deleteTrack: async (id, userId) => {
     set((state) => ({
       savedTracks: state.savedTracks.filter((t) => t.idTrack !== id),
     }));
-    await fetch(`/api/tracks/${id}`, { method: "DELETE" });
+    await fetch(`/api/elements/tracks/${id}?userId=${userId}`, { method: "DELETE" });
   },
 
   getArtists: () => get().savedArtists,

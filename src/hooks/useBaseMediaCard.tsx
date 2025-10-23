@@ -17,7 +17,14 @@ export const useBaseMediaCard = (
   element: AllElements,
   metadata?: UserMetadata
 ) => {
-  const { addAlbum, addArtist, addTrack } = useSavedItems();
+  const {
+    addAlbum,
+    addArtist,
+    addTrack,
+    deleteAlbum,
+    deleteArtist,
+    deleteTrack,
+  } = useSavedItems();
   const userId = useSession();
 
   const [selectedColor, setSelectedColor] = useState<Rating>(
@@ -40,7 +47,7 @@ export const useBaseMediaCard = (
       includesMetadata: true,
     };
     const myUserId = userId.getId();
-    console.warn("lets go", userId);
+
     if (!myUserId) return;
     switch (type) {
       case TypeOfElement.ALBUM:
@@ -80,6 +87,25 @@ export const useBaseMediaCard = (
 
   const toggleTag = () => setAddTag((prev) => !prev);
 
+  const handleDeleteElement = () => {
+    const myUserId = userId.getId();
+
+    if (!myUserId) return;
+    switch (type) {
+      case TypeOfElement.ALBUM:
+        deleteAlbum((element as AlbumEdited).idAlbum, myUserId);
+        break;
+      case TypeOfElement.ARTIST:
+        deleteArtist((element as ArtistEdited).idArtist, myUserId);
+        break;
+      case TypeOfElement.TRACK:
+        deleteTrack((element as TrackEdited).idTrack, myUserId);
+        break;
+    }
+
+    toast("Deleted!", { description: "Item deleted successfully." });
+  };
+
   return {
     handleSaveTag,
     handleSaveCommentary,
@@ -90,5 +116,6 @@ export const useBaseMediaCard = (
     handleChangeSelectedColor,
     handleChangeTag,
     toggleTag,
+    handleDeleteElement
   };
 };
