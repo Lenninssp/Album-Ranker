@@ -26,7 +26,7 @@ export const TrackCard = ({ track }: TrackCardProps) => {
       metadata={metadata}
     >
       <div className="text-sm leading-relaxed max-h-44 overflow-auto">
-        {track.strDescriptionEN || "No description available."}
+        {track.strDescriptionEN ||  track.includesMetadata && track.commentary  || "No description available."}
       </div>
       <div className="opacity-75">{track.strGenre}</div>
     </BaseMediaCard>
