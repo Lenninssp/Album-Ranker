@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { User } from "@/generated/prisma";
 
 export const LoginComponent = () => {
-  const { authorized, toggle, setId } = useSession();
+  const { authorized, toggle, setId, setName } = useSession();
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -35,6 +35,7 @@ export const LoginComponent = () => {
       toggle();
       console.log(data)
       setId(data.user.id);
+      setName(data.user.name || "undefined");
       toast("Login successful");
       return true;
     } catch (e) {

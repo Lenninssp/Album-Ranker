@@ -2,8 +2,12 @@ import { User } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Input } from "../ui/input";
+import { useSession } from "@/context/auth";
+import { useSavedItems } from "@/context/savedItems";
 
 export const AccountEdit = () => {
+  const { getId, getName } = useSession();
+  const { getAlbums, getArtists, getTracks} = useSavedItems()
   const [wantsToReset, setWantsToReset] = useState<boolean>(false);
 
   return (
@@ -13,13 +17,17 @@ export const AccountEdit = () => {
       </div>
       <div className="flex flex-col w-fit gap-4">
         <div className="flex gap-2">
+          <div className=" font-bold">User Id:</div>
+          <div>{getId()}</div>
+        </div>
+        <div className="flex gap-2">
           <div className=" font-bold">Name:</div>
-          <div>Not defined</div>
+          <div>{getName()}</div>
         </div>
 
         <div className="flex gap-2">
           <div className=" font-bold"># rated songs:</div>
-          <div>Not defined</div>
+          <div>{getAlbums().length + getArtists().length + getTracks().length}</div>
         </div>
 
         <div className="flex gap-2">

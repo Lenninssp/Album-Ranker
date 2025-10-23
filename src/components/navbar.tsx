@@ -57,9 +57,7 @@ export const NavBar = () => {
             <Link href={"/library"}>
               <div>LIBRARY</div>
             </Link>
-            <Link href={"/playground"}>
-              <div>PLAYGROUND</div>
-            </Link>
+      
             <Link href={"/my-account"}>
               <div>MY ACCOUNT</div>
             </Link>
