@@ -3,6 +3,7 @@ import { NavBar } from "./navbar";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { AppInitializer } from "./general/app-initializer";
 
 export const DefaultFrame = ({
   children,
@@ -31,6 +32,7 @@ export const DefaultFrame = ({
         className={cn(" h-full w-full p-5 flex-1 overflow-hidden", className)}
       >
         {children}
+        <AppInitializer />
       </div>
     </div>
   );

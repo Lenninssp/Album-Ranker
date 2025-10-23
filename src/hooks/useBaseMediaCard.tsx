@@ -1,3 +1,4 @@
+import { useSession } from "@/context/auth";
 import { useSavedItems } from "@/context/savedItems";
 import {
   AlbumEdited,
@@ -11,14 +12,29 @@ import { Rating } from "@/types/ratingColor";
 import { useState } from "react";
 import { toast } from "sonner";
 
+export const useBaseMediaCard = (
+  type: TypeOfElement,
+  element: AllElements,
+  metadata?: UserMetadata
+) => {
+  const {
+    addAlbum,
+    addArtist,
+    addTrack,
+    deleteAlbum,
+    deleteArtist,
+    deleteTrack,
+  } = useSavedItems();
+  const userId = useSession();
 
-export const useBaseMediaCard = (type: TypeOfElement, element: AllElements, metadata?: UserMetadata) => {
-  const { addAlbum, addArtist, addTrack } = useSavedItems();
-
-  const [selectedColor, setSelectedColor] = useState<Rating>(metadata?.rating ?? Rating.Undefined);
+  const [selectedColor, setSelectedColor] = useState<Rating>(
+    metadata?.rating ?? Rating.Undefined
+  );
   const [addTag, setAddTag] = useState<boolean>(false);
   const [tag, setTag] = useState<string>(metadata?.tag ?? "");
-  const [commentary, setCommentary] = useState<string>(metadata?.commentary ?? "");
+  const [commentary, setCommentary] = useState<string>(
+    metadata?.commentary ?? ""
+  );
 
   const saveProgress = (
     overrides?: Partial<{ tag: string; commentary: string; rating: Rating }>
@@ -30,18 +46,18 @@ export const useBaseMediaCard = (type: TypeOfElement, element: AllElements, meta
       rating: overrides?.rating ?? selectedColor,
       includesMetadata: true,
     };
+    const myUserId = userId.getId();
 
-    console.log(baseData);
-
+    if (!myUserId) return;
     switch (type) {
       case TypeOfElement.ALBUM:
-        addAlbum(baseData as AlbumEdited);
+        addAlbum(baseData as AlbumEdited, myUserId);
         break;
       case TypeOfElement.ARTIST:
-        addArtist(baseData as ArtistEdited);
+        addArtist(baseData as ArtistEdited, myUserId);
         break;
       case TypeOfElement.TRACK:
-        addTrack(baseData as TrackEdited);
+        addTrack(baseData as TrackEdited, myUserId);
         break;
     }
 
@@ -71,6 +87,25 @@ export const useBaseMediaCard = (type: TypeOfElement, element: AllElements, meta
 
   const toggleTag = () => setAddTag((prev) => !prev);
 
+  const handleDeleteElement = () => {
+    const myUserId = userId.getId();
+
+    if (!myUserId) return;
+    switch (type) {
+      case TypeOfElement.ALBUM:
+        deleteAlbum((element as AlbumEdited).idAlbum, myUserId);
+        break;
+      case TypeOfElement.ARTIST:
+        deleteArtist((element as ArtistEdited).idArtist, myUserId);
+        break;
+      case TypeOfElement.TRACK:
+        deleteTrack((element as TrackEdited).idTrack, myUserId);
+        break;
+    }
+
+    toast("Deleted!", { description: "Item deleted successfully." });
+  };
+
   return {
     handleSaveTag,
     handleSaveCommentary,
@@ -81,5 +116,6 @@ export const useBaseMediaCard = (type: TypeOfElement, element: AllElements, meta
     handleChangeSelectedColor,
     handleChangeTag,
     toggleTag,
+    handleDeleteElement
   };
 };

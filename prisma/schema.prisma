@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?
+  password  String
+  createdAt DateTime @default(now())
+
+  tracks  TrackEdited[]
+  albums  AlbumEdited[]
+  artists ArtistEdited[]
+}
+
+model TrackEdited {
+  id                  Int     @id @default(autoincrement())
+  idTrack             String
+  idAlbum             String
+  idArtist            String
+  strTrack            String
+  strAlbum            String
+  strArtist           String
+  strGenre            String?
+  strMood             String?
+  strStyle            String?
+  intDuration         String?
+  strDescriptionEN    String?
+  strTrackThumb       String?
+  strMusicVid         String?
+  strMusicVidDirector String?
+  strMusicVidCompany  String?
+  intMusicVidViews    String?
+  intMusicVidLikes    String?
+  intTrackNumber      String?
+  commentary          String
+  tag                 String
+  rating              String
+  includesMetadata    Boolean @default(true)
+  User                User?   @relation(fields: [userId], references: [id])
+  userId              Int?
+
+  @@unique([idTrack, userId]) 
+}
+
+model AlbumEdited {
+  id               Int     @id @default(autoincrement())
+  idAlbum          String
+  idArtist         String
+  strAlbum         String
+  strArtist        String
+  intYearReleased  String
+  strGenre         String?
+  strStyle         String?
+  strLabel         String?
+  strReleaseFormat String?
+  strAlbumThumb    String?
+  strAlbumBack     String?
+  strAlbumCDart    String?
+  strAlbum3DThumb  String?
+  strDescriptionEN String?
+  strMood          String?
+  strSpeed         String?
+  strWikipediaID   String?
+  commentary       String
+  tag              String
+  rating           String
+  includesMetadata Boolean @default(true)
+  User             User?   @relation(fields: [userId], references: [id])
+  userId           Int?
+  @@unique([idAlbum, userId])
+
+}
+
+model ArtistEdited {
+  id                 Int     @id @default(autoincrement())
+  idArtist           String
+  strArtist          String
+  strArtistAlternate String?
+  strLabel           String?
+  intFormedYear      String?
+  strGenre           String?
+  strStyle           String?
+  strMood            String?
+  strCountry         String?
+  intMembers         String?
+  strWebsite         String?
+  strBiographyEN     String?
+  strArtistThumb     String?
+  strArtistLogo      String?
+  strArtistClearart  String?
+  strArtistWideThumb String?
+  strArtistFanart    String?
+  strArtistBanner    String?
+  commentary         String
+  tag                String
+  rating             String
+  includesMetadata   Boolean @default(true)
+  User               User?   @relation(fields: [userId], references: [id])
+  userId             Int?
+  @@unique([idArtist, userId]) 
+}

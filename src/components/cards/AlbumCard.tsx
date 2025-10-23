@@ -26,7 +26,7 @@ export const AlbumCard = ({ album }: AlbumCardProps) => {
       metadata={metadata}
     >
       <div className="text-sm max-h-44 overflow-auto">
-        {album.strDescriptionEN || "No description available."}
+        {album.strDescriptionEN ||  album.includesMetadata && album.commentary  || "No description available."}
       </div>
       <div className="opacity-75">{album.strGenre}</div>
     </BaseMediaCard>

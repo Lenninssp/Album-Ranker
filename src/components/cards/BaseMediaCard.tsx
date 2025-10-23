@@ -42,6 +42,7 @@ export const BaseMediaCard = ({
     handleSaveCommentary,
     handleChangeTag,
     toggleTag,
+    handleDeleteElement
   } = useBaseMediaCard(type, element, metadata);
   return (
     <Dialog>
@@ -60,6 +61,7 @@ export const BaseMediaCard = ({
           handleActivateTag={toggleTag}
           commentary={commentary}
           handleSaveCommentary={(value) => handleSaveCommentary(value)}
+          handleDeleteElement = {handleDeleteElement}
         />
 
         <div className="flex gap-4">

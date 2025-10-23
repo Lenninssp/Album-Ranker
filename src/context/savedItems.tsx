@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { ArtistEdited, AlbumEdited, TrackEdited } from "@/types/music";
+import { useSession } from "./auth";
 
 type State = {
   savedArtists: ArtistEdited[];
@@ -8,9 +9,13 @@ type State = {
 };
 
 type Actions = {
-  addArtist: (addition: ArtistEdited) => void;
-  addAlbum: (addition: AlbumEdited) => void;
-  addTrack: (addition: TrackEdited) => void;
+  addArtist: (addition: ArtistEdited, userId: number) => Promise<void>;
+  addAlbum: (addition: AlbumEdited, userId: number) => Promise<void>;
+  addTrack: (addition: TrackEdited, userId: number) => Promise<void>;
+
+  deleteArtist: (id: string, userId: number) => Promise<void>;
+  deleteAlbum: (id: string, userId: number) => Promise<void>;
+  deleteTrack: (id: string, userId: number) => Promise<void>;
 
   getArtists: () => ArtistEdited[];
   getAlbums: () => AlbumEdited[];
@@ -19,6 +24,8 @@ type Actions = {
   searchArtist: (id: string) => ArtistEdited | undefined;
   searchAlbum: (id: string) => AlbumEdited | undefined;
   searchTrack: (id: string) => TrackEdited | undefined;
+
+  loadUserData: (userId: number) => Promise<void>;
 };
 
 export const useSavedItems = create<State & Actions>((set, get) => ({
@@ -26,29 +33,89 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
   savedTracks: [],
   savedAlbums: [],
 
-  addArtist: (addition) =>
+  loadUserData: async (userId: Number) => {
+    const [artistRes, albumRes, trackRes] = await Promise.all([
+      fetch(`/api/elements/artists?userId=${userId}`),
+      fetch(`/api/elements/albums?userId=${userId}`),
+      fetch(`/api/elements/tracks?userId=${userId}`),
+    ]);
+
+    const [artists, albums, tracks] = await Promise.all([
+      artistRes.json(),
+      albumRes.json(),
+      trackRes.json(),
+    ]);
+
+    set({
+      savedArtists: artists,
+      savedAlbums: albums,
+      savedTracks: tracks,
+    });
+  },
+
+  addArtist: async (artist, userId) => {
     set((state) => ({
       savedArtists: [
-        ...state.savedArtists.filter((a) => a.idArtist !== addition.idArtist),
-        addition,
+        ...state.savedArtists.filter((a) => a.idArtist !== artist.idArtist),
+        artist,
       ],
-    })),
+    }));
+    await fetch("/api/elements/artists", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({...artist, userId: userId}),
+    });
+  },
 
-  addAlbum: (addition) =>
+  addAlbum: async (album, userId) => {
     set((state) => ({
       savedAlbums: [
-        ...state.savedAlbums.filter((a) => a.idAlbum !== addition.idAlbum),
-        addition,
+        ...state.savedAlbums.filter((a) => a.idAlbum !== album.idAlbum),
+        album,
       ],
-    })),
+    }));
+    await fetch("/api/elements/albums", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({...album, userId: userId}),
+    });
+  },
 
-  addTrack: (addition) =>
+  addTrack: async (track, userId) => {
     set((state) => ({
       savedTracks: [
-        ...state.savedTracks.filter((t) => t.idTrack !== addition.idTrack),
-        addition,
+        ...state.savedTracks.filter((t) => t.idTrack !== track.idTrack),
+        track,
       ],
-    })),
+    }));
+    await fetch("/api/elements/tracks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({...track, userId: userId}),
+    });
+  },
+
+  deleteArtist: async (id, userId) => {
+    set((state) => ({
+      savedArtists: state.savedArtists.filter((a) => a.idArtist !== id),
+    }));
+    await fetch(`/api/elements/artists/${id}?userId=${userId}`, { method: "DELETE" });
+  },
+
+  deleteAlbum: async (id, userId) => {
+    set((state) => ({
+      savedAlbums: state.savedAlbums.filter((a) => a.idAlbum !== id),
+    }));
+    await fetch(`/api/elements/albums/${id}?userId=${userId}`, { method: "DELETE" });
+  },
+
+  deleteTrack: async (id, userId) => {
+    set((state) => ({
+      savedTracks: state.savedTracks.filter((t) => t.idTrack !== id),
+    }));
+    await fetch(`/api/elements/tracks/${id}?userId=${userId}`, { method: "DELETE" });
+  },
+
   getArtists: () => get().savedArtists,
   getAlbums: () => get().savedAlbums,
   getTracks: () => get().savedTracks,
