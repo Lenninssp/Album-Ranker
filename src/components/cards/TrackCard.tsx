@@ -4,9 +4,10 @@ import { BaseMediaCard } from "./BaseMediaCard";
 
 interface TrackCardProps {
   track: Track;
+  simplified?: boolean;
 }
 
-export const TrackCard = ({ track }: TrackCardProps) => {
+export const TrackCard = ({ track, simplified }: TrackCardProps) => {
   let metadata: UserMetadata | undefined;
   if (track.includesMetadata) {
     metadata = {
@@ -24,6 +25,7 @@ export const TrackCard = ({ track }: TrackCardProps) => {
       title={track.strTrack}
       subtitle={track.strAlbum}
       metadata={metadata}
+      simplified={simplified}
     >
       <div className="text-sm leading-relaxed max-h-44 overflow-auto">
         {track.strDescriptionEN ||  track.includesMetadata && track.commentary  || "No description available."}

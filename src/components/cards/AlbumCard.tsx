@@ -3,9 +3,10 @@ import { BaseMediaCard } from "./BaseMediaCard";
 
 interface AlbumCardProps {
   album: Album;
+  simplified?: boolean;
 }
 
-export const AlbumCard = ({ album }: AlbumCardProps) => {
+export const AlbumCard = ({ album, simplified }: AlbumCardProps) => {
     let metadata: UserMetadata | undefined;
     if (album.includesMetadata) {
       metadata = {
@@ -24,6 +25,7 @@ export const AlbumCard = ({ album }: AlbumCardProps) => {
       subtitle={album.strArtist}
       year={album.intYearReleased}
       metadata={metadata}
+      simplified={simplified}
     >
       <div className="text-sm max-h-44 overflow-auto">
         {album.strDescriptionEN ||  album.includesMetadata && album.commentary  || "No description available."}

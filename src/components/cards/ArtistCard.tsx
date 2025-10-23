@@ -1,12 +1,12 @@
-// components/cards/ArtistCard.tsx
 import { Artist, TypeOfElement, UserMetadata } from "@/types/music";
 import { BaseMediaCard } from "./BaseMediaCard";
 
 interface ArtistCardProps {
   artist: Artist;
+  simplified?: boolean;
 }
 
-export const ArtistCard = ({ artist }: ArtistCardProps) => {
+export const ArtistCard = ({ artist, simplified }: ArtistCardProps) => {
   let metadata: UserMetadata | undefined;
   console.log(artist)
   if (artist.includesMetadata) {
@@ -28,6 +28,7 @@ export const ArtistCard = ({ artist }: ArtistCardProps) => {
       subtitle={artist.strLabel}
       year={artist.intFormedYear}
       metadata={metadata}
+      simplified={simplified}
     >
       <div className="text-sm leading-relaxed max-h-44 overflow-auto">
         {artist.strBiographyEN || artist.includesMetadata && artist.commentary || "No biography available."}

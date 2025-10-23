@@ -20,6 +20,7 @@ interface BaseMediaCardProps {
   subtitle?: string | null;
   year?: string | number | null;
   metadata?: UserMetadata;
+  simplified?: boolean;
 }
 
 export const BaseMediaCard = ({
@@ -30,7 +31,8 @@ export const BaseMediaCard = ({
   year,
   type,
   element,
-  metadata
+  metadata,
+  simplified
 }: BaseMediaCardProps) => {
   const {
     selectedColor,
@@ -69,7 +71,7 @@ export const BaseMediaCard = ({
             <img
               src={headerImage}
               alt={title}
-              className="h-32 w-32 rounded object-cover"
+              className={cn("h-32 w-32 rounded object-cover", simplified && "h-16 w-16")}
             />
           ) : (
             <div className="h-32 w-32 rounded object-cover text-center bg-gray-50 items-center justify-center flex">
