@@ -32,7 +32,7 @@ export const BaseMediaCard = ({
   type,
   element,
   metadata,
-  simplified
+  simplified,
 }: BaseMediaCardProps) => {
   const {
     selectedColor,
@@ -44,7 +44,7 @@ export const BaseMediaCard = ({
     handleSaveCommentary,
     handleChangeTag,
     toggleTag,
-    handleDeleteElement
+    handleDeleteElement,
   } = useBaseMediaCard(type, element, metadata);
   return (
     <Dialog>
@@ -54,31 +54,46 @@ export const BaseMediaCard = ({
           RatingDimmerBackground[selectedColor]
         )}
       >
-        <CardActions
-          handleSelectColor={(key) => handleChangeSelectedColor(key)}
-          addTag={addTag}
-          tag={tag}
-          handleModifyTag={(value) => handleChangeTag(value)}
-          handleSaveTag={handleSaveTag}
-          handleActivateTag={toggleTag}
-          commentary={commentary}
-          handleSaveCommentary={(value) => handleSaveCommentary(value)}
-          handleDeleteElement = {handleDeleteElement}
-        />
+
+          <CardActions
+            handleSelectColor={(key) => handleChangeSelectedColor(key)}
+            addTag={addTag}
+            tag={tag}
+            handleModifyTag={(value) => handleChangeTag(value)}
+            handleSaveTag={handleSaveTag}
+            handleActivateTag={toggleTag}
+            commentary={commentary}
+            handleSaveCommentary={(value) => handleSaveCommentary(value)}
+            handleDeleteElement={handleDeleteElement}
+          />
+
 
         <div className="flex gap-4">
           {headerImage ? (
             <img
               src={headerImage}
               alt={title}
-              className={cn("h-32 w-32 rounded object-cover", simplified && "h-16 w-16")}
+              className={cn(
+                "h-32 w-32 rounded object-cover",
+                simplified && "h-16 w-16"
+              )}
             />
           ) : (
-            <div className={cn("h-32 w-32 rounded object-cover text-center bg-gray-50 items-center justify-center flex", simplified && "h-16 w-16 text-xs")}>
+            <div
+              className={cn(
+                "h-32 w-32 rounded object-cover text-center bg-gray-50 items-center justify-center flex",
+                simplified && "h-16 w-16 text-xs"
+              )}
+            >
               No image available
             </div>
           )}
-          <div className={cn("flex flex-col flex-1 justify-center", simplified && "gap-4 flex-row items-center justify-start")}>
+          <div
+            className={cn(
+              "flex flex-col flex-1 justify-center",
+              simplified && "gap-4 flex-row items-center justify-start"
+            )}
+          >
             <div className="text-3xl font-bold truncate">{title}</div>
             {subtitle && <div>{subtitle}</div>}
             {year && <div className="text-sm opacity-80">{year}</div>}
