@@ -8,12 +8,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  expires      DateTime
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  password  String
-  createdAt DateTime @default(now())
+  id              Int     @id @default(autoincrement())
+  email           String  @unique
+  name            String?
+  password        String
+  imageUrl        String?
+  imageStorageKey String?
+
+  passwordUpdatedAt DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  sessions Session[]
 
   tracks  TrackEdited[]
   albums  AlbumEdited[]
@@ -47,7 +62,7 @@ model TrackEdited {
   User                User?   @relation(fields: [userId], references: [id])
   userId              Int?
 
-  @@unique([idTrack, userId]) 
+  @@unique([idTrack, userId])
 }
 
 model AlbumEdited {
@@ -75,8 +90,8 @@ model AlbumEdited {
   includesMetadata Boolean @default(true)
   User             User?   @relation(fields: [userId], references: [id])
   userId           Int?
-  @@unique([idAlbum, userId])
 
+  @@unique([idAlbum, userId])
 }
 
 model ArtistEdited {
@@ -105,5 +120,6 @@ model ArtistEdited {
   includesMetadata   Boolean @default(true)
   User               User?   @relation(fields: [userId], references: [id])
   userId             Int?
-  @@unique([idArtist, userId]) 
+
+  @@unique([idArtist, userId])
 }
