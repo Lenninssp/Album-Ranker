@@ -1,14 +1,10 @@
-import { useSession } from "@/context/auth";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { User } from "@/generated/prisma";
+import { signIn } from "next-auth/react";
 
 export const LoginComponent = () => {
-  const { authorized, toggle, setId, setName } = useSession();
-
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -16,35 +12,26 @@ export const LoginComponent = () => {
 
   const router = useRouter();
 
-  const authorize = async () => {
-    try {
-      const response = await fetch("/api/auth", {
-        method: "POST",
-        headers: { "Content-type": "applications/json" },
-        body: JSON.stringify({
-          action: "login",
-          email: username,
-          password: password,
-        }),
-      });
-      if (!response.ok)
-        throw new Error(`HTTP error! status: ${response.status}`);
-      const data:{user: User} = await response.json();
-      setErrorVisible(null);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = await signIn("credentials", {
+      email: username,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setErrorVisible("Invalid email or password");
+    } else {
       router.push("/");
-      toggle();
-      console.log(data)
-      setId(data.user.id);
-      setName(data.user.name || "undefined");
-      toast("Login successful");
-      return true;
-    } catch (e) {
-      setErrorVisible("Sorry, either your username or password are incorrect");
     }
   };
 
   return (
-    <div className="h-screen w-full flex items-center justify-center flex-col gap-3">
+    <form
+      onSubmit={handleSubmit}
+      className="h-screen w-full flex items-center justify-center flex-col gap-3"
+    >
       <div className=" text-4xl font-bold">Log in</div>
 
       {errorVisible && <div className="text-red-400">{errorVisible}</div>}
@@ -55,18 +42,20 @@ export const LoginComponent = () => {
         <Input
           type="text"
           value={username}
+          placeholder="email"
           onChange={(e) => setUsername(e.target.value)}
         />
         <Input
           type="password"
+          placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
 
-      <Button onClick={authorize} className="cursor-pointer">
+      <Button type="submit" className="cursor-pointer">
         Login
       </Button>
-    </div>
+    </form>
   );
 };
