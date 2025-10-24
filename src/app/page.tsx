@@ -1,12 +1,9 @@
 "use client";
 import { DefaultFrame } from "@/components/default-frame";
-import { Button } from "@/components/ui/button";
-import { useSession } from "@/context/auth";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function Home() {
+ 
   return (
     <DefaultFrame>
       <div className="h-full w-full flex items-center justify-center flex-col gap-5">

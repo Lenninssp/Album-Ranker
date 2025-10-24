@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { useSession } from "@/context/auth";
 import Image from "next/image";
+import { signOut, useSession } from "next-auth/react";
 
 export const NavBar = () => {
   const [open, setOpen] = useState(false);
-  const authorized = useSession((state) => state.authorized);
-  const toggle = useSession((state) => state.toggle);
+
+  const { data: session, status } = useSession();
 
   return (
     <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-20 items-center">
@@ -40,7 +40,7 @@ export const NavBar = () => {
           />
         </div>
 
-        {!authorized ? (
+        {status === "unauthenticated" ? (
           <div className="hidden md:flex gap-4 items-center">
             <Link href={"/login"}>
               <div>SIGN ING</div>
@@ -61,7 +61,7 @@ export const NavBar = () => {
             <Link href={"/my-account"}>
               <div>MY ACCOUNT</div>
             </Link>
-            <Button onClick={toggle} className=" cursor-pointer">
+            <Button onClick={() => signOut()} className=" cursor-pointer">
               LOGOUT
             </Button>
           </div>

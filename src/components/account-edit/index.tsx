@@ -2,11 +2,12 @@ import { User } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Input } from "../ui/input";
-import { useSession } from "@/context/auth";
+
 import { useSavedItems } from "@/context/savedItems";
+import { useSession } from "next-auth/react";
 
 export const AccountEdit = () => {
-  const { getId, getName } = useSession();
+  const { data: session } = useSession();
   const { getAlbums, getArtists, getTracks} = useSavedItems()
   const [wantsToReset, setWantsToReset] = useState<boolean>(false);
 
@@ -18,11 +19,11 @@ export const AccountEdit = () => {
       <div className="flex flex-col w-fit gap-4">
         <div className="flex gap-2">
           <div className=" font-bold">User Id:</div>
-          <div>{getId()}</div>
+          <div>{session?.user.id}</div>
         </div>
         <div className="flex gap-2">
           <div className=" font-bold">Name:</div>
-          <div>{getName()}</div>
+          <div>{session?.user.name}</div>
         </div>
 
         <div className="flex gap-2">

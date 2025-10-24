@@ -1,4 +1,3 @@
-import { useSession } from "@/context/auth";
 import { useSavedItems } from "@/context/savedItems";
 import {
   AlbumEdited,
@@ -9,6 +8,7 @@ import {
   UserMetadata,
 } from "@/types/music";
 import { Rating } from "@/types/ratingColor";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -25,7 +25,7 @@ export const useBaseMediaCard = (
     deleteArtist,
     deleteTrack,
   } = useSavedItems();
-  const userId = useSession();
+  const {data: session} = useSession();
 
   const [selectedColor, setSelectedColor] = useState<Rating>(
     metadata?.rating ?? Rating.Undefined
@@ -46,7 +46,7 @@ export const useBaseMediaCard = (
       rating: overrides?.rating ?? selectedColor,
       includesMetadata: true,
     };
-    const myUserId = userId.getId();
+    const myUserId = session?.user.id;
 
     if (!myUserId) return;
     switch (type) {
@@ -88,7 +88,7 @@ export const useBaseMediaCard = (
   const toggleTag = () => setAddTag((prev) => !prev);
 
   const handleDeleteElement = () => {
-    const myUserId = userId.getId();
+    const myUserId = session?.user.id;
 
     if (!myUserId) return;
     switch (type) {

@@ -1,4 +1,3 @@
-import { useSession } from "@/context/auth";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -6,8 +5,6 @@ import { Button } from "../ui/button";
 import { toast } from "sonner";
 
 export const SignupComponent = () => {
-  const { authorized, toggle, setId } = useSession();
-
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [password2, setPassword2] = useState<string>("");
@@ -17,11 +14,10 @@ export const SignupComponent = () => {
 
   const createUser = async () => {
     try {
-      const response = await fetch("/api/auth", {
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
-          action: "register",
           email: username,
           password: password,
           name: name,

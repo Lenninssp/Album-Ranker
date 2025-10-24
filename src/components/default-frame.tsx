@@ -1,9 +1,9 @@
-import { useSession } from "@/context/auth";
 import { NavBar } from "./navbar";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { AppInitializer } from "./general/app-initializer";
+import { useSession } from "next-auth/react";
+import { useIdelLogout } from "@/hooks/useIdleLogout";
 
 export const DefaultFrame = ({
   children,
@@ -12,18 +12,18 @@ export const DefaultFrame = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  const authorized = useSession((state) => state.authorized);
-  const hasHydrated = useSession.persist.hasHydrated();
-
+  const { data: session, status } = useSession();
   const router = useRouter();
-  if (!hasHydrated) {
-    return null;
-  }
   useEffect(() => {
-    if (hasHydrated && !authorized) {
+    if (!session) {
       router.push("/login");
     }
-  }, [authorized, hasHydrated, router]);
+  }, [session, router]);
+
+  useIdelLogout(15 * 60 * 1000);
+
+  if (status === "loading") return <p>Loading...</p>;
+
 
   return (
     <div className={"h-full w-full flex flex-col"}>
@@ -32,7 +32,6 @@ export const DefaultFrame = ({
         className={cn(" h-full w-full p-5 flex-1 overflow-hidden", className)}
       >
         {children}
-        <AppInitializer />
       </div>
     </div>
   );
