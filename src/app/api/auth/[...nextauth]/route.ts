@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export const authOptions: NextAuthOptions = {
   session: {
-    strategy: "database",
+    strategy: "jwt",
     maxAge: 60 * 60 * 8,
     updateAge: 60 * 10,
   },
