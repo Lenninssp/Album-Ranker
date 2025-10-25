@@ -15,7 +15,7 @@ export type SearchType = "album" | "track" | "artist";
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchQuery2, setSearchQuery2] = useState<string>("");
-  const [searchType, setSearchType] = useState<SearchType>("artist");
+  const [searchType, setSearchType] = useState<SearchType>("album");
   const [result, setResult] = useState<AudioDBResponse | null>(null);
   const [albumTracks, setAlbumTracks] = useState<Track[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
