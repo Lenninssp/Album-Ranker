@@ -46,8 +46,8 @@ export const useBaseMediaCard = (
       rating: overrides?.rating ?? selectedColor,
       includesMetadata: true,
     };
-    const myUserId = session?.user.id;
-
+    const myUserId = Number(session?.user.id);
+    console.log(session)
     if (!myUserId) return;
     switch (type) {
       case TypeOfElement.ALBUM:

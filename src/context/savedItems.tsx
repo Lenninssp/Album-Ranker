@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import type { ArtistEdited, AlbumEdited, TrackEdited } from "@/types/music";
-import { useSession } from "./auth";
 
 type State = {
   savedArtists: ArtistEdited[];

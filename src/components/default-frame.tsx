@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
-import { useIdelLogout } from "@/hooks/useIdleLogout";
+import { useIdleLogout } from "@/hooks/useIdleLogout";
+
 
 export const DefaultFrame = ({
   children,
@@ -20,7 +21,7 @@ export const DefaultFrame = ({
     }
   }, [session, router]);
 
-  useIdelLogout(15 * 60 * 1000);
+  useIdleLogout(15 * 60 * 1000);
 
   if (status === "loading") return <p>Loading...</p>;
 

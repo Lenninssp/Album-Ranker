@@ -1,6 +1,6 @@
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { SearchType } from "@/app/search/page";
+import { SearchType } from "@/app/(authenticated)/search/page";
 
 interface RadioSearchProps {
   value: SearchType;

@@ -27,6 +27,7 @@ export const authOptions: NextAuthOptions = {
         if (!user) return null;
         const ok = await compare(creds.password, user.password);
         if (!ok) return null;
+        console.log(user);
         return {
           id: String(user.id),
           name: user.name ?? "",
@@ -37,14 +38,26 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-  callbacks: {
-    async session({ session, user }) {
-      if (session.user && user) {
-        session.user.image = user.image ?? null;
-      }
-      return session;
-    },
+ callbacks: {
+  async jwt({ token, user }) {
+    if (user) {
+      token.id = user.id;
+      token.name = user.name;
+      token.email = user.email;
+      token.picture = user.image;
+    }
+    return token;
   },
+  async session({ session, token }) {
+    if (session.user && token) {
+      session.user.id = token.id as string;
+      session.user.name = token.name;
+      session.user.email = token.email;
+      session.user.image = token.picture ?? null;
+    }
+    return session;
+  },
+},
 };
 
 const handler = NextAuth(authOptions);
