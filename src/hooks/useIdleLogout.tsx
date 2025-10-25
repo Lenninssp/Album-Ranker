@@ -8,7 +8,7 @@ export function useIdelLogout(ms = 15 * 60 * 1000) {
     const reset = () => {
       if (timer.current) window.clearTimeout(timer.current);
       timer.current = window.setTimeout(() => {
-        signOut({ callbackUrl: "/auth" });
+        signOut({ callbackUrl: "/login" });
       }, ms)
     };
 
