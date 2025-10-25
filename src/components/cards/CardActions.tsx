@@ -31,6 +31,8 @@ interface CardActionsProps {
   commentary: string;
   handleSaveCommentary: (value: string) => void;
   handleDeleteElement: () => void;
+
+  simplified?: boolean;
 }
 export const CardActions = ({
   handleSelectColor,
@@ -41,11 +43,12 @@ export const CardActions = ({
   addTag,
   commentary,
   handleSaveCommentary,
-  handleDeleteElement
+  handleDeleteElement,
+  simplified,
 }: CardActionsProps) => {
   const [newDialog, setNewDialog] = useState<string>(commentary);
   return (
-    <div className="flex flex-col w-full justify-end gap-2 absolute top-3 -left-3 z-10">
+    <div className="flex flex-col w-fit justify-end gap-2 absolute top-3 right-3 z-10">
       <div className="flex w-full justify-end gap-2">
         {(Object.entries(RatingBackground) as [Rating, string][]).map(
           ([key, bg]) => (
@@ -57,7 +60,8 @@ export const CardActions = ({
                     onClick={() => handleSelectColor(key)}
                     className={cn(
                       "h-8 w-8 rounded-full transition hover:scale-110 cursor-pointer border border-white hover:brightness-125",
-                      bg
+                      bg,
+                      simplified && "h-4 w-4"
                     )}
                   />
                 </TooltipTrigger>
@@ -93,12 +97,12 @@ export const CardActions = ({
       </div>
 
       <div className="flex w-full justify-end gap-2">
-        <Button className="cursor-pointer" onClick={handleDeleteElement} >
-            <Icon
-              icon={"material-symbols:delete-forever"}
-              className="text-red-400 cursor-pointer"
-            />
-          </Button>
+        <Button className="cursor-pointer" onClick={handleDeleteElement}>
+          <Icon
+            icon={"material-symbols:delete-forever"}
+            className="text-red-400 cursor-pointer"
+          />
+        </Button>
         <DialogTrigger asChild>
           <Button className="cursor-pointer">
             <Icon

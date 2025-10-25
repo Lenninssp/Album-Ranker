@@ -65,6 +65,7 @@ export const BaseMediaCard = ({
             commentary={commentary}
             handleSaveCommentary={(value) => handleSaveCommentary(value)}
             handleDeleteElement={handleDeleteElement}
+            simplified={simplified}
           />
 
 
