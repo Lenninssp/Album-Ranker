@@ -93,13 +93,30 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
       ))}
 
       <SimplySwitch element={TypeOfElement.ALBUM} />
-      {savedAlbums.map((album) => (
-        <AlbumCard
-          key={album.idAlbum}
-          album={album}
-          simplified={state.albumSimplified}
-        />
-      ))}
+      {savedAlbums.map((album) => {
+        const albumTracks = savedTracks.filter(
+          (track) => track.idAlbum === album.idAlbum
+        );
+
+        return (
+          <div key={album.idAlbum} className="flex flex-col gap-3">
+            <AlbumCard album={album} simplified={state.albumSimplified} />
+
+            {albumTracks.length > 0 && (
+              <div className="flex flex-col gap-3 p-4">
+                {albumTracks.map((track) => (
+                  <TrackCard
+                    key={track.idTrack}
+                    track={track}
+                    simplified
+                    fallBackImage={album.strAlbumThumb ?? undefined}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })}
 
       <SimplySwitch element={TypeOfElement.TRACK} />
       {savedTracks.map((track) => (
