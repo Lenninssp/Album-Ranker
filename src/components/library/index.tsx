@@ -83,15 +83,6 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
 
   return (
     <div className="flex flex-col w-full gap-3 h-full">
-      <SimplySwitch element={TypeOfElement.ARTIST} />
-      {savedArtists.map((artist) => (
-        <ArtistCard
-          key={artist.idArtist}
-          artist={artist}
-          simplified={state.artistSimplified}
-        />
-      ))}
-
       <SimplySwitch element={TypeOfElement.ALBUM} />
       {savedAlbums.map((album) => {
         const albumTracks = savedTracks.filter(
@@ -103,7 +94,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
             <AlbumCard album={album} simplified={state.albumSimplified} />
 
             {albumTracks.length > 0 && (
-              <div className="flex flex-col gap-3 p-4">
+              <div className="flex flex-col gap-3 px-4">
                 {albumTracks.map((track) => (
                   <TrackCard
                     key={track.idTrack}
@@ -126,6 +117,19 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
           simplified={state.trackSimplified}
         />
       ))}
+      
+      <SimplySwitch element={TypeOfElement.ARTIST} />
+      {savedArtists.map((artist) => (
+        <ArtistCard
+          key={artist.idArtist}
+          artist={artist}
+          simplified={state.artistSimplified}
+        />
+      ))}
+
+      
+
+      
     </div>
   );
 };
