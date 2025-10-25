@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useIdleLogout } from "@/hooks/useIdleLogout";
+import { Loader } from "lucide-react";
 
 
 export const DefaultFrame = ({
@@ -23,7 +24,7 @@ export const DefaultFrame = ({
 
   useIdleLogout(15 * 60 * 1000);
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading") return <Loader/>;
 
 
   return (

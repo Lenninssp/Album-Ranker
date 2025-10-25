@@ -3,11 +3,14 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 
 export const NavBar = () => {
   const [open, setOpen] = useState(false);
 
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   return (
     <nav className="flex filter drop-shadow-md bg-white px-4 py-4 h-20 items-center">
@@ -61,7 +64,7 @@ export const NavBar = () => {
             <Link href={"/my-account"}>
               <div>MY ACCOUNT</div>
             </Link>
-            <Button onClick={() => signOut()} className=" cursor-pointer">
+            <Button onClick={() => {signOut(); router.push('/login')}} className=" cursor-pointer">
               LOGOUT
             </Button>
           </div>

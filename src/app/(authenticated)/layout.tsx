@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useSavedItems } from "@/context/savedItems";
 import { useIdleLogout } from "@/hooks/useIdleLogout"; 
+import { LoaderMusikRanker } from "@/components/general/loader/loader";
 
 export default function AuthenticatedLayout({
   children,
@@ -24,7 +25,7 @@ export default function AuthenticatedLayout({
   }, [status, session?.user?.id, loadUserData]);
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <LoaderMusikRanker />;
   }
 
   if (status === "unauthenticated") {
