@@ -23,6 +23,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "User not foung" }, { status: 404 });
 
   const ok = await compare(currentPassword ?? "", user?.password);
+  console.log(currentPassword, user.password)
   if (!ok)
     return NextResponse.json(
       { error: "Current password is incorrect" },
