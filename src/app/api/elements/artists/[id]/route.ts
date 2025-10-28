@@ -1,26 +1,29 @@
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 interface Params {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
-export async function GET(_: Request, { params }: Params) {
+export async function GET(_: NextRequest, { params }: Params) {
+  const { id } = await params;
   const artist = await prisma.artistEdited.findUnique({
-    where: { id: Number(params.id) },
+    where: { id: Number(id) },
   });
   return NextResponse.json(artist);
 }
 
-export async function PUT(req: Request, { params }: Params) {
+export async function PUT(req: NextRequest, { params }: Params) {
+  const { id } = await params;
   const data = await req.json();
   const updated = await prisma.artistEdited.update({
-    where: { id: Number(params.id) },
+    where: { id: Number(id) },
     data,
   });
   return NextResponse.json(updated);
 }
 
-export async function DELETE(req: Request, { params }: Params) {
+export async function DELETE(req: NextRequest, { params }: Params) {
+  const { id } = await params;
   const { searchParams } = new URL(req.url);
   const userId = Number(searchParams.get("userId"));
   if (!userId) {
@@ -30,7 +33,7 @@ export async function DELETE(req: Request, { params }: Params) {
     await prisma.artistEdited.delete({
       where: {
         idArtist_userId: {
-          idArtist: params.id,
+          idArtist: id,
           userId,
         },
       },

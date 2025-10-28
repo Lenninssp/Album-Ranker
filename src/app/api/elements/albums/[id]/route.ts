@@ -1,26 +1,35 @@
-
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-interface Params {
-  params: { id: string };
-}
-
-export async function GET(_: Request, { params }: Params) {
-  const album = await prisma.albumEdited.findUnique({ where: { id: Number(params.id )}});
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const album = await prisma.albumEdited.findUnique({
+    where: { id: Number(id) },
+  });
   return NextResponse.json(album);
 }
 
-export async function PUT(req: Request, { params }: Params) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   const data = await req.json();
   const updated = await prisma.albumEdited.update({
-    where: { id: Number(params.id)},
+    where: { id: Number(id) },
     data,
-  })
-  return NextResponse.json(updated)
+  });
+  return NextResponse.json(updated);
 }
 
-export async function DELETE(req: Request, { params }: Params) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   const { searchParams } = new URL(req.url);
   const userId = Number(searchParams.get("userId"));
   if (!userId) {
@@ -31,7 +40,7 @@ export async function DELETE(req: Request, { params }: Params) {
     await prisma.albumEdited.delete({
       where: {
         idAlbum_userId: {
-          idAlbum: params.id,
+          idAlbum: id,
           userId,
         },
       },
@@ -51,5 +60,4 @@ export async function DELETE(req: Request, { params }: Params) {
       { status: 500 }
     );
   }
-  
 }
