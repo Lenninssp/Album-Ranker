@@ -33,7 +33,7 @@ export const LoginComponent = () => {
     
     try {
       await signIn("google", {
-        callbackUrl: "/",
+        callbackUrl: "/library",
       });
     } catch (error) {
       setErrorVisible("Failed to sign in with Google");
