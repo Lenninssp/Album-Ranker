@@ -5,6 +5,13 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { YoutubeIcon } from "lucide-react";
+
+type NavLink = {
+  href: string,
+  label: string,
+  icon?: string | React.ReactNode;
+}
 
 export const NavBar = () => {
   const [open, setOpen] = useState(false);
@@ -16,7 +23,7 @@ export const NavBar = () => {
     router.push("/login");
   };
 
-  const navLinks = status === "unauthenticated"
+  const navLinks: NavLink[] = status === "unauthenticated"
     ? [
         { href: "/login", label: "SIGN IN" },
       ]
@@ -25,6 +32,7 @@ export const NavBar = () => {
         { href: "/search", label: "SEARCH" },
         { href: "/library", label: "LIBRARY" },
         { href: "/my-account", label: "MY ACCOUNT" },
+        { href: "/youtube-library", label: "YTLIB", icon: <YoutubeIcon/>},
       ];
 
   const NavItems = ({ onClick }: { onClick?: () => void }) => (
@@ -36,7 +44,7 @@ export const NavBar = () => {
           onClick={onClick}
           className="hover:text-gray-600 transition-colors"
         >
-          {link.label}
+          {link.icon ?? link.label}
         </Link>
       ))}
       {status === "authenticated" && (
