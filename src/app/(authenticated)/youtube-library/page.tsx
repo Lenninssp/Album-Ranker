@@ -60,6 +60,11 @@ const YoutubeLibrary = () => {
     fetchTracks();
   }, [playlists]);
 
+  const tracksByPlaylist = playlists.map((playlist) => ({
+    ...playlist,
+    tracks: tracks.filter((track) => track.snippet.playlistId === playlist.id),
+  }));
+
   return (
     <DefaultFrame className="flex flex-col gap-4 items-center justify-center p-6">
       {!session?.accessToken ? (
@@ -74,20 +79,60 @@ const YoutubeLibrary = () => {
             Playlists loaded: {playlists.length} | Songs loaded: {tracks.length}
           </div>
 
-          <div className=" flex w-4xl overflow-auto flex-col gap-3">
-            {playlists.map((playlist) => (
-              <a href={`https://www.youtube.com/playlist?list=${playlist.id}`} key={playlist.id} className="flex gap-3 items-center">
-                <Image
-                  src={playlist.snippet.thumbnails.default?.url ?? ""}
-                  alt={playlist.snippet.title}
-                  height={playlist.snippet.thumbnails.default?.height}
-                  width={playlist.snippet.thumbnails.default?.width}
-                />
-                <div className="flex-col">
-                  <div>{playlist.snippet.title}</div>
-                  <div>{playlist.snippet.description}</div>
+          <div className="w-full max-w-3xl flex flex-col gap-6 overflow-auto">
+            {tracksByPlaylist.map((playlist) => (
+              <div
+                key={playlist.id}
+                className="border rounded-lg p-4"
+              >
+                <a
+                  href={`https://www.youtube.com/playlist?list=${playlist.id}`}
+                  target="_blank"
+                  className="flex gap-3 items-center hover:opacity-80"
+                >
+                  <Image
+                    src={playlist.snippet.thumbnails.default?.url ?? ""}
+                    alt={playlist.snippet.title}
+                    width={80}
+                    height={80}
+                    className="rounded-md"
+                  />
+                  <div>
+                    <div className="font-semibold">
+                      {playlist.snippet.title}
+                    </div>
+                    <div className="text-xs opacity-60">
+                      {playlist.snippet.description}
+                    </div>
+                  </div>
+                </a>
+
+                {/* Tracks inside playlist */}
+                <div className="mt-3 flex flex-col gap-2 pl-10">
+                  {playlist.tracks.map((track) => (
+                    <a
+                      key={track.id}
+                      href={`https://www.youtube.com/watch?v=${track.snippet.resourceId.videoId}&list=${playlist.id}`}
+                      target="_blank"
+                      className="flex items-center gap-2 hover:opacity-75"
+                    >
+                      <Image
+                        src={track.snippet.thumbnails.default?.url ?? ""}
+                        alt={track.snippet.title}
+                        width={48}
+                        height={48}
+                        className="rounded"
+                      />
+                      <div>
+                        <div className="text-sm">{track.snippet.title}</div>
+                        <div className="text-xs opacity-60">
+                          {track.snippet.channelTitle}
+                        </div>
+                      </div>
+                    </a>
+                  ))}
                 </div>
-              </a>
+              </div>
             ))}
           </div>
         </>

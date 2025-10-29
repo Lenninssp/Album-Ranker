@@ -36,6 +36,7 @@ export type YoutubeTrack = {
     resourceId: {
       videoId: string;
     };
+    playlistId: string;
   };
 };
 
