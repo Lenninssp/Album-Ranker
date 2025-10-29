@@ -29,7 +29,9 @@ const Playground = () => {
 
         <Button onClick={handleTest}>Fetch Playlist</Button>
 
-        <pre className="flex">{JSON.stringify(playlist, null, 2)}</pre>
+        <div className="flex w-full overflow-auto">
+          <pre className="">{JSON.stringify(playlist, null, 2)}</pre>
+        </div>
       </div>
     </DefaultFrame>
   );
