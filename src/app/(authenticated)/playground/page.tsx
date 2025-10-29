@@ -18,9 +18,22 @@ const Playground = () => {
         },
       }
     );
-
-    setPlaylist(await res.json());
+    const result = await res.json()
+    setPlaylist(result.items);
   };
+
+  const handleTrack = async() => {
+     const res = await fetch(
+      "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=PLlaqoIK4SNnJ5zfXCywJd1qmYFoYtvoj1",
+      {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      }
+    );
+    const result = await res.json()
+    setPlaylist(result.items);
+  }
 
   return (
     <DefaultFrame>
@@ -28,6 +41,8 @@ const Playground = () => {
         <div className=" text-4xl font-bold ">This is your playground</div>
 
         <Button onClick={handleTest}>Fetch Playlist</Button>
+        <Button onClick={handleTrack}>Fetch Track</Button>
+
 
         <div className="flex w-full overflow-auto">
           <pre className="">{JSON.stringify(playlist, null, 2)}</pre>
