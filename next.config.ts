@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
 
 module.exports = {
   images: {
-    remotePatterns: [new URL('https://r2.theaudiodb.com/images/media/**')],
+    remotePatterns: [new URL('https://r2.theaudiodb.com/images/media/**'), new URL("https://i.ytimg.com/vi/**")],
   },
 }
 
