@@ -16,7 +16,6 @@ export const NavBar = () => {
     router.push("/login");
   };
 
-  // ✅ Shared links — rendered both in mobile & desktop
   const navLinks = status === "unauthenticated"
     ? [
         { href: "/login", label: "SIGN IN" },

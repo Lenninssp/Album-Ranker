@@ -18,6 +18,8 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
+          access_type: "offline",
+          prompt: "consent",
           scope:
             "openid email profile https://www.googleapis.com/auth/youtube.readonly",
         },
@@ -72,7 +74,7 @@ export const authOptions: NextAuthOptions = {
                 email: user.email!,
                 name: user.name ?? "",
                 imageUrl: user.image ?? null,
-                password: "", 
+                password: "",
               },
             });
             user.id = String(newUser.id);
