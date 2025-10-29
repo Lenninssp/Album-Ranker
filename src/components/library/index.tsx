@@ -136,7 +136,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
       <Accordion type="single" collapsible defaultValue="item-1">
         <AccordionItem value="item-2">
           <SimplySwitch element={TypeOfElement.TRACK} />
-          <AccordionContent>
+          <AccordionContent className=" flex flex-col gap-3">
             {savedTracks.map((track) => (
               <TrackCard
                 key={track.idTrack}
@@ -151,7 +151,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
       <Accordion type="single" collapsible defaultValue="item-1">
         <AccordionItem value="item-3">
           <SimplySwitch element={TypeOfElement.ARTIST} />
-          <AccordionContent>
+          <AccordionContent className=" flex flex-col gap-3">
             {savedArtists.map((artist) => (
               <ArtistCard
                 key={artist.idArtist}
