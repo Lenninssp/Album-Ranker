@@ -3,6 +3,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { Icon } from "@iconify/react";
 
 export const LoginComponent = () => {
   const [username, setUsername] = useState<string>("");
@@ -24,6 +25,18 @@ export const LoginComponent = () => {
       setErrorVisible("Invalid email or password");
     } else {
       router.push("/");
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setErrorVisible(null);
+    
+    try {
+      await signIn("google", {
+        callbackUrl: "/",
+      });
+    } catch (error) {
+      setErrorVisible("Failed to sign in with Google");
     }
   };
 
@@ -55,6 +68,21 @@ export const LoginComponent = () => {
 
       <Button type="submit" className="cursor-pointer">
         Login
+      </Button>
+      <div className="flex items-center gap-3 w-full max-w-md">
+        <div className="flex-1 border-t border-gray-300"></div>
+        <span className="text-sm text-gray-500">OR</span>
+        <div className="flex-1 border-t border-gray-300"></div>
+      </div>
+
+      <Button
+        type="button"
+        variant="outline"
+        className="cursor-pointer flex items-center gap-2"
+        onClick={handleGoogleSignIn}
+      >
+        <Icon icon={"logos:google-icon"}/>
+        Continue with Google
       </Button>
     </form>
   );
