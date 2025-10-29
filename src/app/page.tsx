@@ -2,6 +2,17 @@
 import { DefaultFrame } from "@/components/default-frame";
 import Image from "next/image";
 
+/*
+Pages to open on every work session:
+https://vercel.com/lenninssps-projects/album-ranker/deployments
+https://github.com/Lenninssp/Album-Ranker
+https://console.cloud.google.com/auth/audience?project=musik-ranker-476612&supportedpurview=project,folder
+https://icones.js.org/collection/logos?s=youtube&icon=logos:youtube-icon
+https://console.cloud.google.com/apis/api/youtube.googleapis.com/metrics?project=musik-ranker-476612
+https://docs.google.com/document/d/17OTnQRYqKeNIpfIkrurbAlaUAQhyXGxLtX2J-ikuigo/edit?tab=t.0
+
+ */
+
 export default function Home() {
  
   return (
