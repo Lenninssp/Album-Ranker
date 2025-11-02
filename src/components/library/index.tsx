@@ -4,7 +4,7 @@ import { ArtistCard } from "../cards/ArtistCard";
 import { AlbumCard } from "../cards/AlbumCard";
 import { TrackCard } from "../cards/TrackCard";
 import { Switch } from "../ui/switch";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { TypeOfElement } from "@/types/music";
 import {
   Accordion,
@@ -12,6 +12,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
+import { RankingColors } from "../general/ranking-colors";
+import { Rating } from "@/types/ratingColor";
 
 interface LibraryComponentProps {
   className?: string;
@@ -48,11 +50,16 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
     albumSimplified: true,
     artistSimplified: true,
   });
+  const [selectedFilter, setSelectedFilter] = useState<Rating | null>(null);
 
   const artistsEmpty = savedArtists.length === 0;
   const albumsEmpty = savedAlbums.length === 0;
   const tracksEmpty = savedTracks.length === 0;
   const allEmpty = artistsEmpty && albumsEmpty && tracksEmpty;
+
+  const handleSelectFilter = (key: Rating) => {
+    setSelectedFilter(key);
+  }
 
   const SimplySwitch = ({ element }: { element: TypeOfElement }) => {
     const checked =
@@ -61,7 +68,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
         : element === TypeOfElement.ALBUM
         ? state.albumSimplified
         : state.trackSimplified;
-
+    
     return (
       <AccordionTrigger className="flex flex-col w-full justify-between items-center cursor-pointer border-b">
         <div className=" flex w-full justify-between items-center">
@@ -92,6 +99,9 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
 
   return (
     <div className="flex flex-col w-full gap-3 h-full">
+      <div className="flex w-full gap-2 justify-end">
+        <RankingColors action={handleSelectFilter} selected={selectedFilter} />
+      </div>
       <Accordion type="single" collapsible defaultValue="item-1">
         <AccordionItem value="item-1">
           <SimplySwitch element={TypeOfElement.ALBUM} />

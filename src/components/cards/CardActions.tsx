@@ -20,6 +20,7 @@ import {
 } from "../ui/dialog";
 import { useState } from "react";
 import { Textarea } from "../ui/textarea";
+import { RankingColors } from "../general/ranking-colors";
 
 interface CardActionsProps {
   handleSelectColor: (key: Rating) => void;
@@ -50,26 +51,7 @@ export const CardActions = ({
   return (
     <div className="flex flex-col w-fit justify-end gap-2 absolute top-3 right-3 z-10">
       <div className="flex w-full justify-end gap-2">
-        {(Object.entries(RatingBackground) as [Rating, string][]).map(
-          ([key, bg]) => (
-            <TooltipProvider key={key}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div
-                    role="button"
-                    onClick={() => handleSelectColor(key)}
-                    className={cn(
-                      "h-8 w-8 rounded-full transition hover:scale-110 cursor-pointer border border-white hover:brightness-125",
-                      bg,
-                      simplified && "h-4 w-4"
-                    )}
-                  />
-                </TooltipTrigger>
-                <TooltipContent>{key}</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-          )
-        )}
+        <RankingColors action={handleSelectColor} simplified={simplified} />
       </div>
       <div className="flex w-full justify-end gap-2">
         {addTag ? (
