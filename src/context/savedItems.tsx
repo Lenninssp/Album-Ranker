@@ -5,6 +5,8 @@ type State = {
   savedArtists: ArtistEdited[];
   savedTracks: TrackEdited[];
   savedAlbums: AlbumEdited[];
+
+  tags: String[];
 };
 
 type Actions = {
@@ -25,12 +27,25 @@ type Actions = {
   searchTrack: (id: string) => TrackEdited | undefined;
 
   loadUserData: (userId: number) => Promise<void>;
+
+  getTags: () => String[];
 };
+
+function extractAllTags(state: State) {
+  const allTags = [
+    ...state.savedArtists.flatMap((item) => item.tag ?? []),
+    ...state.savedAlbums.flatMap((item) => item.tag ?? []),
+    ...state.savedTracks.flatMap((item) => item.tag ?? []),
+  ];
+
+  return [...new Set(allTags)]; // dedupe tags
+}
 
 export const useSavedItems = create<State & Actions>((set, get) => ({
   savedArtists: [],
   savedTracks: [],
   savedAlbums: [],
+  tags: [],
 
   loadUserData: async (userId: Number) => {
     const [artistRes, albumRes, trackRes] = await Promise.all([
@@ -45,10 +60,18 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
       trackRes.json(),
     ]);
 
-    set({
-      savedArtists: artists,
-      savedAlbums: albums,
-      savedTracks: tracks,
+    set((state) => {
+      const updatedState = {
+        ...state,
+        savedArtists: artists,
+        savedAlbums: albums,
+        savedTracks: tracks,
+      };
+
+      return {
+        ...updatedState,
+        tags: extractAllTags(updatedState),
+      };
     });
   },
 
@@ -62,7 +85,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     await fetch("/api/elements/artists", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({...artist, userId: userId}),
+      body: JSON.stringify({ ...artist, userId: userId }),
     });
   },
 
@@ -76,7 +99,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     await fetch("/api/elements/albums", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({...album, userId: userId}),
+      body: JSON.stringify({ ...album, userId: userId }),
     });
   },
 
@@ -90,7 +113,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     await fetch("/api/elements/tracks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({...track, userId: userId}),
+      body: JSON.stringify({ ...track, userId: userId }),
     });
   },
 
@@ -98,21 +121,27 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     set((state) => ({
       savedArtists: state.savedArtists.filter((a) => a.idArtist !== id),
     }));
-    await fetch(`/api/elements/artists/${id}?userId=${userId}`, { method: "DELETE" });
+    await fetch(`/api/elements/artists/${id}?userId=${userId}`, {
+      method: "DELETE",
+    });
   },
 
   deleteAlbum: async (id, userId) => {
     set((state) => ({
       savedAlbums: state.savedAlbums.filter((a) => a.idAlbum !== id),
     }));
-    await fetch(`/api/elements/albums/${id}?userId=${userId}`, { method: "DELETE" });
+    await fetch(`/api/elements/albums/${id}?userId=${userId}`, {
+      method: "DELETE",
+    });
   },
 
   deleteTrack: async (id, userId) => {
     set((state) => ({
       savedTracks: state.savedTracks.filter((t) => t.idTrack !== id),
     }));
-    await fetch(`/api/elements/tracks/${id}?userId=${userId}`, { method: "DELETE" });
+    await fetch(`/api/elements/tracks/${id}?userId=${userId}`, {
+      method: "DELETE",
+    });
   },
 
   getArtists: () => get().savedArtists,
@@ -122,4 +151,6 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
   searchArtist: (id) => get().savedArtists.find((a) => a.idArtist === id),
   searchAlbum: (id) => get().savedAlbums.find((a) => a.idAlbum === id),
   searchTrack: (id) => get().savedTracks.find((t) => t.idTrack === id),
+
+  getTags: () => get().tags,
 }));
