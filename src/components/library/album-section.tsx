@@ -13,6 +13,7 @@ import { LibrarySectionProps, SimplifiedAction } from "@/types/library-types";
 
 export const AlbumsSection = ({
   selectedFilter,
+  selectedFolder,
   simplifiedState,
   dispatch, 
 }: LibrarySectionProps & {
@@ -21,8 +22,10 @@ export const AlbumsSection = ({
   const { savedAlbums, savedTracks } = useSavedItems();
 
   const filteredAlbums = savedAlbums.filter(
-    (album) => !selectedFilter || album.rating === selectedFilter
+    (album) => (!selectedFilter || album.rating === selectedFilter) && (!selectedFolder || album.tag === selectedFolder)
   );
+
+  
 
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
@@ -35,7 +38,7 @@ export const AlbumsSection = ({
         <AccordionContent>
           {filteredAlbums.map((album) => {
             const albumTracks = savedTracks.filter(
-              (track) => track.idAlbum === album.idAlbum
+              (track) => (track.idAlbum === album.idAlbum) && (!selectedFolder || track.tag === selectedFolder)
             );
 
             return (

@@ -11,6 +11,7 @@ import { SimplifiedSwitch } from "./simplified-switch";
 
 export const TracksSection = ({
   selectedFilter,
+  selectedFolder,
   simplifiedState,
   dispatch,
   state,
@@ -21,7 +22,7 @@ export const TracksSection = ({
   const { savedTracks } = useSavedItems();
 
   const filteredTracks = savedTracks.filter(
-    (track) => !selectedFilter || track.rating === selectedFilter
+    (track) => (!selectedFilter || track.rating === selectedFilter)&& (!selectedFolder || track.tag === selectedFolder)
   );
 
   return (

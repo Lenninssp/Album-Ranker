@@ -14,7 +14,7 @@ export const TagsFilter = ({
   const { tags } = useSavedItems();
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 flex-wrap">
       {tags.map(
         (tag) =>
           tag.length !== 0 && (

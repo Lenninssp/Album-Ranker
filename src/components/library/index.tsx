@@ -27,7 +27,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
 
   return (
     <div className="flex flex-col w-full gap-3 h-full">
-      <div className="flex w-full gap-2 justify-between">
+      <div className="flex w-full gap-2 justify-between flex-wrap">
         <TagsFilter action={setSelectedFolder} selected={selectedFolder} />
         <LibraryFilter
           selectedFilter={selectedFilter}
@@ -37,12 +37,14 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
 
       <AlbumsSection
         selectedFilter={selectedFilter}
+        selectedFolder={selectedFolder}
         simplifiedState={state}
         dispatch={dispatch}
       />
 
       <TracksSection
         selectedFilter={selectedFilter}
+        selectedFolder={selectedFolder}
         simplifiedState={state}
         dispatch={dispatch}
         state={state}
@@ -50,6 +52,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
 
       <ArtistsSection
         selectedFilter={selectedFilter}
+        selectedFolder={selectedFolder}
         simplifiedState={state}
         dispatch={dispatch}
         state={state}

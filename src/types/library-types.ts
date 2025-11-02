@@ -29,5 +29,6 @@ export interface LibraryFilterProps {
 
 export interface LibrarySectionProps {
   selectedFilter: Rating | null;
+  selectedFolder: string | null;
   simplifiedState: SimplifiedState;
 }

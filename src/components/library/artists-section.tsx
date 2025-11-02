@@ -11,6 +11,7 @@ import { LibrarySectionProps, SimplifiedAction, SimplifiedState } from "@/types/
 
 export const ArtistsSection = ({
   selectedFilter,
+  selectedFolder,
   simplifiedState,
   dispatch,
   state,
@@ -21,7 +22,7 @@ export const ArtistsSection = ({
   const { savedArtists } = useSavedItems();
 
   const filteredArtists = savedArtists.filter(
-    (artist) => !selectedFilter || artist.rating === selectedFilter
+    (artist) => (!selectedFilter || artist.rating === selectedFilter) && (!selectedFolder || artist.tag === selectedFolder)
   );
 
   return (
