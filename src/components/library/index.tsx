@@ -14,6 +14,7 @@ import {
 } from "../ui/accordion";
 import { RankingColors } from "../general/ranking-colors";
 import { Rating } from "@/types/ratingColor";
+import { X } from "lucide-react";
 
 interface LibraryComponentProps {
   className?: string;
@@ -57,7 +58,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
   const tracksEmpty = savedTracks.length === 0;
   const allEmpty = artistsEmpty && albumsEmpty && tracksEmpty;
 
-  const handleSelectFilter = (key: Rating) => {
+  const handleSelectFilter = (key: Rating | null) => {
     setSelectedFilter(key);
   };
 
@@ -101,13 +102,14 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
     <div className="flex flex-col w-full gap-3 h-full">
       <div className="flex w-full gap-2 justify-end">
         <RankingColors action={handleSelectFilter} selected={selectedFilter} />
+        <button className="cursor-pointer" onClick={() => handleSelectFilter(null)}><X/></button>
       </div>
       <Accordion type="single" collapsible defaultValue="item-1">
         <AccordionItem value="item-1">
           <SimplySwitch element={TypeOfElement.ALBUM} />
           <AccordionContent>
             {savedAlbums
-              .filter((album) => album.rating === selectedFilter)
+              .filter((album) => !selectedFilter || album.rating === selectedFilter)
               .map((album) => {
                 const albumTracks = savedTracks.filter(
                   (track) => track.idAlbum === album.idAlbum
@@ -131,7 +133,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
                           <div className="flex flex-col gap-3 px-4">
                             {savedTracks
                               .filter(
-                                (track) => track.rating === selectedFilter
+                                (track) => !selectedFilter || track.rating === selectedFilter
                               )
                               .map((track) => (
                                 <TrackCard
@@ -159,7 +161,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
           <SimplySwitch element={TypeOfElement.TRACK} />
           <AccordionContent className=" flex flex-col gap-3">
             {savedTracks
-              .filter((track) => track.rating === selectedFilter)
+              .filter((track) => !selectedFilter || track.rating === selectedFilter)
               .map((track) => (
                 <TrackCard
                   key={track.idTrack}
@@ -176,7 +178,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
           <SimplySwitch element={TypeOfElement.ARTIST} />
           <AccordionContent className=" flex flex-col gap-3">
             {savedArtists
-              .filter((artist) => artist.rating === selectedFilter)
+              .filter((artist) => !selectedFilter || artist.rating === selectedFilter)
               .map((artist) => (
                 <ArtistCard
                   key={artist.idArtist}
