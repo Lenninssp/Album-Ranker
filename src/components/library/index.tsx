@@ -8,11 +8,13 @@ import { LibraryFilter } from "./library-filter";
 import { AlbumsSection } from "./album-section";
 import { TracksSection } from "./tracks-section";
 import { ArtistsSection } from "./artists-section";
+import { TagsFilter } from "./tags-filter";
 
 export const LibraryComponent = ({ className }: LibraryComponentProps) => {
   const { savedArtists, savedAlbums, savedTracks } = useSavedItems();
   const [state, dispatch] = useSimplifiedState();
   const [selectedFilter, setSelectedFilter] = useState<Rating | null>(null);
+  const [selectedFolder, setSelectedFolder] = useState<string | null>(null);
 
   const artistsEmpty = savedArtists.length === 0;
   const albumsEmpty = savedAlbums.length === 0;
@@ -25,10 +27,13 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
 
   return (
     <div className="flex flex-col w-full gap-3 h-full">
-      <LibraryFilter
-        selectedFilter={selectedFilter}
-        onFilterChange={setSelectedFilter}
-      />
+      <div className="flex w-full gap-2 justify-between">
+        <TagsFilter action={setSelectedFolder} selected={selectedFolder} />
+        <LibraryFilter
+          selectedFilter={selectedFilter}
+          onFilterChange={setSelectedFilter}
+        />
+      </div>
 
       <AlbumsSection
         selectedFilter={selectedFilter}
