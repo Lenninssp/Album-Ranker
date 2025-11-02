@@ -6,6 +6,7 @@ import { DefaultFrame } from "@/components/default-frame";
 import { User } from "@/generated/prisma";
 import { AlbumEdited, ArtistEdited, TrackEdited } from "@/types/music";
 import { Rating } from "@/types/ratingColor";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 type UserWithMedia = User & {
@@ -15,6 +16,7 @@ type UserWithMedia = User & {
 };
 
 const CommunityPage = () => {
+  const { data: session } = useSession();
   const [userList, setUserList] = useState<UserWithMedia[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -27,8 +29,12 @@ const CommunityPage = () => {
 
       const users: User[] = await response.json();
 
+      const filteredUsers = users.filter(
+        (user) => user.id !== Number(session?.user.id)
+      );
+
       const usersWithMedia = await Promise.all(
-        users.map(async (user) => {
+        filteredUsers.map(async (user) => {
           const [artistRes, albumRes, trackRes] = await Promise.all([
             fetch(`/api/elements/artists?userId=${user.id}`),
             fetch(`/api/elements/albums?userId=${user.id}`),
@@ -54,7 +60,9 @@ const CommunityPage = () => {
   };
 
   useEffect(() => {
-    handleGetUsers();
+    if (session?.user.id) {
+      handleGetUsers();
+    }
   }, []);
 
   return (

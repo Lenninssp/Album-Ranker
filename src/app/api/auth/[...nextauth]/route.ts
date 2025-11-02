@@ -40,7 +40,6 @@ export const authOptions: NextAuthOptions = {
         if (!user) return null;
         const ok = await compare(creds.password, user.password);
         if (!ok) return null;
-        console.log(user);
         return {
           id: String(user.id),
           name: user.name ?? "",
