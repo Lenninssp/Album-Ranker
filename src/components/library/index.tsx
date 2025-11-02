@@ -59,7 +59,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
 
   const handleSelectFilter = (key: Rating) => {
     setSelectedFilter(key);
-  }
+  };
 
   const SimplySwitch = ({ element }: { element: TypeOfElement }) => {
     const checked =
@@ -68,7 +68,7 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
         : element === TypeOfElement.ALBUM
         ? state.albumSimplified
         : state.trackSimplified;
-    
+
     return (
       <AccordionTrigger className="flex flex-col w-full justify-between items-center cursor-pointer border-b">
         <div className=" flex w-full justify-between items-center">
@@ -106,39 +106,50 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
         <AccordionItem value="item-1">
           <SimplySwitch element={TypeOfElement.ALBUM} />
           <AccordionContent>
-            {savedAlbums.map((album) => {
-              const albumTracks = savedTracks.filter(
-                (track) => track.idAlbum === album.idAlbum
-              );
+            {savedAlbums
+              .filter((album) => album.rating === selectedFilter)
+              .map((album) => {
+                const albumTracks = savedTracks.filter(
+                  (track) => track.idAlbum === album.idAlbum
+                );
 
-              return (
-                <Accordion
-                  type="single"
-                  collapsible
-                  key={album.idAlbum}
-                  className="flex flex-col gap-3"
-                >
-                  <AlbumCard album={album} simplified={state.albumSimplified} />
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger className=" flex-col items-center cursor-pointer"></AccordionTrigger>
-                    <AccordionContent className="border-b">
-                      {albumTracks.length > 0 && (
-                        <div className="flex flex-col gap-3 px-4">
-                          {albumTracks.map((track) => (
-                            <TrackCard
-                              key={track.idTrack}
-                              track={track}
-                              simplified
-                              fallBackImage={album.strAlbumThumb ?? undefined}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              );
-            })}
+                return (
+                  <Accordion
+                    type="single"
+                    collapsible
+                    key={album.idAlbum}
+                    className="flex flex-col gap-3"
+                  >
+                    <AlbumCard
+                      album={album}
+                      simplified={state.albumSimplified}
+                    />
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger className=" flex-col items-center cursor-pointer"></AccordionTrigger>
+                      <AccordionContent className="border-b">
+                        {albumTracks.length > 0 && (
+                          <div className="flex flex-col gap-3 px-4">
+                            {savedTracks
+                              .filter(
+                                (track) => track.rating === selectedFilter
+                              )
+                              .map((track) => (
+                                <TrackCard
+                                  key={track.idTrack}
+                                  track={track}
+                                  simplified
+                                  fallBackImage={
+                                    album.strAlbumThumb ?? undefined
+                                  }
+                                />
+                              ))}
+                          </div>
+                        )}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                );
+              })}
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -147,13 +158,15 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
         <AccordionItem value="item-2">
           <SimplySwitch element={TypeOfElement.TRACK} />
           <AccordionContent className=" flex flex-col gap-3">
-            {savedTracks.map((track) => (
-              <TrackCard
-                key={track.idTrack}
-                track={track}
-                simplified={state.trackSimplified}
-              />
-            ))}
+            {savedTracks
+              .filter((track) => track.rating === selectedFilter)
+              .map((track) => (
+                <TrackCard
+                  key={track.idTrack}
+                  track={track}
+                  simplified={state.trackSimplified}
+                />
+              ))}
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -162,13 +175,15 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
         <AccordionItem value="item-3">
           <SimplySwitch element={TypeOfElement.ARTIST} />
           <AccordionContent className=" flex flex-col gap-3">
-            {savedArtists.map((artist) => (
-              <ArtistCard
-                key={artist.idArtist}
-                artist={artist}
-                simplified={state.artistSimplified}
-              />
-            ))}
+            {savedArtists
+              .filter((artist) => artist.rating === selectedFilter)
+              .map((artist) => (
+                <ArtistCard
+                  key={artist.idArtist}
+                  artist={artist}
+                  simplified={state.artistSimplified}
+                />
+              ))}
           </AccordionContent>
         </AccordionItem>
       </Accordion>
