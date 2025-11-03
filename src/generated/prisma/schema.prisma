@@ -34,6 +34,9 @@ model User {
   tracks  TrackEdited[]
   albums  AlbumEdited[]
   artists ArtistEdited[]
+
+  following User[] @relation("UserFollows")
+  followers User[] @relation("UserFollows")
 }
 
 model TrackEdited {

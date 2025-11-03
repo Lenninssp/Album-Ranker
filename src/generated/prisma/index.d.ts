@@ -1229,6 +1229,8 @@ export namespace Prisma {
     tracks: number
     albums: number
     artists: number
+    following: number
+    followers: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1236,6 +1238,8 @@ export namespace Prisma {
     tracks?: boolean | UserCountOutputTypeCountTracksArgs
     albums?: boolean | UserCountOutputTypeCountAlbumsArgs
     artists?: boolean | UserCountOutputTypeCountArtistsArgs
+    following?: boolean | UserCountOutputTypeCountFollowingArgs
+    followers?: boolean | UserCountOutputTypeCountFollowersArgs
   }
 
   // Custom InputTypes
@@ -1275,6 +1279,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountArtistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ArtistEditedWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFollowingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFollowersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
   }
 
 
@@ -2593,6 +2611,8 @@ export namespace Prisma {
     tracks?: boolean | User$tracksArgs<ExtArgs>
     albums?: boolean | User$albumsArgs<ExtArgs>
     artists?: boolean | User$artistsArgs<ExtArgs>
+    following?: boolean | User$followingArgs<ExtArgs>
+    followers?: boolean | User$followersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2638,6 +2658,8 @@ export namespace Prisma {
     tracks?: boolean | User$tracksArgs<ExtArgs>
     albums?: boolean | User$albumsArgs<ExtArgs>
     artists?: boolean | User$artistsArgs<ExtArgs>
+    following?: boolean | User$followingArgs<ExtArgs>
+    followers?: boolean | User$followersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2650,6 +2672,8 @@ export namespace Prisma {
       tracks: Prisma.$TrackEditedPayload<ExtArgs>[]
       albums: Prisma.$AlbumEditedPayload<ExtArgs>[]
       artists: Prisma.$ArtistEditedPayload<ExtArgs>[]
+      following: Prisma.$UserPayload<ExtArgs>[]
+      followers: Prisma.$UserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3059,6 +3083,8 @@ export namespace Prisma {
     tracks<T extends User$tracksArgs<ExtArgs> = {}>(args?: Subset<T, User$tracksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrackEditedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     albums<T extends User$albumsArgs<ExtArgs> = {}>(args?: Subset<T, User$albumsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlbumEditedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     artists<T extends User$artistsArgs<ExtArgs> = {}>(args?: Subset<T, User$artistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArtistEditedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    following<T extends User$followingArgs<ExtArgs> = {}>(args?: Subset<T, User$followingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    followers<T extends User$followersArgs<ExtArgs> = {}>(args?: Subset<T, User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3576,6 +3602,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ArtistEditedScalarFieldEnum | ArtistEditedScalarFieldEnum[]
+  }
+
+  /**
+   * User.following
+   */
+  export type User$followingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User.followers
+   */
+  export type User$followersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -7917,6 +7991,8 @@ export namespace Prisma {
     tracks?: TrackEditedListRelationFilter
     albums?: AlbumEditedListRelationFilter
     artists?: ArtistEditedListRelationFilter
+    following?: UserListRelationFilter
+    followers?: UserListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7933,6 +8009,8 @@ export namespace Prisma {
     tracks?: TrackEditedOrderByRelationAggregateInput
     albums?: AlbumEditedOrderByRelationAggregateInput
     artists?: ArtistEditedOrderByRelationAggregateInput
+    following?: UserOrderByRelationAggregateInput
+    followers?: UserOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7952,6 +8030,8 @@ export namespace Prisma {
     tracks?: TrackEditedListRelationFilter
     albums?: AlbumEditedListRelationFilter
     artists?: ArtistEditedListRelationFilter
+    following?: UserListRelationFilter
+    followers?: UserListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8501,6 +8581,8 @@ export namespace Prisma {
     tracks?: TrackEditedCreateNestedManyWithoutUserInput
     albums?: AlbumEditedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
+    following?: UserCreateNestedManyWithoutFollowersInput
+    followers?: UserCreateNestedManyWithoutFollowingInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8517,6 +8599,8 @@ export namespace Prisma {
     tracks?: TrackEditedUncheckedCreateNestedManyWithoutUserInput
     albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
+    following?: UserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
   }
 
   export type UserUpdateInput = {
@@ -8532,6 +8616,8 @@ export namespace Prisma {
     tracks?: TrackEditedUpdateManyWithoutUserNestedInput
     albums?: AlbumEditedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
+    following?: UserUpdateManyWithoutFollowersNestedInput
+    followers?: UserUpdateManyWithoutFollowingNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8548,6 +8634,8 @@ export namespace Prisma {
     tracks?: TrackEditedUncheckedUpdateManyWithoutUserNestedInput
     albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
+    following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9288,6 +9376,12 @@ export namespace Prisma {
     none?: ArtistEditedWhereInput
   }
 
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -9306,6 +9400,10 @@ export namespace Prisma {
   }
 
   export type ArtistEditedOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9758,6 +9856,18 @@ export namespace Prisma {
     connect?: ArtistEditedWhereUniqueInput | ArtistEditedWhereUniqueInput[]
   }
 
+  export type UserCreateNestedManyWithoutFollowersInput = {
+    create?: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput> | UserCreateWithoutFollowersInput[] | UserUncheckedCreateWithoutFollowersInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFollowersInput | UserCreateOrConnectWithoutFollowersInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedManyWithoutFollowingInput = {
+    create?: XOR<UserCreateWithoutFollowingInput, UserUncheckedCreateWithoutFollowingInput> | UserCreateWithoutFollowingInput[] | UserUncheckedCreateWithoutFollowingInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFollowingInput | UserCreateOrConnectWithoutFollowingInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -9784,6 +9894,18 @@ export namespace Prisma {
     connectOrCreate?: ArtistEditedCreateOrConnectWithoutUserInput | ArtistEditedCreateOrConnectWithoutUserInput[]
     createMany?: ArtistEditedCreateManyUserInputEnvelope
     connect?: ArtistEditedWhereUniqueInput | ArtistEditedWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutFollowersInput = {
+    create?: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput> | UserCreateWithoutFollowersInput[] | UserUncheckedCreateWithoutFollowersInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFollowersInput | UserCreateOrConnectWithoutFollowersInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutFollowingInput = {
+    create?: XOR<UserCreateWithoutFollowingInput, UserUncheckedCreateWithoutFollowingInput> | UserCreateWithoutFollowingInput[] | UserUncheckedCreateWithoutFollowingInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFollowingInput | UserCreateOrConnectWithoutFollowingInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -9846,6 +9968,32 @@ export namespace Prisma {
     deleteMany?: ArtistEditedScalarWhereInput | ArtistEditedScalarWhereInput[]
   }
 
+  export type UserUpdateManyWithoutFollowersNestedInput = {
+    create?: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput> | UserCreateWithoutFollowersInput[] | UserUncheckedCreateWithoutFollowersInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFollowersInput | UserCreateOrConnectWithoutFollowersInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutFollowersInput | UserUpsertWithWhereUniqueWithoutFollowersInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutFollowersInput | UserUpdateWithWhereUniqueWithoutFollowersInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutFollowersInput | UserUpdateManyWithWhereWithoutFollowersInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type UserUpdateManyWithoutFollowingNestedInput = {
+    create?: XOR<UserCreateWithoutFollowingInput, UserUncheckedCreateWithoutFollowingInput> | UserCreateWithoutFollowingInput[] | UserUncheckedCreateWithoutFollowingInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFollowingInput | UserCreateOrConnectWithoutFollowingInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutFollowingInput | UserUpsertWithWhereUniqueWithoutFollowingInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutFollowingInput | UserUpdateWithWhereUniqueWithoutFollowingInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutFollowingInput | UserUpdateManyWithWhereWithoutFollowingInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -9900,6 +10048,32 @@ export namespace Prisma {
     update?: ArtistEditedUpdateWithWhereUniqueWithoutUserInput | ArtistEditedUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: ArtistEditedUpdateManyWithWhereWithoutUserInput | ArtistEditedUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: ArtistEditedScalarWhereInput | ArtistEditedScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutFollowersNestedInput = {
+    create?: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput> | UserCreateWithoutFollowersInput[] | UserUncheckedCreateWithoutFollowersInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFollowersInput | UserCreateOrConnectWithoutFollowersInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutFollowersInput | UserUpsertWithWhereUniqueWithoutFollowersInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutFollowersInput | UserUpdateWithWhereUniqueWithoutFollowersInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutFollowersInput | UserUpdateManyWithWhereWithoutFollowersInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutFollowingNestedInput = {
+    create?: XOR<UserCreateWithoutFollowingInput, UserUncheckedCreateWithoutFollowingInput> | UserCreateWithoutFollowingInput[] | UserUncheckedCreateWithoutFollowingInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFollowingInput | UserCreateOrConnectWithoutFollowingInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutFollowingInput | UserUpsertWithWhereUniqueWithoutFollowingInput[]
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutFollowingInput | UserUpdateWithWhereUniqueWithoutFollowingInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutFollowingInput | UserUpdateManyWithWhereWithoutFollowingInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutTracksInput = {
@@ -10150,6 +10324,8 @@ export namespace Prisma {
     tracks?: TrackEditedCreateNestedManyWithoutUserInput
     albums?: AlbumEditedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
+    following?: UserCreateNestedManyWithoutFollowersInput
+    followers?: UserCreateNestedManyWithoutFollowingInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -10165,6 +10341,8 @@ export namespace Prisma {
     tracks?: TrackEditedUncheckedCreateNestedManyWithoutUserInput
     albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
+    following?: UserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -10195,6 +10373,8 @@ export namespace Prisma {
     tracks?: TrackEditedUpdateManyWithoutUserNestedInput
     albums?: AlbumEditedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
+    following?: UserUpdateManyWithoutFollowersNestedInput
+    followers?: UserUpdateManyWithoutFollowingNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -10210,6 +10390,8 @@ export namespace Prisma {
     tracks?: TrackEditedUncheckedUpdateManyWithoutUserNestedInput
     albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
+    following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -10411,6 +10593,82 @@ export namespace Prisma {
     data: ArtistEditedCreateManyUserInput | ArtistEditedCreateManyUserInput[]
   }
 
+  export type UserCreateWithoutFollowersInput = {
+    email: string
+    name?: string | null
+    password: string
+    imageUrl?: string | null
+    imageStorageKey?: string | null
+    passwordUpdatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    tracks?: TrackEditedCreateNestedManyWithoutUserInput
+    albums?: AlbumEditedCreateNestedManyWithoutUserInput
+    artists?: ArtistEditedCreateNestedManyWithoutUserInput
+    following?: UserCreateNestedManyWithoutFollowersInput
+  }
+
+  export type UserUncheckedCreateWithoutFollowersInput = {
+    id?: number
+    email: string
+    name?: string | null
+    password: string
+    imageUrl?: string | null
+    imageStorageKey?: string | null
+    passwordUpdatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    tracks?: TrackEditedUncheckedCreateNestedManyWithoutUserInput
+    albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
+    artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
+    following?: UserUncheckedCreateNestedManyWithoutFollowersInput
+  }
+
+  export type UserCreateOrConnectWithoutFollowersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
+  }
+
+  export type UserCreateWithoutFollowingInput = {
+    email: string
+    name?: string | null
+    password: string
+    imageUrl?: string | null
+    imageStorageKey?: string | null
+    passwordUpdatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    tracks?: TrackEditedCreateNestedManyWithoutUserInput
+    albums?: AlbumEditedCreateNestedManyWithoutUserInput
+    artists?: ArtistEditedCreateNestedManyWithoutUserInput
+    followers?: UserCreateNestedManyWithoutFollowingInput
+  }
+
+  export type UserUncheckedCreateWithoutFollowingInput = {
+    id?: number
+    email: string
+    name?: string | null
+    password: string
+    imageUrl?: string | null
+    imageStorageKey?: string | null
+    passwordUpdatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    tracks?: TrackEditedUncheckedCreateNestedManyWithoutUserInput
+    albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
+    artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
+    followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+  }
+
+  export type UserCreateOrConnectWithoutFollowingInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFollowingInput, UserUncheckedCreateWithoutFollowingInput>
+  }
+
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
     where: SessionWhereUniqueInput
     update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
@@ -10574,6 +10832,53 @@ export namespace Prisma {
     userId?: IntNullableFilter<"ArtistEdited"> | number | null
   }
 
+  export type UserUpsertWithWhereUniqueWithoutFollowersInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutFollowersInput, UserUncheckedUpdateWithoutFollowersInput>
+    create: XOR<UserCreateWithoutFollowersInput, UserUncheckedCreateWithoutFollowersInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutFollowersInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutFollowersInput, UserUncheckedUpdateWithoutFollowersInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutFollowersInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutFollowersInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: IntFilter<"User"> | number
+    email?: StringFilter<"User"> | string
+    name?: StringNullableFilter<"User"> | string | null
+    password?: StringFilter<"User"> | string
+    imageUrl?: StringNullableFilter<"User"> | string | null
+    imageStorageKey?: StringNullableFilter<"User"> | string | null
+    passwordUpdatedAt?: DateTimeFilter<"User"> | Date | string
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutFollowingInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutFollowingInput, UserUncheckedUpdateWithoutFollowingInput>
+    create: XOR<UserCreateWithoutFollowingInput, UserUncheckedCreateWithoutFollowingInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutFollowingInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutFollowingInput, UserUncheckedUpdateWithoutFollowingInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutFollowingInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutFollowingInput>
+  }
+
   export type UserCreateWithoutTracksInput = {
     email: string
     name?: string | null
@@ -10586,6 +10891,8 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     albums?: AlbumEditedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
+    following?: UserCreateNestedManyWithoutFollowersInput
+    followers?: UserCreateNestedManyWithoutFollowingInput
   }
 
   export type UserUncheckedCreateWithoutTracksInput = {
@@ -10601,6 +10908,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
+    following?: UserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
   }
 
   export type UserCreateOrConnectWithoutTracksInput = {
@@ -10631,6 +10940,8 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     albums?: AlbumEditedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
+    following?: UserUpdateManyWithoutFollowersNestedInput
+    followers?: UserUpdateManyWithoutFollowingNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTracksInput = {
@@ -10646,6 +10957,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
+    following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
   }
 
   export type UserCreateWithoutAlbumsInput = {
@@ -10660,6 +10973,8 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     tracks?: TrackEditedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
+    following?: UserCreateNestedManyWithoutFollowersInput
+    followers?: UserCreateNestedManyWithoutFollowingInput
   }
 
   export type UserUncheckedCreateWithoutAlbumsInput = {
@@ -10675,6 +10990,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     tracks?: TrackEditedUncheckedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
+    following?: UserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
   }
 
   export type UserCreateOrConnectWithoutAlbumsInput = {
@@ -10705,6 +11022,8 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     tracks?: TrackEditedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
+    following?: UserUpdateManyWithoutFollowersNestedInput
+    followers?: UserUpdateManyWithoutFollowingNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAlbumsInput = {
@@ -10720,6 +11039,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     tracks?: TrackEditedUncheckedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
+    following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
   }
 
   export type UserCreateWithoutArtistsInput = {
@@ -10734,6 +11055,8 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     tracks?: TrackEditedCreateNestedManyWithoutUserInput
     albums?: AlbumEditedCreateNestedManyWithoutUserInput
+    following?: UserCreateNestedManyWithoutFollowersInput
+    followers?: UserCreateNestedManyWithoutFollowingInput
   }
 
   export type UserUncheckedCreateWithoutArtistsInput = {
@@ -10749,6 +11072,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     tracks?: TrackEditedUncheckedCreateNestedManyWithoutUserInput
     albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
+    following?: UserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
   }
 
   export type UserCreateOrConnectWithoutArtistsInput = {
@@ -10779,6 +11104,8 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     tracks?: TrackEditedUpdateManyWithoutUserNestedInput
     albums?: AlbumEditedUpdateManyWithoutUserNestedInput
+    following?: UserUpdateManyWithoutFollowersNestedInput
+    followers?: UserUpdateManyWithoutFollowingNestedInput
   }
 
   export type UserUncheckedUpdateWithoutArtistsInput = {
@@ -10794,6 +11121,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     tracks?: TrackEditedUncheckedUpdateManyWithoutUserNestedInput
     albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
+    following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -11123,6 +11452,96 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type UserUpdateWithoutFollowersInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    imageStorageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordUpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    tracks?: TrackEditedUpdateManyWithoutUserNestedInput
+    albums?: AlbumEditedUpdateManyWithoutUserNestedInput
+    artists?: ArtistEditedUpdateManyWithoutUserNestedInput
+    following?: UserUpdateManyWithoutFollowersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFollowersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    imageStorageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordUpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    tracks?: TrackEditedUncheckedUpdateManyWithoutUserNestedInput
+    albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
+    artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
+    following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutFollowersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    imageStorageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordUpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpdateWithoutFollowingInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    imageStorageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordUpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    tracks?: TrackEditedUpdateManyWithoutUserNestedInput
+    albums?: AlbumEditedUpdateManyWithoutUserNestedInput
+    artists?: ArtistEditedUpdateManyWithoutUserNestedInput
+    followers?: UserUpdateManyWithoutFollowingNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFollowingInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    imageStorageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordUpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    tracks?: TrackEditedUncheckedUpdateManyWithoutUserNestedInput
+    albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
+    artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
+    followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutFollowingInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    imageStorageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordUpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
