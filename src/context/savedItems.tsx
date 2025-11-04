@@ -6,7 +6,9 @@ type State = {
   savedTracks: TrackEdited[];
   savedAlbums: AlbumEdited[];
 
-  tags: String[];
+  tags: string[];
+
+  subscriptions: string[];
 };
 
 type Actions = {
@@ -28,7 +30,12 @@ type Actions = {
 
   loadUserData: (userId: number) => Promise<void>;
 
-  getTags: () => String[];
+  getTags: () => string[];
+
+  getSubscriptions: () => string[];
+  addSubscription: (userId: number, creatorId: number) => Promise<void>;
+  removeSubscription: (userId: number, creatorId: number) => Promise<void>;
+  isSubscribed: (creatorId: string) => boolean;
 };
 
 function extractAllTags(state: State) {
@@ -46,18 +53,21 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
   savedTracks: [],
   savedAlbums: [],
   tags: [],
+  subscriptions: [],
 
   loadUserData: async (userId: Number) => {
-    const [artistRes, albumRes, trackRes] = await Promise.all([
+    const [artistRes, albumRes, trackRes, subsRes] = await Promise.all([
       fetch(`/api/elements/artists?userId=${userId}`),
       fetch(`/api/elements/albums?userId=${userId}`),
       fetch(`/api/elements/tracks?userId=${userId}`),
+      fetch(`/api/community/users/follow/${userId}`),
     ]);
 
-    const [artists, albums, tracks] = await Promise.all([
+    const [artists, albums, tracks, subsResult] = await Promise.all([
       artistRes.json(),
       albumRes.json(),
       trackRes.json(),
+      subsRes.json(),
     ]);
 
     set((state) => {
@@ -66,6 +76,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
         savedArtists: artists,
         savedAlbums: albums,
         savedTracks: tracks,
+        subscriptions: subsResult,
       };
 
       return {
@@ -117,6 +128,39 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     });
   },
 
+  addSubscription: async (userId: number, creatorId: number) => {
+    const creatorIdStr = creatorId.toString();
+
+    set((state) => ({
+      subscriptions: [
+        ...state.subscriptions.filter((s) => s !== creatorIdStr),
+        creatorIdStr,
+      ],
+    }));
+
+    try {
+      const response = await fetch(`/api/community/users/follow/${creatorId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentUserId: userId }),
+      });
+
+      if (!response.ok) {
+        set((state) => ({
+          subscriptions: state.subscriptions.filter((s) => s !== creatorIdStr),
+        }));
+
+        const error = await response.json();
+        console.error("Error adding subscription:", error);
+      }
+    } catch (error) {
+      set((state) => ({
+        subscriptions: state.subscriptions.filter((s) => s !== creatorIdStr),
+      }));
+      console.error("Error adding subscription:", error);
+    }
+  },
+
   deleteArtist: async (id, userId) => {
     set((state) => ({
       savedArtists: state.savedArtists.filter((a) => a.idArtist !== id),
@@ -144,6 +188,35 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
     });
   },
 
+  removeSubscription: async (userId: number, creatorId: number) => {
+    const creatorIdStr = creatorId.toString();
+    set((state) => ({
+      subscriptions: state.subscriptions.filter((s) => s !== creatorIdStr),
+    }));
+
+    try {
+      const response = await fetch(`/api/community/users/follow/${creatorId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ currentUserId: userId }),
+      });
+
+      if (!response.ok) {
+        set((state) => ({
+          subscriptions: [...state.subscriptions, creatorIdStr],
+        }));
+
+        const error = await response.json();
+        console.error("Error removing subscription:", error);
+      }
+    } catch (error) {
+      set((state) => ({
+        subscriptions: [...state.subscriptions, creatorIdStr],
+      }));
+      console.error("Error removing subscription:", error);
+    }
+  },
+
   getArtists: () => get().savedArtists,
   getAlbums: () => get().savedAlbums,
   getTracks: () => get().savedTracks,
@@ -153,4 +226,6 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
   searchTrack: (id) => get().savedTracks.find((t) => t.idTrack === id),
 
   getTags: () => get().tags,
+  getSubscriptions: () => get().subscriptions,
+  isSubscribed: (creatorId: string) => get().subscriptions.includes(creatorId),
 }));
