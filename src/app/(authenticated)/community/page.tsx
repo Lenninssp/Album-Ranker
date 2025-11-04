@@ -2,12 +2,14 @@
 import { AlbumCard } from "@/components/cards/AlbumCard";
 import { ArtistCard } from "@/components/cards/ArtistCard";
 import { TrackCard } from "@/components/cards/TrackCard";
+import { UserLib } from "@/components/community/user-lib";
 import { DefaultFrame } from "@/components/default-frame";
+import { Button } from "@/components/ui/button";
 import { User } from "@/generated/prisma";
 import { AlbumEdited, ArtistEdited, TrackEdited } from "@/types/music";
 import { Rating } from "@/types/ratingColor";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 type UserWithMedia = User & {
   albums?: AlbumEdited[];
@@ -77,39 +79,7 @@ const CommunityPage = () => {
             {(user.albums?.length !== 0 ||
               user.tracks?.length !== 0 ||
               user.artists?.length !== 0) && (
-              <>
-                <div className="font-bold max-w-48">
-                  {user.name}'s liked music:
-                </div>
-
-                <div className="flex flex-col max-h-52 overflow-auto w-full gap-3">
-                  {user.albums
-                    ?.filter(
-                      (a) =>
-                        a.rating === Rating.Adore || a.rating === Rating.Love
-                    )
-                    .map((album) => (
-                      <AlbumCard key={album.idAlbum} album={album} simplified />
-                    ))}
-
-                  {user.tracks
-                    ?.filter(
-                      (t) =>
-                        t.rating === Rating.Adore || t.rating === Rating.Love
-                    )
-                    .map((track) => (
-                      <TrackCard key={track.idTrack} track={track} simplified />
-                    ))}
-
-                  {user.artists?.map((artist) => (
-                    <ArtistCard
-                      key={artist.idArtist}
-                      artist={artist}
-                      simplified
-                    />
-                  ))}
-                </div>
-              </>
+              <UserLib key={user.id} user={user} />
             )}
           </div>
         ))}
