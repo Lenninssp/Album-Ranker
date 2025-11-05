@@ -38,6 +38,11 @@ export type AlbumEdited = $Result.DefaultSelection<Prisma.$AlbumEditedPayload>
  * 
  */
 export type ArtistEdited = $Result.DefaultSelection<Prisma.$ArtistEditedPayload>
+/**
+ * Model Interaction
+ * 
+ */
+export type Interaction = $Result.DefaultSelection<Prisma.$InteractionPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -206,6 +211,16 @@ export class PrismaClient<
     * ```
     */
   get artistEdited(): Prisma.ArtistEditedDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.interaction`: Exposes CRUD operations for the **Interaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Interactions
+    * const interactions = await prisma.interaction.findMany()
+    * ```
+    */
+  get interaction(): Prisma.InteractionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -651,7 +666,8 @@ export namespace Prisma {
     User: 'User',
     TrackEdited: 'TrackEdited',
     AlbumEdited: 'AlbumEdited',
-    ArtistEdited: 'ArtistEdited'
+    ArtistEdited: 'ArtistEdited',
+    Interaction: 'Interaction'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -670,7 +686,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "session" | "user" | "trackEdited" | "albumEdited" | "artistEdited"
+      modelProps: "session" | "user" | "trackEdited" | "albumEdited" | "artistEdited" | "interaction"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1044,6 +1060,80 @@ export namespace Prisma {
           }
         }
       }
+      Interaction: {
+        payload: Prisma.$InteractionPayload<ExtArgs>
+        fields: Prisma.InteractionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InteractionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InteractionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          findFirst: {
+            args: Prisma.InteractionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InteractionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          findMany: {
+            args: Prisma.InteractionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>[]
+          }
+          create: {
+            args: Prisma.InteractionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          createMany: {
+            args: Prisma.InteractionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InteractionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>[]
+          }
+          delete: {
+            args: Prisma.InteractionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          update: {
+            args: Prisma.InteractionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          deleteMany: {
+            args: Prisma.InteractionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InteractionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InteractionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>[]
+          }
+          upsert: {
+            args: Prisma.InteractionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          aggregate: {
+            args: Prisma.InteractionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInteraction>
+          }
+          groupBy: {
+            args: Prisma.InteractionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InteractionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InteractionCountArgs<ExtArgs>
+            result: $Utils.Optional<InteractionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1145,6 +1235,7 @@ export namespace Prisma {
     trackEdited?: TrackEditedOmit
     albumEdited?: AlbumEditedOmit
     artistEdited?: ArtistEditedOmit
+    interaction?: InteractionOmit
   }
 
   /* Types for Logging */
@@ -1231,6 +1322,7 @@ export namespace Prisma {
     artists: number
     following: number
     followers: number
+    interactions: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1240,6 +1332,7 @@ export namespace Prisma {
     artists?: boolean | UserCountOutputTypeCountArtistsArgs
     following?: boolean | UserCountOutputTypeCountFollowingArgs
     followers?: boolean | UserCountOutputTypeCountFollowersArgs
+    interactions?: boolean | UserCountOutputTypeCountInteractionsArgs
   }
 
   // Custom InputTypes
@@ -1293,6 +1386,106 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountFollowersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountInteractionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InteractionWhereInput
+  }
+
+
+  /**
+   * Count Type TrackEditedCountOutputType
+   */
+
+  export type TrackEditedCountOutputType = {
+    interactions: number
+  }
+
+  export type TrackEditedCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interactions?: boolean | TrackEditedCountOutputTypeCountInteractionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TrackEditedCountOutputType without action
+   */
+  export type TrackEditedCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackEditedCountOutputType
+     */
+    select?: TrackEditedCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TrackEditedCountOutputType without action
+   */
+  export type TrackEditedCountOutputTypeCountInteractionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InteractionWhereInput
+  }
+
+
+  /**
+   * Count Type AlbumEditedCountOutputType
+   */
+
+  export type AlbumEditedCountOutputType = {
+    interactions: number
+  }
+
+  export type AlbumEditedCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interactions?: boolean | AlbumEditedCountOutputTypeCountInteractionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AlbumEditedCountOutputType without action
+   */
+  export type AlbumEditedCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AlbumEditedCountOutputType
+     */
+    select?: AlbumEditedCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AlbumEditedCountOutputType without action
+   */
+  export type AlbumEditedCountOutputTypeCountInteractionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InteractionWhereInput
+  }
+
+
+  /**
+   * Count Type ArtistEditedCountOutputType
+   */
+
+  export type ArtistEditedCountOutputType = {
+    interactions: number
+  }
+
+  export type ArtistEditedCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interactions?: boolean | ArtistEditedCountOutputTypeCountInteractionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ArtistEditedCountOutputType without action
+   */
+  export type ArtistEditedCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArtistEditedCountOutputType
+     */
+    select?: ArtistEditedCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ArtistEditedCountOutputType without action
+   */
+  export type ArtistEditedCountOutputTypeCountInteractionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InteractionWhereInput
   }
 
 
@@ -2613,6 +2806,7 @@ export namespace Prisma {
     artists?: boolean | User$artistsArgs<ExtArgs>
     following?: boolean | User$followingArgs<ExtArgs>
     followers?: boolean | User$followersArgs<ExtArgs>
+    interactions?: boolean | User$interactionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2660,6 +2854,7 @@ export namespace Prisma {
     artists?: boolean | User$artistsArgs<ExtArgs>
     following?: boolean | User$followingArgs<ExtArgs>
     followers?: boolean | User$followersArgs<ExtArgs>
+    interactions?: boolean | User$interactionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2674,6 +2869,7 @@ export namespace Prisma {
       artists: Prisma.$ArtistEditedPayload<ExtArgs>[]
       following: Prisma.$UserPayload<ExtArgs>[]
       followers: Prisma.$UserPayload<ExtArgs>[]
+      interactions: Prisma.$InteractionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3085,6 +3281,7 @@ export namespace Prisma {
     artists<T extends User$artistsArgs<ExtArgs> = {}>(args?: Subset<T, User$artistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ArtistEditedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     following<T extends User$followingArgs<ExtArgs> = {}>(args?: Subset<T, User$followingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     followers<T extends User$followersArgs<ExtArgs> = {}>(args?: Subset<T, User$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    interactions<T extends User$interactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3653,6 +3850,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.interactions
+   */
+  export type User$interactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    where?: InteractionWhereInput
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    cursor?: InteractionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3718,6 +3939,7 @@ export namespace Prisma {
     rating: string | null
     includesMetadata: boolean | null
     userId: number | null
+    public: boolean | null
   }
 
   export type TrackEditedMaxAggregateOutputType = {
@@ -3745,6 +3967,7 @@ export namespace Prisma {
     rating: string | null
     includesMetadata: boolean | null
     userId: number | null
+    public: boolean | null
   }
 
   export type TrackEditedCountAggregateOutputType = {
@@ -3772,6 +3995,7 @@ export namespace Prisma {
     rating: number
     includesMetadata: number
     userId: number
+    public: number
     _all: number
   }
 
@@ -3811,6 +4035,7 @@ export namespace Prisma {
     rating?: true
     includesMetadata?: true
     userId?: true
+    public?: true
   }
 
   export type TrackEditedMaxAggregateInputType = {
@@ -3838,6 +4063,7 @@ export namespace Prisma {
     rating?: true
     includesMetadata?: true
     userId?: true
+    public?: true
   }
 
   export type TrackEditedCountAggregateInputType = {
@@ -3865,6 +4091,7 @@ export namespace Prisma {
     rating?: true
     includesMetadata?: true
     userId?: true
+    public?: true
     _all?: true
   }
 
@@ -3979,6 +4206,7 @@ export namespace Prisma {
     rating: string
     includesMetadata: boolean
     userId: number | null
+    public: boolean
     _count: TrackEditedCountAggregateOutputType | null
     _avg: TrackEditedAvgAggregateOutputType | null
     _sum: TrackEditedSumAggregateOutputType | null
@@ -4025,7 +4253,10 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
     User?: boolean | TrackEdited$UserArgs<ExtArgs>
+    interactions?: boolean | TrackEdited$interactionsArgs<ExtArgs>
+    _count?: boolean | TrackEditedCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["trackEdited"]>
 
   export type TrackEditedSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4053,6 +4284,7 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
     User?: boolean | TrackEdited$UserArgs<ExtArgs>
   }, ExtArgs["result"]["trackEdited"]>
 
@@ -4081,6 +4313,7 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
     User?: boolean | TrackEdited$UserArgs<ExtArgs>
   }, ExtArgs["result"]["trackEdited"]>
 
@@ -4109,11 +4342,14 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
   }
 
-  export type TrackEditedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idTrack" | "idAlbum" | "idArtist" | "strTrack" | "strAlbum" | "strArtist" | "strGenre" | "strMood" | "strStyle" | "intDuration" | "strDescriptionEN" | "strTrackThumb" | "strMusicVid" | "strMusicVidDirector" | "strMusicVidCompany" | "intMusicVidViews" | "intMusicVidLikes" | "intTrackNumber" | "commentary" | "tag" | "rating" | "includesMetadata" | "userId", ExtArgs["result"]["trackEdited"]>
+  export type TrackEditedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idTrack" | "idAlbum" | "idArtist" | "strTrack" | "strAlbum" | "strArtist" | "strGenre" | "strMood" | "strStyle" | "intDuration" | "strDescriptionEN" | "strTrackThumb" | "strMusicVid" | "strMusicVidDirector" | "strMusicVidCompany" | "intMusicVidViews" | "intMusicVidLikes" | "intTrackNumber" | "commentary" | "tag" | "rating" | "includesMetadata" | "userId" | "public", ExtArgs["result"]["trackEdited"]>
   export type TrackEditedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | TrackEdited$UserArgs<ExtArgs>
+    interactions?: boolean | TrackEdited$interactionsArgs<ExtArgs>
+    _count?: boolean | TrackEditedCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TrackEditedIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | TrackEdited$UserArgs<ExtArgs>
@@ -4126,6 +4362,7 @@ export namespace Prisma {
     name: "TrackEdited"
     objects: {
       User: Prisma.$UserPayload<ExtArgs> | null
+      interactions: Prisma.$InteractionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4152,6 +4389,7 @@ export namespace Prisma {
       rating: string
       includesMetadata: boolean
       userId: number | null
+      public: boolean
     }, ExtArgs["result"]["trackEdited"]>
     composites: {}
   }
@@ -4547,6 +4785,7 @@ export namespace Prisma {
   export interface Prisma__TrackEditedClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     User<T extends TrackEdited$UserArgs<ExtArgs> = {}>(args?: Subset<T, TrackEdited$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    interactions<T extends TrackEdited$interactionsArgs<ExtArgs> = {}>(args?: Subset<T, TrackEdited$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4600,6 +4839,7 @@ export namespace Prisma {
     readonly rating: FieldRef<"TrackEdited", 'String'>
     readonly includesMetadata: FieldRef<"TrackEdited", 'Boolean'>
     readonly userId: FieldRef<"TrackEdited", 'Int'>
+    readonly public: FieldRef<"TrackEdited", 'Boolean'>
   }
     
 
@@ -5013,6 +5253,30 @@ export namespace Prisma {
   }
 
   /**
+   * TrackEdited.interactions
+   */
+  export type TrackEdited$interactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    where?: InteractionWhereInput
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    cursor?: InteractionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
    * TrackEdited without action
    */
   export type TrackEditedDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5077,6 +5341,7 @@ export namespace Prisma {
     rating: string | null
     includesMetadata: boolean | null
     userId: number | null
+    public: boolean | null
   }
 
   export type AlbumEditedMaxAggregateOutputType = {
@@ -5103,6 +5368,7 @@ export namespace Prisma {
     rating: string | null
     includesMetadata: boolean | null
     userId: number | null
+    public: boolean | null
   }
 
   export type AlbumEditedCountAggregateOutputType = {
@@ -5129,6 +5395,7 @@ export namespace Prisma {
     rating: number
     includesMetadata: number
     userId: number
+    public: number
     _all: number
   }
 
@@ -5167,6 +5434,7 @@ export namespace Prisma {
     rating?: true
     includesMetadata?: true
     userId?: true
+    public?: true
   }
 
   export type AlbumEditedMaxAggregateInputType = {
@@ -5193,6 +5461,7 @@ export namespace Prisma {
     rating?: true
     includesMetadata?: true
     userId?: true
+    public?: true
   }
 
   export type AlbumEditedCountAggregateInputType = {
@@ -5219,6 +5488,7 @@ export namespace Prisma {
     rating?: true
     includesMetadata?: true
     userId?: true
+    public?: true
     _all?: true
   }
 
@@ -5332,6 +5602,7 @@ export namespace Prisma {
     rating: string
     includesMetadata: boolean
     userId: number | null
+    public: boolean
     _count: AlbumEditedCountAggregateOutputType | null
     _avg: AlbumEditedAvgAggregateOutputType | null
     _sum: AlbumEditedSumAggregateOutputType | null
@@ -5377,7 +5648,10 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
     User?: boolean | AlbumEdited$UserArgs<ExtArgs>
+    interactions?: boolean | AlbumEdited$interactionsArgs<ExtArgs>
+    _count?: boolean | AlbumEditedCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["albumEdited"]>
 
   export type AlbumEditedSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5404,6 +5678,7 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
     User?: boolean | AlbumEdited$UserArgs<ExtArgs>
   }, ExtArgs["result"]["albumEdited"]>
 
@@ -5431,6 +5706,7 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
     User?: boolean | AlbumEdited$UserArgs<ExtArgs>
   }, ExtArgs["result"]["albumEdited"]>
 
@@ -5458,11 +5734,14 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
   }
 
-  export type AlbumEditedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idAlbum" | "idArtist" | "strAlbum" | "strArtist" | "intYearReleased" | "strGenre" | "strStyle" | "strLabel" | "strReleaseFormat" | "strAlbumThumb" | "strAlbumBack" | "strAlbumCDart" | "strAlbum3DThumb" | "strDescriptionEN" | "strMood" | "strSpeed" | "strWikipediaID" | "commentary" | "tag" | "rating" | "includesMetadata" | "userId", ExtArgs["result"]["albumEdited"]>
+  export type AlbumEditedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idAlbum" | "idArtist" | "strAlbum" | "strArtist" | "intYearReleased" | "strGenre" | "strStyle" | "strLabel" | "strReleaseFormat" | "strAlbumThumb" | "strAlbumBack" | "strAlbumCDart" | "strAlbum3DThumb" | "strDescriptionEN" | "strMood" | "strSpeed" | "strWikipediaID" | "commentary" | "tag" | "rating" | "includesMetadata" | "userId" | "public", ExtArgs["result"]["albumEdited"]>
   export type AlbumEditedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | AlbumEdited$UserArgs<ExtArgs>
+    interactions?: boolean | AlbumEdited$interactionsArgs<ExtArgs>
+    _count?: boolean | AlbumEditedCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AlbumEditedIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | AlbumEdited$UserArgs<ExtArgs>
@@ -5475,6 +5754,7 @@ export namespace Prisma {
     name: "AlbumEdited"
     objects: {
       User: Prisma.$UserPayload<ExtArgs> | null
+      interactions: Prisma.$InteractionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5500,6 +5780,7 @@ export namespace Prisma {
       rating: string
       includesMetadata: boolean
       userId: number | null
+      public: boolean
     }, ExtArgs["result"]["albumEdited"]>
     composites: {}
   }
@@ -5895,6 +6176,7 @@ export namespace Prisma {
   export interface Prisma__AlbumEditedClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     User<T extends AlbumEdited$UserArgs<ExtArgs> = {}>(args?: Subset<T, AlbumEdited$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    interactions<T extends AlbumEdited$interactionsArgs<ExtArgs> = {}>(args?: Subset<T, AlbumEdited$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5947,6 +6229,7 @@ export namespace Prisma {
     readonly rating: FieldRef<"AlbumEdited", 'String'>
     readonly includesMetadata: FieldRef<"AlbumEdited", 'Boolean'>
     readonly userId: FieldRef<"AlbumEdited", 'Int'>
+    readonly public: FieldRef<"AlbumEdited", 'Boolean'>
   }
     
 
@@ -6360,6 +6643,30 @@ export namespace Prisma {
   }
 
   /**
+   * AlbumEdited.interactions
+   */
+  export type AlbumEdited$interactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    where?: InteractionWhereInput
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    cursor?: InteractionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
    * AlbumEdited without action
    */
   export type AlbumEditedDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6425,6 +6732,7 @@ export namespace Prisma {
     rating: string | null
     includesMetadata: boolean | null
     userId: number | null
+    public: boolean | null
   }
 
   export type ArtistEditedMaxAggregateOutputType = {
@@ -6452,6 +6760,7 @@ export namespace Prisma {
     rating: string | null
     includesMetadata: boolean | null
     userId: number | null
+    public: boolean | null
   }
 
   export type ArtistEditedCountAggregateOutputType = {
@@ -6479,6 +6788,7 @@ export namespace Prisma {
     rating: number
     includesMetadata: number
     userId: number
+    public: number
     _all: number
   }
 
@@ -6518,6 +6828,7 @@ export namespace Prisma {
     rating?: true
     includesMetadata?: true
     userId?: true
+    public?: true
   }
 
   export type ArtistEditedMaxAggregateInputType = {
@@ -6545,6 +6856,7 @@ export namespace Prisma {
     rating?: true
     includesMetadata?: true
     userId?: true
+    public?: true
   }
 
   export type ArtistEditedCountAggregateInputType = {
@@ -6572,6 +6884,7 @@ export namespace Prisma {
     rating?: true
     includesMetadata?: true
     userId?: true
+    public?: true
     _all?: true
   }
 
@@ -6686,6 +6999,7 @@ export namespace Prisma {
     rating: string
     includesMetadata: boolean
     userId: number | null
+    public: boolean
     _count: ArtistEditedCountAggregateOutputType | null
     _avg: ArtistEditedAvgAggregateOutputType | null
     _sum: ArtistEditedSumAggregateOutputType | null
@@ -6732,7 +7046,10 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
     User?: boolean | ArtistEdited$UserArgs<ExtArgs>
+    interactions?: boolean | ArtistEdited$interactionsArgs<ExtArgs>
+    _count?: boolean | ArtistEditedCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["artistEdited"]>
 
   export type ArtistEditedSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6760,6 +7077,7 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
     User?: boolean | ArtistEdited$UserArgs<ExtArgs>
   }, ExtArgs["result"]["artistEdited"]>
 
@@ -6788,6 +7106,7 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
     User?: boolean | ArtistEdited$UserArgs<ExtArgs>
   }, ExtArgs["result"]["artistEdited"]>
 
@@ -6816,11 +7135,14 @@ export namespace Prisma {
     rating?: boolean
     includesMetadata?: boolean
     userId?: boolean
+    public?: boolean
   }
 
-  export type ArtistEditedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idArtist" | "strArtist" | "strArtistAlternate" | "strLabel" | "intFormedYear" | "strGenre" | "strStyle" | "strMood" | "strCountry" | "intMembers" | "strWebsite" | "strBiographyEN" | "strArtistThumb" | "strArtistLogo" | "strArtistClearart" | "strArtistWideThumb" | "strArtistFanart" | "strArtistBanner" | "commentary" | "tag" | "rating" | "includesMetadata" | "userId", ExtArgs["result"]["artistEdited"]>
+  export type ArtistEditedOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "idArtist" | "strArtist" | "strArtistAlternate" | "strLabel" | "intFormedYear" | "strGenre" | "strStyle" | "strMood" | "strCountry" | "intMembers" | "strWebsite" | "strBiographyEN" | "strArtistThumb" | "strArtistLogo" | "strArtistClearart" | "strArtistWideThumb" | "strArtistFanart" | "strArtistBanner" | "commentary" | "tag" | "rating" | "includesMetadata" | "userId" | "public", ExtArgs["result"]["artistEdited"]>
   export type ArtistEditedInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | ArtistEdited$UserArgs<ExtArgs>
+    interactions?: boolean | ArtistEdited$interactionsArgs<ExtArgs>
+    _count?: boolean | ArtistEditedCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ArtistEditedIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     User?: boolean | ArtistEdited$UserArgs<ExtArgs>
@@ -6833,6 +7155,7 @@ export namespace Prisma {
     name: "ArtistEdited"
     objects: {
       User: Prisma.$UserPayload<ExtArgs> | null
+      interactions: Prisma.$InteractionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6859,6 +7182,7 @@ export namespace Prisma {
       rating: string
       includesMetadata: boolean
       userId: number | null
+      public: boolean
     }, ExtArgs["result"]["artistEdited"]>
     composites: {}
   }
@@ -7254,6 +7578,7 @@ export namespace Prisma {
   export interface Prisma__ArtistEditedClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     User<T extends ArtistEdited$UserArgs<ExtArgs> = {}>(args?: Subset<T, ArtistEdited$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    interactions<T extends ArtistEdited$interactionsArgs<ExtArgs> = {}>(args?: Subset<T, ArtistEdited$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7307,6 +7632,7 @@ export namespace Prisma {
     readonly rating: FieldRef<"ArtistEdited", 'String'>
     readonly includesMetadata: FieldRef<"ArtistEdited", 'Boolean'>
     readonly userId: FieldRef<"ArtistEdited", 'Int'>
+    readonly public: FieldRef<"ArtistEdited", 'Boolean'>
   }
     
 
@@ -7720,6 +8046,30 @@ export namespace Prisma {
   }
 
   /**
+   * ArtistEdited.interactions
+   */
+  export type ArtistEdited$interactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    where?: InteractionWhereInput
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    cursor?: InteractionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
    * ArtistEdited without action
    */
   export type ArtistEditedDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7735,6 +8085,1232 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ArtistEditedInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Interaction
+   */
+
+  export type AggregateInteraction = {
+    _count: InteractionCountAggregateOutputType | null
+    _avg: InteractionAvgAggregateOutputType | null
+    _sum: InteractionSumAggregateOutputType | null
+    _min: InteractionMinAggregateOutputType | null
+    _max: InteractionMaxAggregateOutputType | null
+  }
+
+  export type InteractionAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    trackEditedId: number | null
+    albumEditedId: number | null
+    artistEditedId: number | null
+  }
+
+  export type InteractionSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    trackEditedId: number | null
+    albumEditedId: number | null
+    artistEditedId: number | null
+  }
+
+  export type InteractionMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    trackEditedId: number | null
+    albumEditedId: number | null
+    artistEditedId: number | null
+    comment: string | null
+    liked: boolean | null
+    createdAt: Date | null
+  }
+
+  export type InteractionMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    trackEditedId: number | null
+    albumEditedId: number | null
+    artistEditedId: number | null
+    comment: string | null
+    liked: boolean | null
+    createdAt: Date | null
+  }
+
+  export type InteractionCountAggregateOutputType = {
+    id: number
+    userId: number
+    trackEditedId: number
+    albumEditedId: number
+    artistEditedId: number
+    comment: number
+    liked: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type InteractionAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    trackEditedId?: true
+    albumEditedId?: true
+    artistEditedId?: true
+  }
+
+  export type InteractionSumAggregateInputType = {
+    id?: true
+    userId?: true
+    trackEditedId?: true
+    albumEditedId?: true
+    artistEditedId?: true
+  }
+
+  export type InteractionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    trackEditedId?: true
+    albumEditedId?: true
+    artistEditedId?: true
+    comment?: true
+    liked?: true
+    createdAt?: true
+  }
+
+  export type InteractionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    trackEditedId?: true
+    albumEditedId?: true
+    artistEditedId?: true
+    comment?: true
+    liked?: true
+    createdAt?: true
+  }
+
+  export type InteractionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    trackEditedId?: true
+    albumEditedId?: true
+    artistEditedId?: true
+    comment?: true
+    liked?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type InteractionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Interaction to aggregate.
+     */
+    where?: InteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interactions to fetch.
+     */
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Interactions
+    **/
+    _count?: true | InteractionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InteractionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InteractionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InteractionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InteractionMaxAggregateInputType
+  }
+
+  export type GetInteractionAggregateType<T extends InteractionAggregateArgs> = {
+        [P in keyof T & keyof AggregateInteraction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInteraction[P]>
+      : GetScalarType<T[P], AggregateInteraction[P]>
+  }
+
+
+
+
+  export type InteractionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InteractionWhereInput
+    orderBy?: InteractionOrderByWithAggregationInput | InteractionOrderByWithAggregationInput[]
+    by: InteractionScalarFieldEnum[] | InteractionScalarFieldEnum
+    having?: InteractionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InteractionCountAggregateInputType | true
+    _avg?: InteractionAvgAggregateInputType
+    _sum?: InteractionSumAggregateInputType
+    _min?: InteractionMinAggregateInputType
+    _max?: InteractionMaxAggregateInputType
+  }
+
+  export type InteractionGroupByOutputType = {
+    id: number
+    userId: number
+    trackEditedId: number | null
+    albumEditedId: number | null
+    artistEditedId: number | null
+    comment: string | null
+    liked: boolean
+    createdAt: Date
+    _count: InteractionCountAggregateOutputType | null
+    _avg: InteractionAvgAggregateOutputType | null
+    _sum: InteractionSumAggregateOutputType | null
+    _min: InteractionMinAggregateOutputType | null
+    _max: InteractionMaxAggregateOutputType | null
+  }
+
+  type GetInteractionGroupByPayload<T extends InteractionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InteractionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InteractionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InteractionGroupByOutputType[P]>
+            : GetScalarType<T[P], InteractionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InteractionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    trackEditedId?: boolean
+    albumEditedId?: boolean
+    artistEditedId?: boolean
+    comment?: boolean
+    liked?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    trackEdited?: boolean | Interaction$trackEditedArgs<ExtArgs>
+    albumEdited?: boolean | Interaction$albumEditedArgs<ExtArgs>
+    artistEdited?: boolean | Interaction$artistEditedArgs<ExtArgs>
+  }, ExtArgs["result"]["interaction"]>
+
+  export type InteractionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    trackEditedId?: boolean
+    albumEditedId?: boolean
+    artistEditedId?: boolean
+    comment?: boolean
+    liked?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    trackEdited?: boolean | Interaction$trackEditedArgs<ExtArgs>
+    albumEdited?: boolean | Interaction$albumEditedArgs<ExtArgs>
+    artistEdited?: boolean | Interaction$artistEditedArgs<ExtArgs>
+  }, ExtArgs["result"]["interaction"]>
+
+  export type InteractionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    trackEditedId?: boolean
+    albumEditedId?: boolean
+    artistEditedId?: boolean
+    comment?: boolean
+    liked?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    trackEdited?: boolean | Interaction$trackEditedArgs<ExtArgs>
+    albumEdited?: boolean | Interaction$albumEditedArgs<ExtArgs>
+    artistEdited?: boolean | Interaction$artistEditedArgs<ExtArgs>
+  }, ExtArgs["result"]["interaction"]>
+
+  export type InteractionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    trackEditedId?: boolean
+    albumEditedId?: boolean
+    artistEditedId?: boolean
+    comment?: boolean
+    liked?: boolean
+    createdAt?: boolean
+  }
+
+  export type InteractionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "trackEditedId" | "albumEditedId" | "artistEditedId" | "comment" | "liked" | "createdAt", ExtArgs["result"]["interaction"]>
+  export type InteractionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    trackEdited?: boolean | Interaction$trackEditedArgs<ExtArgs>
+    albumEdited?: boolean | Interaction$albumEditedArgs<ExtArgs>
+    artistEdited?: boolean | Interaction$artistEditedArgs<ExtArgs>
+  }
+  export type InteractionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    trackEdited?: boolean | Interaction$trackEditedArgs<ExtArgs>
+    albumEdited?: boolean | Interaction$albumEditedArgs<ExtArgs>
+    artistEdited?: boolean | Interaction$artistEditedArgs<ExtArgs>
+  }
+  export type InteractionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    trackEdited?: boolean | Interaction$trackEditedArgs<ExtArgs>
+    albumEdited?: boolean | Interaction$albumEditedArgs<ExtArgs>
+    artistEdited?: boolean | Interaction$artistEditedArgs<ExtArgs>
+  }
+
+  export type $InteractionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Interaction"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      trackEdited: Prisma.$TrackEditedPayload<ExtArgs> | null
+      albumEdited: Prisma.$AlbumEditedPayload<ExtArgs> | null
+      artistEdited: Prisma.$ArtistEditedPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      trackEditedId: number | null
+      albumEditedId: number | null
+      artistEditedId: number | null
+      comment: string | null
+      liked: boolean
+      createdAt: Date
+    }, ExtArgs["result"]["interaction"]>
+    composites: {}
+  }
+
+  type InteractionGetPayload<S extends boolean | null | undefined | InteractionDefaultArgs> = $Result.GetResult<Prisma.$InteractionPayload, S>
+
+  type InteractionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InteractionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InteractionCountAggregateInputType | true
+    }
+
+  export interface InteractionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Interaction'], meta: { name: 'Interaction' } }
+    /**
+     * Find zero or one Interaction that matches the filter.
+     * @param {InteractionFindUniqueArgs} args - Arguments to find a Interaction
+     * @example
+     * // Get one Interaction
+     * const interaction = await prisma.interaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InteractionFindUniqueArgs>(args: SelectSubset<T, InteractionFindUniqueArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Interaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InteractionFindUniqueOrThrowArgs} args - Arguments to find a Interaction
+     * @example
+     * // Get one Interaction
+     * const interaction = await prisma.interaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InteractionFindUniqueOrThrowArgs>(args: SelectSubset<T, InteractionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Interaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionFindFirstArgs} args - Arguments to find a Interaction
+     * @example
+     * // Get one Interaction
+     * const interaction = await prisma.interaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InteractionFindFirstArgs>(args?: SelectSubset<T, InteractionFindFirstArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Interaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionFindFirstOrThrowArgs} args - Arguments to find a Interaction
+     * @example
+     * // Get one Interaction
+     * const interaction = await prisma.interaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InteractionFindFirstOrThrowArgs>(args?: SelectSubset<T, InteractionFindFirstOrThrowArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Interactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Interactions
+     * const interactions = await prisma.interaction.findMany()
+     * 
+     * // Get first 10 Interactions
+     * const interactions = await prisma.interaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const interactionWithIdOnly = await prisma.interaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InteractionFindManyArgs>(args?: SelectSubset<T, InteractionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Interaction.
+     * @param {InteractionCreateArgs} args - Arguments to create a Interaction.
+     * @example
+     * // Create one Interaction
+     * const Interaction = await prisma.interaction.create({
+     *   data: {
+     *     // ... data to create a Interaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends InteractionCreateArgs>(args: SelectSubset<T, InteractionCreateArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Interactions.
+     * @param {InteractionCreateManyArgs} args - Arguments to create many Interactions.
+     * @example
+     * // Create many Interactions
+     * const interaction = await prisma.interaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InteractionCreateManyArgs>(args?: SelectSubset<T, InteractionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Interactions and returns the data saved in the database.
+     * @param {InteractionCreateManyAndReturnArgs} args - Arguments to create many Interactions.
+     * @example
+     * // Create many Interactions
+     * const interaction = await prisma.interaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Interactions and only return the `id`
+     * const interactionWithIdOnly = await prisma.interaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InteractionCreateManyAndReturnArgs>(args?: SelectSubset<T, InteractionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Interaction.
+     * @param {InteractionDeleteArgs} args - Arguments to delete one Interaction.
+     * @example
+     * // Delete one Interaction
+     * const Interaction = await prisma.interaction.delete({
+     *   where: {
+     *     // ... filter to delete one Interaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InteractionDeleteArgs>(args: SelectSubset<T, InteractionDeleteArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Interaction.
+     * @param {InteractionUpdateArgs} args - Arguments to update one Interaction.
+     * @example
+     * // Update one Interaction
+     * const interaction = await prisma.interaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InteractionUpdateArgs>(args: SelectSubset<T, InteractionUpdateArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Interactions.
+     * @param {InteractionDeleteManyArgs} args - Arguments to filter Interactions to delete.
+     * @example
+     * // Delete a few Interactions
+     * const { count } = await prisma.interaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InteractionDeleteManyArgs>(args?: SelectSubset<T, InteractionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Interactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Interactions
+     * const interaction = await prisma.interaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InteractionUpdateManyArgs>(args: SelectSubset<T, InteractionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Interactions and returns the data updated in the database.
+     * @param {InteractionUpdateManyAndReturnArgs} args - Arguments to update many Interactions.
+     * @example
+     * // Update many Interactions
+     * const interaction = await prisma.interaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Interactions and only return the `id`
+     * const interactionWithIdOnly = await prisma.interaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InteractionUpdateManyAndReturnArgs>(args: SelectSubset<T, InteractionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Interaction.
+     * @param {InteractionUpsertArgs} args - Arguments to update or create a Interaction.
+     * @example
+     * // Update or create a Interaction
+     * const interaction = await prisma.interaction.upsert({
+     *   create: {
+     *     // ... data to create a Interaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Interaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InteractionUpsertArgs>(args: SelectSubset<T, InteractionUpsertArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Interactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionCountArgs} args - Arguments to filter Interactions to count.
+     * @example
+     * // Count the number of Interactions
+     * const count = await prisma.interaction.count({
+     *   where: {
+     *     // ... the filter for the Interactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends InteractionCountArgs>(
+      args?: Subset<T, InteractionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InteractionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Interaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InteractionAggregateArgs>(args: Subset<T, InteractionAggregateArgs>): Prisma.PrismaPromise<GetInteractionAggregateType<T>>
+
+    /**
+     * Group by Interaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InteractionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InteractionGroupByArgs['orderBy'] }
+        : { orderBy?: InteractionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InteractionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInteractionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Interaction model
+   */
+  readonly fields: InteractionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Interaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InteractionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    trackEdited<T extends Interaction$trackEditedArgs<ExtArgs> = {}>(args?: Subset<T, Interaction$trackEditedArgs<ExtArgs>>): Prisma__TrackEditedClient<$Result.GetResult<Prisma.$TrackEditedPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    albumEdited<T extends Interaction$albumEditedArgs<ExtArgs> = {}>(args?: Subset<T, Interaction$albumEditedArgs<ExtArgs>>): Prisma__AlbumEditedClient<$Result.GetResult<Prisma.$AlbumEditedPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    artistEdited<T extends Interaction$artistEditedArgs<ExtArgs> = {}>(args?: Subset<T, Interaction$artistEditedArgs<ExtArgs>>): Prisma__ArtistEditedClient<$Result.GetResult<Prisma.$ArtistEditedPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Interaction model
+   */
+  interface InteractionFieldRefs {
+    readonly id: FieldRef<"Interaction", 'Int'>
+    readonly userId: FieldRef<"Interaction", 'Int'>
+    readonly trackEditedId: FieldRef<"Interaction", 'Int'>
+    readonly albumEditedId: FieldRef<"Interaction", 'Int'>
+    readonly artistEditedId: FieldRef<"Interaction", 'Int'>
+    readonly comment: FieldRef<"Interaction", 'String'>
+    readonly liked: FieldRef<"Interaction", 'Boolean'>
+    readonly createdAt: FieldRef<"Interaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Interaction findUnique
+   */
+  export type InteractionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interaction to fetch.
+     */
+    where: InteractionWhereUniqueInput
+  }
+
+  /**
+   * Interaction findUniqueOrThrow
+   */
+  export type InteractionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interaction to fetch.
+     */
+    where: InteractionWhereUniqueInput
+  }
+
+  /**
+   * Interaction findFirst
+   */
+  export type InteractionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interaction to fetch.
+     */
+    where?: InteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interactions to fetch.
+     */
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Interactions.
+     */
+    cursor?: InteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Interactions.
+     */
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
+   * Interaction findFirstOrThrow
+   */
+  export type InteractionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interaction to fetch.
+     */
+    where?: InteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interactions to fetch.
+     */
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Interactions.
+     */
+    cursor?: InteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Interactions.
+     */
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
+   * Interaction findMany
+   */
+  export type InteractionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interactions to fetch.
+     */
+    where?: InteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interactions to fetch.
+     */
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Interactions.
+     */
+    cursor?: InteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interactions.
+     */
+    skip?: number
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
+   * Interaction create
+   */
+  export type InteractionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Interaction.
+     */
+    data: XOR<InteractionCreateInput, InteractionUncheckedCreateInput>
+  }
+
+  /**
+   * Interaction createMany
+   */
+  export type InteractionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Interactions.
+     */
+    data: InteractionCreateManyInput | InteractionCreateManyInput[]
+  }
+
+  /**
+   * Interaction createManyAndReturn
+   */
+  export type InteractionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Interactions.
+     */
+    data: InteractionCreateManyInput | InteractionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Interaction update
+   */
+  export type InteractionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Interaction.
+     */
+    data: XOR<InteractionUpdateInput, InteractionUncheckedUpdateInput>
+    /**
+     * Choose, which Interaction to update.
+     */
+    where: InteractionWhereUniqueInput
+  }
+
+  /**
+   * Interaction updateMany
+   */
+  export type InteractionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Interactions.
+     */
+    data: XOR<InteractionUpdateManyMutationInput, InteractionUncheckedUpdateManyInput>
+    /**
+     * Filter which Interactions to update
+     */
+    where?: InteractionWhereInput
+    /**
+     * Limit how many Interactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Interaction updateManyAndReturn
+   */
+  export type InteractionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * The data used to update Interactions.
+     */
+    data: XOR<InteractionUpdateManyMutationInput, InteractionUncheckedUpdateManyInput>
+    /**
+     * Filter which Interactions to update
+     */
+    where?: InteractionWhereInput
+    /**
+     * Limit how many Interactions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Interaction upsert
+   */
+  export type InteractionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Interaction to update in case it exists.
+     */
+    where: InteractionWhereUniqueInput
+    /**
+     * In case the Interaction found by the `where` argument doesn't exist, create a new Interaction with this data.
+     */
+    create: XOR<InteractionCreateInput, InteractionUncheckedCreateInput>
+    /**
+     * In case the Interaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InteractionUpdateInput, InteractionUncheckedUpdateInput>
+  }
+
+  /**
+   * Interaction delete
+   */
+  export type InteractionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter which Interaction to delete.
+     */
+    where: InteractionWhereUniqueInput
+  }
+
+  /**
+   * Interaction deleteMany
+   */
+  export type InteractionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Interactions to delete
+     */
+    where?: InteractionWhereInput
+    /**
+     * Limit how many Interactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Interaction.trackEdited
+   */
+  export type Interaction$trackEditedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TrackEdited
+     */
+    select?: TrackEditedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TrackEdited
+     */
+    omit?: TrackEditedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrackEditedInclude<ExtArgs> | null
+    where?: TrackEditedWhereInput
+  }
+
+  /**
+   * Interaction.albumEdited
+   */
+  export type Interaction$albumEditedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AlbumEdited
+     */
+    select?: AlbumEditedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AlbumEdited
+     */
+    omit?: AlbumEditedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlbumEditedInclude<ExtArgs> | null
+    where?: AlbumEditedWhereInput
+  }
+
+  /**
+   * Interaction.artistEdited
+   */
+  export type Interaction$artistEditedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ArtistEdited
+     */
+    select?: ArtistEditedSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ArtistEdited
+     */
+    omit?: ArtistEditedOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ArtistEditedInclude<ExtArgs> | null
+    where?: ArtistEditedWhereInput
+  }
+
+  /**
+   * Interaction without action
+   */
+  export type InteractionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
   }
 
 
@@ -7798,7 +9374,8 @@ export namespace Prisma {
     tag: 'tag',
     rating: 'rating',
     includesMetadata: 'includesMetadata',
-    userId: 'userId'
+    userId: 'userId',
+    public: 'public'
   };
 
   export type TrackEditedScalarFieldEnum = (typeof TrackEditedScalarFieldEnum)[keyof typeof TrackEditedScalarFieldEnum]
@@ -7827,7 +9404,8 @@ export namespace Prisma {
     tag: 'tag',
     rating: 'rating',
     includesMetadata: 'includesMetadata',
-    userId: 'userId'
+    userId: 'userId',
+    public: 'public'
   };
 
   export type AlbumEditedScalarFieldEnum = (typeof AlbumEditedScalarFieldEnum)[keyof typeof AlbumEditedScalarFieldEnum]
@@ -7857,10 +9435,25 @@ export namespace Prisma {
     tag: 'tag',
     rating: 'rating',
     includesMetadata: 'includesMetadata',
-    userId: 'userId'
+    userId: 'userId',
+    public: 'public'
   };
 
   export type ArtistEditedScalarFieldEnum = (typeof ArtistEditedScalarFieldEnum)[keyof typeof ArtistEditedScalarFieldEnum]
+
+
+  export const InteractionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    trackEditedId: 'trackEditedId',
+    albumEditedId: 'albumEditedId',
+    artistEditedId: 'artistEditedId',
+    comment: 'comment',
+    liked: 'liked',
+    createdAt: 'createdAt'
+  };
+
+  export type InteractionScalarFieldEnum = (typeof InteractionScalarFieldEnum)[keyof typeof InteractionScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -7993,6 +9586,7 @@ export namespace Prisma {
     artists?: ArtistEditedListRelationFilter
     following?: UserListRelationFilter
     followers?: UserListRelationFilter
+    interactions?: InteractionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8011,6 +9605,7 @@ export namespace Prisma {
     artists?: ArtistEditedOrderByRelationAggregateInput
     following?: UserOrderByRelationAggregateInput
     followers?: UserOrderByRelationAggregateInput
+    interactions?: InteractionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8032,6 +9627,7 @@ export namespace Prisma {
     artists?: ArtistEditedListRelationFilter
     following?: UserListRelationFilter
     followers?: UserListRelationFilter
+    interactions?: InteractionListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -8094,7 +9690,9 @@ export namespace Prisma {
     rating?: StringFilter<"TrackEdited"> | string
     includesMetadata?: BoolFilter<"TrackEdited"> | boolean
     userId?: IntNullableFilter<"TrackEdited"> | number | null
+    public?: BoolFilter<"TrackEdited"> | boolean
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    interactions?: InteractionListRelationFilter
   }
 
   export type TrackEditedOrderByWithRelationInput = {
@@ -8122,7 +9720,9 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrderInput | SortOrder
+    public?: SortOrder
     User?: UserOrderByWithRelationInput
+    interactions?: InteractionOrderByRelationAggregateInput
   }
 
   export type TrackEditedWhereUniqueInput = Prisma.AtLeast<{
@@ -8154,7 +9754,9 @@ export namespace Prisma {
     rating?: StringFilter<"TrackEdited"> | string
     includesMetadata?: BoolFilter<"TrackEdited"> | boolean
     userId?: IntNullableFilter<"TrackEdited"> | number | null
+    public?: BoolFilter<"TrackEdited"> | boolean
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    interactions?: InteractionListRelationFilter
   }, "id" | "idTrack_userId">
 
   export type TrackEditedOrderByWithAggregationInput = {
@@ -8182,6 +9784,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrderInput | SortOrder
+    public?: SortOrder
     _count?: TrackEditedCountOrderByAggregateInput
     _avg?: TrackEditedAvgOrderByAggregateInput
     _max?: TrackEditedMaxOrderByAggregateInput
@@ -8217,6 +9820,7 @@ export namespace Prisma {
     rating?: StringWithAggregatesFilter<"TrackEdited"> | string
     includesMetadata?: BoolWithAggregatesFilter<"TrackEdited"> | boolean
     userId?: IntNullableWithAggregatesFilter<"TrackEdited"> | number | null
+    public?: BoolWithAggregatesFilter<"TrackEdited"> | boolean
   }
 
   export type AlbumEditedWhereInput = {
@@ -8246,7 +9850,9 @@ export namespace Prisma {
     rating?: StringFilter<"AlbumEdited"> | string
     includesMetadata?: BoolFilter<"AlbumEdited"> | boolean
     userId?: IntNullableFilter<"AlbumEdited"> | number | null
+    public?: BoolFilter<"AlbumEdited"> | boolean
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    interactions?: InteractionListRelationFilter
   }
 
   export type AlbumEditedOrderByWithRelationInput = {
@@ -8273,7 +9879,9 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrderInput | SortOrder
+    public?: SortOrder
     User?: UserOrderByWithRelationInput
+    interactions?: InteractionOrderByRelationAggregateInput
   }
 
   export type AlbumEditedWhereUniqueInput = Prisma.AtLeast<{
@@ -8304,7 +9912,9 @@ export namespace Prisma {
     rating?: StringFilter<"AlbumEdited"> | string
     includesMetadata?: BoolFilter<"AlbumEdited"> | boolean
     userId?: IntNullableFilter<"AlbumEdited"> | number | null
+    public?: BoolFilter<"AlbumEdited"> | boolean
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    interactions?: InteractionListRelationFilter
   }, "id" | "idAlbum_userId">
 
   export type AlbumEditedOrderByWithAggregationInput = {
@@ -8331,6 +9941,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrderInput | SortOrder
+    public?: SortOrder
     _count?: AlbumEditedCountOrderByAggregateInput
     _avg?: AlbumEditedAvgOrderByAggregateInput
     _max?: AlbumEditedMaxOrderByAggregateInput
@@ -8365,6 +9976,7 @@ export namespace Prisma {
     rating?: StringWithAggregatesFilter<"AlbumEdited"> | string
     includesMetadata?: BoolWithAggregatesFilter<"AlbumEdited"> | boolean
     userId?: IntNullableWithAggregatesFilter<"AlbumEdited"> | number | null
+    public?: BoolWithAggregatesFilter<"AlbumEdited"> | boolean
   }
 
   export type ArtistEditedWhereInput = {
@@ -8395,7 +10007,9 @@ export namespace Prisma {
     rating?: StringFilter<"ArtistEdited"> | string
     includesMetadata?: BoolFilter<"ArtistEdited"> | boolean
     userId?: IntNullableFilter<"ArtistEdited"> | number | null
+    public?: BoolFilter<"ArtistEdited"> | boolean
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    interactions?: InteractionListRelationFilter
   }
 
   export type ArtistEditedOrderByWithRelationInput = {
@@ -8423,7 +10037,9 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrderInput | SortOrder
+    public?: SortOrder
     User?: UserOrderByWithRelationInput
+    interactions?: InteractionOrderByRelationAggregateInput
   }
 
   export type ArtistEditedWhereUniqueInput = Prisma.AtLeast<{
@@ -8455,7 +10071,9 @@ export namespace Prisma {
     rating?: StringFilter<"ArtistEdited"> | string
     includesMetadata?: BoolFilter<"ArtistEdited"> | boolean
     userId?: IntNullableFilter<"ArtistEdited"> | number | null
+    public?: BoolFilter<"ArtistEdited"> | boolean
     User?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    interactions?: InteractionListRelationFilter
   }, "id" | "idArtist_userId">
 
   export type ArtistEditedOrderByWithAggregationInput = {
@@ -8483,6 +10101,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrderInput | SortOrder
+    public?: SortOrder
     _count?: ArtistEditedCountOrderByAggregateInput
     _avg?: ArtistEditedAvgOrderByAggregateInput
     _max?: ArtistEditedMaxOrderByAggregateInput
@@ -8518,6 +10137,89 @@ export namespace Prisma {
     rating?: StringWithAggregatesFilter<"ArtistEdited"> | string
     includesMetadata?: BoolWithAggregatesFilter<"ArtistEdited"> | boolean
     userId?: IntNullableWithAggregatesFilter<"ArtistEdited"> | number | null
+    public?: BoolWithAggregatesFilter<"ArtistEdited"> | boolean
+  }
+
+  export type InteractionWhereInput = {
+    AND?: InteractionWhereInput | InteractionWhereInput[]
+    OR?: InteractionWhereInput[]
+    NOT?: InteractionWhereInput | InteractionWhereInput[]
+    id?: IntFilter<"Interaction"> | number
+    userId?: IntFilter<"Interaction"> | number
+    trackEditedId?: IntNullableFilter<"Interaction"> | number | null
+    albumEditedId?: IntNullableFilter<"Interaction"> | number | null
+    artistEditedId?: IntNullableFilter<"Interaction"> | number | null
+    comment?: StringNullableFilter<"Interaction"> | string | null
+    liked?: BoolFilter<"Interaction"> | boolean
+    createdAt?: DateTimeFilter<"Interaction"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    trackEdited?: XOR<TrackEditedNullableScalarRelationFilter, TrackEditedWhereInput> | null
+    albumEdited?: XOR<AlbumEditedNullableScalarRelationFilter, AlbumEditedWhereInput> | null
+    artistEdited?: XOR<ArtistEditedNullableScalarRelationFilter, ArtistEditedWhereInput> | null
+  }
+
+  export type InteractionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    trackEditedId?: SortOrderInput | SortOrder
+    albumEditedId?: SortOrderInput | SortOrder
+    artistEditedId?: SortOrderInput | SortOrder
+    comment?: SortOrderInput | SortOrder
+    liked?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    trackEdited?: TrackEditedOrderByWithRelationInput
+    albumEdited?: AlbumEditedOrderByWithRelationInput
+    artistEdited?: ArtistEditedOrderByWithRelationInput
+  }
+
+  export type InteractionWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_trackEditedId_albumEditedId_artistEditedId?: InteractionUserIdTrackEditedIdAlbumEditedIdArtistEditedIdCompoundUniqueInput
+    AND?: InteractionWhereInput | InteractionWhereInput[]
+    OR?: InteractionWhereInput[]
+    NOT?: InteractionWhereInput | InteractionWhereInput[]
+    userId?: IntFilter<"Interaction"> | number
+    trackEditedId?: IntNullableFilter<"Interaction"> | number | null
+    albumEditedId?: IntNullableFilter<"Interaction"> | number | null
+    artistEditedId?: IntNullableFilter<"Interaction"> | number | null
+    comment?: StringNullableFilter<"Interaction"> | string | null
+    liked?: BoolFilter<"Interaction"> | boolean
+    createdAt?: DateTimeFilter<"Interaction"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    trackEdited?: XOR<TrackEditedNullableScalarRelationFilter, TrackEditedWhereInput> | null
+    albumEdited?: XOR<AlbumEditedNullableScalarRelationFilter, AlbumEditedWhereInput> | null
+    artistEdited?: XOR<ArtistEditedNullableScalarRelationFilter, ArtistEditedWhereInput> | null
+  }, "id" | "userId_trackEditedId_albumEditedId_artistEditedId">
+
+  export type InteractionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    trackEditedId?: SortOrderInput | SortOrder
+    albumEditedId?: SortOrderInput | SortOrder
+    artistEditedId?: SortOrderInput | SortOrder
+    comment?: SortOrderInput | SortOrder
+    liked?: SortOrder
+    createdAt?: SortOrder
+    _count?: InteractionCountOrderByAggregateInput
+    _avg?: InteractionAvgOrderByAggregateInput
+    _max?: InteractionMaxOrderByAggregateInput
+    _min?: InteractionMinOrderByAggregateInput
+    _sum?: InteractionSumOrderByAggregateInput
+  }
+
+  export type InteractionScalarWhereWithAggregatesInput = {
+    AND?: InteractionScalarWhereWithAggregatesInput | InteractionScalarWhereWithAggregatesInput[]
+    OR?: InteractionScalarWhereWithAggregatesInput[]
+    NOT?: InteractionScalarWhereWithAggregatesInput | InteractionScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Interaction"> | number
+    userId?: IntWithAggregatesFilter<"Interaction"> | number
+    trackEditedId?: IntNullableWithAggregatesFilter<"Interaction"> | number | null
+    albumEditedId?: IntNullableWithAggregatesFilter<"Interaction"> | number | null
+    artistEditedId?: IntNullableWithAggregatesFilter<"Interaction"> | number | null
+    comment?: StringNullableWithAggregatesFilter<"Interaction"> | string | null
+    liked?: BoolWithAggregatesFilter<"Interaction"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Interaction"> | Date | string
   }
 
   export type SessionCreateInput = {
@@ -8583,6 +10285,7 @@ export namespace Prisma {
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
     following?: UserCreateNestedManyWithoutFollowersInput
     followers?: UserCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8601,6 +10304,7 @@ export namespace Prisma {
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
     following?: UserUncheckedCreateNestedManyWithoutFollowersInput
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -8618,6 +10322,7 @@ export namespace Prisma {
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
     following?: UserUpdateManyWithoutFollowersNestedInput
     followers?: UserUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8636,6 +10341,7 @@ export namespace Prisma {
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
     following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -8696,7 +10402,9 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
     User?: UserCreateNestedOneWithoutTracksInput
+    interactions?: InteractionCreateNestedManyWithoutTrackEditedInput
   }
 
   export type TrackEditedUncheckedCreateInput = {
@@ -8724,6 +10432,8 @@ export namespace Prisma {
     rating: string
     includesMetadata?: boolean
     userId?: number | null
+    public?: boolean
+    interactions?: InteractionUncheckedCreateNestedManyWithoutTrackEditedInput
   }
 
   export type TrackEditedUpdateInput = {
@@ -8749,7 +10459,9 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
     User?: UserUpdateOneWithoutTracksNestedInput
+    interactions?: InteractionUpdateManyWithoutTrackEditedNestedInput
   }
 
   export type TrackEditedUncheckedUpdateInput = {
@@ -8777,6 +10489,8 @@ export namespace Prisma {
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+    public?: BoolFieldUpdateOperationsInput | boolean
+    interactions?: InteractionUncheckedUpdateManyWithoutTrackEditedNestedInput
   }
 
   export type TrackEditedCreateManyInput = {
@@ -8804,6 +10518,7 @@ export namespace Prisma {
     rating: string
     includesMetadata?: boolean
     userId?: number | null
+    public?: boolean
   }
 
   export type TrackEditedUpdateManyMutationInput = {
@@ -8829,6 +10544,7 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type TrackEditedUncheckedUpdateManyInput = {
@@ -8856,6 +10572,7 @@ export namespace Prisma {
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+    public?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AlbumEditedCreateInput = {
@@ -8880,7 +10597,9 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
     User?: UserCreateNestedOneWithoutAlbumsInput
+    interactions?: InteractionCreateNestedManyWithoutAlbumEditedInput
   }
 
   export type AlbumEditedUncheckedCreateInput = {
@@ -8907,6 +10626,8 @@ export namespace Prisma {
     rating: string
     includesMetadata?: boolean
     userId?: number | null
+    public?: boolean
+    interactions?: InteractionUncheckedCreateNestedManyWithoutAlbumEditedInput
   }
 
   export type AlbumEditedUpdateInput = {
@@ -8931,7 +10652,9 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
     User?: UserUpdateOneWithoutAlbumsNestedInput
+    interactions?: InteractionUpdateManyWithoutAlbumEditedNestedInput
   }
 
   export type AlbumEditedUncheckedUpdateInput = {
@@ -8958,6 +10681,8 @@ export namespace Prisma {
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+    public?: BoolFieldUpdateOperationsInput | boolean
+    interactions?: InteractionUncheckedUpdateManyWithoutAlbumEditedNestedInput
   }
 
   export type AlbumEditedCreateManyInput = {
@@ -8984,6 +10709,7 @@ export namespace Prisma {
     rating: string
     includesMetadata?: boolean
     userId?: number | null
+    public?: boolean
   }
 
   export type AlbumEditedUpdateManyMutationInput = {
@@ -9008,6 +10734,7 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AlbumEditedUncheckedUpdateManyInput = {
@@ -9034,6 +10761,7 @@ export namespace Prisma {
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+    public?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ArtistEditedCreateInput = {
@@ -9059,7 +10787,9 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
     User?: UserCreateNestedOneWithoutArtistsInput
+    interactions?: InteractionCreateNestedManyWithoutArtistEditedInput
   }
 
   export type ArtistEditedUncheckedCreateInput = {
@@ -9087,6 +10817,8 @@ export namespace Prisma {
     rating: string
     includesMetadata?: boolean
     userId?: number | null
+    public?: boolean
+    interactions?: InteractionUncheckedCreateNestedManyWithoutArtistEditedInput
   }
 
   export type ArtistEditedUpdateInput = {
@@ -9112,7 +10844,9 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
     User?: UserUpdateOneWithoutArtistsNestedInput
+    interactions?: InteractionUpdateManyWithoutArtistEditedNestedInput
   }
 
   export type ArtistEditedUncheckedUpdateInput = {
@@ -9140,6 +10874,8 @@ export namespace Prisma {
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+    public?: BoolFieldUpdateOperationsInput | boolean
+    interactions?: InteractionUncheckedUpdateManyWithoutArtistEditedNestedInput
   }
 
   export type ArtistEditedCreateManyInput = {
@@ -9167,6 +10903,7 @@ export namespace Prisma {
     rating: string
     includesMetadata?: boolean
     userId?: number | null
+    public?: boolean
   }
 
   export type ArtistEditedUpdateManyMutationInput = {
@@ -9192,6 +10929,7 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ArtistEditedUncheckedUpdateManyInput = {
@@ -9219,6 +10957,77 @@ export namespace Prisma {
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
     userId?: NullableIntFieldUpdateOperationsInput | number | null
+    public?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type InteractionCreateInput = {
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutInteractionsInput
+    trackEdited?: TrackEditedCreateNestedOneWithoutInteractionsInput
+    albumEdited?: AlbumEditedCreateNestedOneWithoutInteractionsInput
+    artistEdited?: ArtistEditedCreateNestedOneWithoutInteractionsInput
+  }
+
+  export type InteractionUncheckedCreateInput = {
+    id?: number
+    userId: number
+    trackEditedId?: number | null
+    albumEditedId?: number | null
+    artistEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InteractionUpdateInput = {
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutInteractionsNestedInput
+    trackEdited?: TrackEditedUpdateOneWithoutInteractionsNestedInput
+    albumEdited?: AlbumEditedUpdateOneWithoutInteractionsNestedInput
+    artistEdited?: ArtistEditedUpdateOneWithoutInteractionsNestedInput
+  }
+
+  export type InteractionUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    trackEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    artistEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionCreateManyInput = {
+    id?: number
+    userId: number
+    trackEditedId?: number | null
+    albumEditedId?: number | null
+    artistEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InteractionUpdateManyMutationInput = {
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    trackEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    artistEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -9382,6 +11191,12 @@ export namespace Prisma {
     none?: UserWhereInput
   }
 
+  export type InteractionListRelationFilter = {
+    every?: InteractionWhereInput
+    some?: InteractionWhereInput
+    none?: InteractionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -9404,6 +11219,10 @@ export namespace Prisma {
   }
 
   export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InteractionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9519,6 +11338,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrder
+    public?: SortOrder
   }
 
   export type TrackEditedAvgOrderByAggregateInput = {
@@ -9551,6 +11371,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrder
+    public?: SortOrder
   }
 
   export type TrackEditedMinOrderByAggregateInput = {
@@ -9578,6 +11399,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrder
+    public?: SortOrder
   }
 
   export type TrackEditedSumOrderByAggregateInput = {
@@ -9638,6 +11460,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrder
+    public?: SortOrder
   }
 
   export type AlbumEditedAvgOrderByAggregateInput = {
@@ -9669,6 +11492,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrder
+    public?: SortOrder
   }
 
   export type AlbumEditedMinOrderByAggregateInput = {
@@ -9695,6 +11519,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrder
+    public?: SortOrder
   }
 
   export type AlbumEditedSumOrderByAggregateInput = {
@@ -9732,6 +11557,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrder
+    public?: SortOrder
   }
 
   export type ArtistEditedAvgOrderByAggregateInput = {
@@ -9764,6 +11590,7 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrder
+    public?: SortOrder
   }
 
   export type ArtistEditedMinOrderByAggregateInput = {
@@ -9791,11 +11618,83 @@ export namespace Prisma {
     rating?: SortOrder
     includesMetadata?: SortOrder
     userId?: SortOrder
+    public?: SortOrder
   }
 
   export type ArtistEditedSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+  }
+
+  export type TrackEditedNullableScalarRelationFilter = {
+    is?: TrackEditedWhereInput | null
+    isNot?: TrackEditedWhereInput | null
+  }
+
+  export type AlbumEditedNullableScalarRelationFilter = {
+    is?: AlbumEditedWhereInput | null
+    isNot?: AlbumEditedWhereInput | null
+  }
+
+  export type ArtistEditedNullableScalarRelationFilter = {
+    is?: ArtistEditedWhereInput | null
+    isNot?: ArtistEditedWhereInput | null
+  }
+
+  export type InteractionUserIdTrackEditedIdAlbumEditedIdArtistEditedIdCompoundUniqueInput = {
+    userId: number
+    trackEditedId: number
+    albumEditedId: number
+    artistEditedId: number
+  }
+
+  export type InteractionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    trackEditedId?: SortOrder
+    albumEditedId?: SortOrder
+    artistEditedId?: SortOrder
+    comment?: SortOrder
+    liked?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InteractionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    trackEditedId?: SortOrder
+    albumEditedId?: SortOrder
+    artistEditedId?: SortOrder
+  }
+
+  export type InteractionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    trackEditedId?: SortOrder
+    albumEditedId?: SortOrder
+    artistEditedId?: SortOrder
+    comment?: SortOrder
+    liked?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InteractionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    trackEditedId?: SortOrder
+    albumEditedId?: SortOrder
+    artistEditedId?: SortOrder
+    comment?: SortOrder
+    liked?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InteractionSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    trackEditedId?: SortOrder
+    albumEditedId?: SortOrder
+    artistEditedId?: SortOrder
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -9868,6 +11767,13 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
+  export type InteractionCreateNestedManyWithoutUserInput = {
+    create?: XOR<InteractionCreateWithoutUserInput, InteractionUncheckedCreateWithoutUserInput> | InteractionCreateWithoutUserInput[] | InteractionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutUserInput | InteractionCreateOrConnectWithoutUserInput[]
+    createMany?: InteractionCreateManyUserInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -9906,6 +11812,13 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutFollowingInput, UserUncheckedCreateWithoutFollowingInput> | UserCreateWithoutFollowingInput[] | UserUncheckedCreateWithoutFollowingInput[]
     connectOrCreate?: UserCreateOrConnectWithoutFollowingInput | UserCreateOrConnectWithoutFollowingInput[]
     connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type InteractionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<InteractionCreateWithoutUserInput, InteractionUncheckedCreateWithoutUserInput> | InteractionCreateWithoutUserInput[] | InteractionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutUserInput | InteractionCreateOrConnectWithoutUserInput[]
+    createMany?: InteractionCreateManyUserInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -9994,6 +11907,20 @@ export namespace Prisma {
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
+  export type InteractionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InteractionCreateWithoutUserInput, InteractionUncheckedCreateWithoutUserInput> | InteractionCreateWithoutUserInput[] | InteractionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutUserInput | InteractionCreateOrConnectWithoutUserInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutUserInput | InteractionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InteractionCreateManyUserInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutUserInput | InteractionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutUserInput | InteractionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -10076,10 +12003,38 @@ export namespace Prisma {
     deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
+  export type InteractionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<InteractionCreateWithoutUserInput, InteractionUncheckedCreateWithoutUserInput> | InteractionCreateWithoutUserInput[] | InteractionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutUserInput | InteractionCreateOrConnectWithoutUserInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutUserInput | InteractionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: InteractionCreateManyUserInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutUserInput | InteractionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutUserInput | InteractionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutTracksInput = {
     create?: XOR<UserCreateWithoutTracksInput, UserUncheckedCreateWithoutTracksInput>
     connectOrCreate?: UserCreateOrConnectWithoutTracksInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type InteractionCreateNestedManyWithoutTrackEditedInput = {
+    create?: XOR<InteractionCreateWithoutTrackEditedInput, InteractionUncheckedCreateWithoutTrackEditedInput> | InteractionCreateWithoutTrackEditedInput[] | InteractionUncheckedCreateWithoutTrackEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutTrackEditedInput | InteractionCreateOrConnectWithoutTrackEditedInput[]
+    createMany?: InteractionCreateManyTrackEditedInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+  }
+
+  export type InteractionUncheckedCreateNestedManyWithoutTrackEditedInput = {
+    create?: XOR<InteractionCreateWithoutTrackEditedInput, InteractionUncheckedCreateWithoutTrackEditedInput> | InteractionCreateWithoutTrackEditedInput[] | InteractionUncheckedCreateWithoutTrackEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutTrackEditedInput | InteractionCreateOrConnectWithoutTrackEditedInput[]
+    createMany?: InteractionCreateManyTrackEditedInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -10096,6 +12051,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTracksInput, UserUpdateWithoutTracksInput>, UserUncheckedUpdateWithoutTracksInput>
   }
 
+  export type InteractionUpdateManyWithoutTrackEditedNestedInput = {
+    create?: XOR<InteractionCreateWithoutTrackEditedInput, InteractionUncheckedCreateWithoutTrackEditedInput> | InteractionCreateWithoutTrackEditedInput[] | InteractionUncheckedCreateWithoutTrackEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutTrackEditedInput | InteractionCreateOrConnectWithoutTrackEditedInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutTrackEditedInput | InteractionUpsertWithWhereUniqueWithoutTrackEditedInput[]
+    createMany?: InteractionCreateManyTrackEditedInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutTrackEditedInput | InteractionUpdateWithWhereUniqueWithoutTrackEditedInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutTrackEditedInput | InteractionUpdateManyWithWhereWithoutTrackEditedInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -10104,10 +12073,38 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type InteractionUncheckedUpdateManyWithoutTrackEditedNestedInput = {
+    create?: XOR<InteractionCreateWithoutTrackEditedInput, InteractionUncheckedCreateWithoutTrackEditedInput> | InteractionCreateWithoutTrackEditedInput[] | InteractionUncheckedCreateWithoutTrackEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutTrackEditedInput | InteractionCreateOrConnectWithoutTrackEditedInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutTrackEditedInput | InteractionUpsertWithWhereUniqueWithoutTrackEditedInput[]
+    createMany?: InteractionCreateManyTrackEditedInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutTrackEditedInput | InteractionUpdateWithWhereUniqueWithoutTrackEditedInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutTrackEditedInput | InteractionUpdateManyWithWhereWithoutTrackEditedInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutAlbumsInput = {
     create?: XOR<UserCreateWithoutAlbumsInput, UserUncheckedCreateWithoutAlbumsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAlbumsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type InteractionCreateNestedManyWithoutAlbumEditedInput = {
+    create?: XOR<InteractionCreateWithoutAlbumEditedInput, InteractionUncheckedCreateWithoutAlbumEditedInput> | InteractionCreateWithoutAlbumEditedInput[] | InteractionUncheckedCreateWithoutAlbumEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutAlbumEditedInput | InteractionCreateOrConnectWithoutAlbumEditedInput[]
+    createMany?: InteractionCreateManyAlbumEditedInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+  }
+
+  export type InteractionUncheckedCreateNestedManyWithoutAlbumEditedInput = {
+    create?: XOR<InteractionCreateWithoutAlbumEditedInput, InteractionUncheckedCreateWithoutAlbumEditedInput> | InteractionCreateWithoutAlbumEditedInput[] | InteractionUncheckedCreateWithoutAlbumEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutAlbumEditedInput | InteractionCreateOrConnectWithoutAlbumEditedInput[]
+    createMany?: InteractionCreateManyAlbumEditedInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
   }
 
   export type UserUpdateOneWithoutAlbumsNestedInput = {
@@ -10120,10 +12117,52 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAlbumsInput, UserUpdateWithoutAlbumsInput>, UserUncheckedUpdateWithoutAlbumsInput>
   }
 
+  export type InteractionUpdateManyWithoutAlbumEditedNestedInput = {
+    create?: XOR<InteractionCreateWithoutAlbumEditedInput, InteractionUncheckedCreateWithoutAlbumEditedInput> | InteractionCreateWithoutAlbumEditedInput[] | InteractionUncheckedCreateWithoutAlbumEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutAlbumEditedInput | InteractionCreateOrConnectWithoutAlbumEditedInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutAlbumEditedInput | InteractionUpsertWithWhereUniqueWithoutAlbumEditedInput[]
+    createMany?: InteractionCreateManyAlbumEditedInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutAlbumEditedInput | InteractionUpdateWithWhereUniqueWithoutAlbumEditedInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutAlbumEditedInput | InteractionUpdateManyWithWhereWithoutAlbumEditedInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+  }
+
+  export type InteractionUncheckedUpdateManyWithoutAlbumEditedNestedInput = {
+    create?: XOR<InteractionCreateWithoutAlbumEditedInput, InteractionUncheckedCreateWithoutAlbumEditedInput> | InteractionCreateWithoutAlbumEditedInput[] | InteractionUncheckedCreateWithoutAlbumEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutAlbumEditedInput | InteractionCreateOrConnectWithoutAlbumEditedInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutAlbumEditedInput | InteractionUpsertWithWhereUniqueWithoutAlbumEditedInput[]
+    createMany?: InteractionCreateManyAlbumEditedInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutAlbumEditedInput | InteractionUpdateWithWhereUniqueWithoutAlbumEditedInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutAlbumEditedInput | InteractionUpdateManyWithWhereWithoutAlbumEditedInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutArtistsInput = {
     create?: XOR<UserCreateWithoutArtistsInput, UserUncheckedCreateWithoutArtistsInput>
     connectOrCreate?: UserCreateOrConnectWithoutArtistsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type InteractionCreateNestedManyWithoutArtistEditedInput = {
+    create?: XOR<InteractionCreateWithoutArtistEditedInput, InteractionUncheckedCreateWithoutArtistEditedInput> | InteractionCreateWithoutArtistEditedInput[] | InteractionUncheckedCreateWithoutArtistEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutArtistEditedInput | InteractionCreateOrConnectWithoutArtistEditedInput[]
+    createMany?: InteractionCreateManyArtistEditedInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+  }
+
+  export type InteractionUncheckedCreateNestedManyWithoutArtistEditedInput = {
+    create?: XOR<InteractionCreateWithoutArtistEditedInput, InteractionUncheckedCreateWithoutArtistEditedInput> | InteractionCreateWithoutArtistEditedInput[] | InteractionUncheckedCreateWithoutArtistEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutArtistEditedInput | InteractionCreateOrConnectWithoutArtistEditedInput[]
+    createMany?: InteractionCreateManyArtistEditedInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
   }
 
   export type UserUpdateOneWithoutArtistsNestedInput = {
@@ -10134,6 +12173,96 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutArtistsInput, UserUpdateWithoutArtistsInput>, UserUncheckedUpdateWithoutArtistsInput>
+  }
+
+  export type InteractionUpdateManyWithoutArtistEditedNestedInput = {
+    create?: XOR<InteractionCreateWithoutArtistEditedInput, InteractionUncheckedCreateWithoutArtistEditedInput> | InteractionCreateWithoutArtistEditedInput[] | InteractionUncheckedCreateWithoutArtistEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutArtistEditedInput | InteractionCreateOrConnectWithoutArtistEditedInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutArtistEditedInput | InteractionUpsertWithWhereUniqueWithoutArtistEditedInput[]
+    createMany?: InteractionCreateManyArtistEditedInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutArtistEditedInput | InteractionUpdateWithWhereUniqueWithoutArtistEditedInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutArtistEditedInput | InteractionUpdateManyWithWhereWithoutArtistEditedInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+  }
+
+  export type InteractionUncheckedUpdateManyWithoutArtistEditedNestedInput = {
+    create?: XOR<InteractionCreateWithoutArtistEditedInput, InteractionUncheckedCreateWithoutArtistEditedInput> | InteractionCreateWithoutArtistEditedInput[] | InteractionUncheckedCreateWithoutArtistEditedInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutArtistEditedInput | InteractionCreateOrConnectWithoutArtistEditedInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutArtistEditedInput | InteractionUpsertWithWhereUniqueWithoutArtistEditedInput[]
+    createMany?: InteractionCreateManyArtistEditedInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutArtistEditedInput | InteractionUpdateWithWhereUniqueWithoutArtistEditedInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutArtistEditedInput | InteractionUpdateManyWithWhereWithoutArtistEditedInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutInteractionsInput = {
+    create?: XOR<UserCreateWithoutInteractionsInput, UserUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInteractionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TrackEditedCreateNestedOneWithoutInteractionsInput = {
+    create?: XOR<TrackEditedCreateWithoutInteractionsInput, TrackEditedUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: TrackEditedCreateOrConnectWithoutInteractionsInput
+    connect?: TrackEditedWhereUniqueInput
+  }
+
+  export type AlbumEditedCreateNestedOneWithoutInteractionsInput = {
+    create?: XOR<AlbumEditedCreateWithoutInteractionsInput, AlbumEditedUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: AlbumEditedCreateOrConnectWithoutInteractionsInput
+    connect?: AlbumEditedWhereUniqueInput
+  }
+
+  export type ArtistEditedCreateNestedOneWithoutInteractionsInput = {
+    create?: XOR<ArtistEditedCreateWithoutInteractionsInput, ArtistEditedUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: ArtistEditedCreateOrConnectWithoutInteractionsInput
+    connect?: ArtistEditedWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutInteractionsNestedInput = {
+    create?: XOR<UserCreateWithoutInteractionsInput, UserUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInteractionsInput
+    upsert?: UserUpsertWithoutInteractionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInteractionsInput, UserUpdateWithoutInteractionsInput>, UserUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type TrackEditedUpdateOneWithoutInteractionsNestedInput = {
+    create?: XOR<TrackEditedCreateWithoutInteractionsInput, TrackEditedUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: TrackEditedCreateOrConnectWithoutInteractionsInput
+    upsert?: TrackEditedUpsertWithoutInteractionsInput
+    disconnect?: TrackEditedWhereInput | boolean
+    delete?: TrackEditedWhereInput | boolean
+    connect?: TrackEditedWhereUniqueInput
+    update?: XOR<XOR<TrackEditedUpdateToOneWithWhereWithoutInteractionsInput, TrackEditedUpdateWithoutInteractionsInput>, TrackEditedUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type AlbumEditedUpdateOneWithoutInteractionsNestedInput = {
+    create?: XOR<AlbumEditedCreateWithoutInteractionsInput, AlbumEditedUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: AlbumEditedCreateOrConnectWithoutInteractionsInput
+    upsert?: AlbumEditedUpsertWithoutInteractionsInput
+    disconnect?: AlbumEditedWhereInput | boolean
+    delete?: AlbumEditedWhereInput | boolean
+    connect?: AlbumEditedWhereUniqueInput
+    update?: XOR<XOR<AlbumEditedUpdateToOneWithWhereWithoutInteractionsInput, AlbumEditedUpdateWithoutInteractionsInput>, AlbumEditedUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type ArtistEditedUpdateOneWithoutInteractionsNestedInput = {
+    create?: XOR<ArtistEditedCreateWithoutInteractionsInput, ArtistEditedUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: ArtistEditedCreateOrConnectWithoutInteractionsInput
+    upsert?: ArtistEditedUpsertWithoutInteractionsInput
+    disconnect?: ArtistEditedWhereInput | boolean
+    delete?: ArtistEditedWhereInput | boolean
+    connect?: ArtistEditedWhereUniqueInput
+    update?: XOR<XOR<ArtistEditedUpdateToOneWithWhereWithoutInteractionsInput, ArtistEditedUpdateWithoutInteractionsInput>, ArtistEditedUncheckedUpdateWithoutInteractionsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10326,6 +12455,7 @@ export namespace Prisma {
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
     following?: UserCreateNestedManyWithoutFollowersInput
     followers?: UserCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -10343,6 +12473,7 @@ export namespace Prisma {
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
     following?: UserUncheckedCreateNestedManyWithoutFollowersInput
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -10375,6 +12506,7 @@ export namespace Prisma {
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
     following?: UserUpdateManyWithoutFollowersNestedInput
     followers?: UserUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -10392,6 +12524,7 @@ export namespace Prisma {
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
     following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -10438,6 +12571,8 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
+    interactions?: InteractionCreateNestedManyWithoutTrackEditedInput
   }
 
   export type TrackEditedUncheckedCreateWithoutUserInput = {
@@ -10464,6 +12599,8 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
+    interactions?: InteractionUncheckedCreateNestedManyWithoutTrackEditedInput
   }
 
   export type TrackEditedCreateOrConnectWithoutUserInput = {
@@ -10497,6 +12634,8 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
+    interactions?: InteractionCreateNestedManyWithoutAlbumEditedInput
   }
 
   export type AlbumEditedUncheckedCreateWithoutUserInput = {
@@ -10522,6 +12661,8 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
+    interactions?: InteractionUncheckedCreateNestedManyWithoutAlbumEditedInput
   }
 
   export type AlbumEditedCreateOrConnectWithoutUserInput = {
@@ -10556,6 +12697,8 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
+    interactions?: InteractionCreateNestedManyWithoutArtistEditedInput
   }
 
   export type ArtistEditedUncheckedCreateWithoutUserInput = {
@@ -10582,6 +12725,8 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
+    interactions?: InteractionUncheckedCreateNestedManyWithoutArtistEditedInput
   }
 
   export type ArtistEditedCreateOrConnectWithoutUserInput = {
@@ -10607,6 +12752,7 @@ export namespace Prisma {
     albums?: AlbumEditedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
     following?: UserCreateNestedManyWithoutFollowersInput
+    interactions?: InteractionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowersInput = {
@@ -10624,6 +12770,7 @@ export namespace Prisma {
     albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
     following?: UserUncheckedCreateNestedManyWithoutFollowersInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowersInput = {
@@ -10645,6 +12792,7 @@ export namespace Prisma {
     albums?: AlbumEditedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
     followers?: UserCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFollowingInput = {
@@ -10662,11 +12810,40 @@ export namespace Prisma {
     albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFollowingInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutFollowingInput, UserUncheckedCreateWithoutFollowingInput>
+  }
+
+  export type InteractionCreateWithoutUserInput = {
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+    trackEdited?: TrackEditedCreateNestedOneWithoutInteractionsInput
+    albumEdited?: AlbumEditedCreateNestedOneWithoutInteractionsInput
+    artistEdited?: ArtistEditedCreateNestedOneWithoutInteractionsInput
+  }
+
+  export type InteractionUncheckedCreateWithoutUserInput = {
+    id?: number
+    trackEditedId?: number | null
+    albumEditedId?: number | null
+    artistEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InteractionCreateOrConnectWithoutUserInput = {
+    where: InteractionWhereUniqueInput
+    create: XOR<InteractionCreateWithoutUserInput, InteractionUncheckedCreateWithoutUserInput>
+  }
+
+  export type InteractionCreateManyUserInputEnvelope = {
+    data: InteractionCreateManyUserInput | InteractionCreateManyUserInput[]
   }
 
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
@@ -10739,6 +12916,7 @@ export namespace Prisma {
     rating?: StringFilter<"TrackEdited"> | string
     includesMetadata?: BoolFilter<"TrackEdited"> | boolean
     userId?: IntNullableFilter<"TrackEdited"> | number | null
+    public?: BoolFilter<"TrackEdited"> | boolean
   }
 
   export type AlbumEditedUpsertWithWhereUniqueWithoutUserInput = {
@@ -10784,6 +12962,7 @@ export namespace Prisma {
     rating?: StringFilter<"AlbumEdited"> | string
     includesMetadata?: BoolFilter<"AlbumEdited"> | boolean
     userId?: IntNullableFilter<"AlbumEdited"> | number | null
+    public?: BoolFilter<"AlbumEdited"> | boolean
   }
 
   export type ArtistEditedUpsertWithWhereUniqueWithoutUserInput = {
@@ -10830,6 +13009,7 @@ export namespace Prisma {
     rating?: StringFilter<"ArtistEdited"> | string
     includesMetadata?: BoolFilter<"ArtistEdited"> | boolean
     userId?: IntNullableFilter<"ArtistEdited"> | number | null
+    public?: BoolFilter<"ArtistEdited"> | boolean
   }
 
   export type UserUpsertWithWhereUniqueWithoutFollowersInput = {
@@ -10879,6 +13059,36 @@ export namespace Prisma {
     data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutFollowingInput>
   }
 
+  export type InteractionUpsertWithWhereUniqueWithoutUserInput = {
+    where: InteractionWhereUniqueInput
+    update: XOR<InteractionUpdateWithoutUserInput, InteractionUncheckedUpdateWithoutUserInput>
+    create: XOR<InteractionCreateWithoutUserInput, InteractionUncheckedCreateWithoutUserInput>
+  }
+
+  export type InteractionUpdateWithWhereUniqueWithoutUserInput = {
+    where: InteractionWhereUniqueInput
+    data: XOR<InteractionUpdateWithoutUserInput, InteractionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type InteractionUpdateManyWithWhereWithoutUserInput = {
+    where: InteractionScalarWhereInput
+    data: XOR<InteractionUpdateManyMutationInput, InteractionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type InteractionScalarWhereInput = {
+    AND?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+    OR?: InteractionScalarWhereInput[]
+    NOT?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+    id?: IntFilter<"Interaction"> | number
+    userId?: IntFilter<"Interaction"> | number
+    trackEditedId?: IntNullableFilter<"Interaction"> | number | null
+    albumEditedId?: IntNullableFilter<"Interaction"> | number | null
+    artistEditedId?: IntNullableFilter<"Interaction"> | number | null
+    comment?: StringNullableFilter<"Interaction"> | string | null
+    liked?: BoolFilter<"Interaction"> | boolean
+    createdAt?: DateTimeFilter<"Interaction"> | Date | string
+  }
+
   export type UserCreateWithoutTracksInput = {
     email: string
     name?: string | null
@@ -10893,6 +13103,7 @@ export namespace Prisma {
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
     following?: UserCreateNestedManyWithoutFollowersInput
     followers?: UserCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTracksInput = {
@@ -10910,11 +13121,40 @@ export namespace Prisma {
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
     following?: UserUncheckedCreateNestedManyWithoutFollowersInput
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTracksInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutTracksInput, UserUncheckedCreateWithoutTracksInput>
+  }
+
+  export type InteractionCreateWithoutTrackEditedInput = {
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutInteractionsInput
+    albumEdited?: AlbumEditedCreateNestedOneWithoutInteractionsInput
+    artistEdited?: ArtistEditedCreateNestedOneWithoutInteractionsInput
+  }
+
+  export type InteractionUncheckedCreateWithoutTrackEditedInput = {
+    id?: number
+    userId: number
+    albumEditedId?: number | null
+    artistEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InteractionCreateOrConnectWithoutTrackEditedInput = {
+    where: InteractionWhereUniqueInput
+    create: XOR<InteractionCreateWithoutTrackEditedInput, InteractionUncheckedCreateWithoutTrackEditedInput>
+  }
+
+  export type InteractionCreateManyTrackEditedInputEnvelope = {
+    data: InteractionCreateManyTrackEditedInput | InteractionCreateManyTrackEditedInput[]
   }
 
   export type UserUpsertWithoutTracksInput = {
@@ -10942,6 +13182,7 @@ export namespace Prisma {
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
     following?: UserUpdateManyWithoutFollowersNestedInput
     followers?: UserUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTracksInput = {
@@ -10959,6 +13200,23 @@ export namespace Prisma {
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
     following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type InteractionUpsertWithWhereUniqueWithoutTrackEditedInput = {
+    where: InteractionWhereUniqueInput
+    update: XOR<InteractionUpdateWithoutTrackEditedInput, InteractionUncheckedUpdateWithoutTrackEditedInput>
+    create: XOR<InteractionCreateWithoutTrackEditedInput, InteractionUncheckedCreateWithoutTrackEditedInput>
+  }
+
+  export type InteractionUpdateWithWhereUniqueWithoutTrackEditedInput = {
+    where: InteractionWhereUniqueInput
+    data: XOR<InteractionUpdateWithoutTrackEditedInput, InteractionUncheckedUpdateWithoutTrackEditedInput>
+  }
+
+  export type InteractionUpdateManyWithWhereWithoutTrackEditedInput = {
+    where: InteractionScalarWhereInput
+    data: XOR<InteractionUpdateManyMutationInput, InteractionUncheckedUpdateManyWithoutTrackEditedInput>
   }
 
   export type UserCreateWithoutAlbumsInput = {
@@ -10975,6 +13233,7 @@ export namespace Prisma {
     artists?: ArtistEditedCreateNestedManyWithoutUserInput
     following?: UserCreateNestedManyWithoutFollowersInput
     followers?: UserCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAlbumsInput = {
@@ -10992,11 +13251,40 @@ export namespace Prisma {
     artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
     following?: UserUncheckedCreateNestedManyWithoutFollowersInput
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAlbumsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutAlbumsInput, UserUncheckedCreateWithoutAlbumsInput>
+  }
+
+  export type InteractionCreateWithoutAlbumEditedInput = {
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutInteractionsInput
+    trackEdited?: TrackEditedCreateNestedOneWithoutInteractionsInput
+    artistEdited?: ArtistEditedCreateNestedOneWithoutInteractionsInput
+  }
+
+  export type InteractionUncheckedCreateWithoutAlbumEditedInput = {
+    id?: number
+    userId: number
+    trackEditedId?: number | null
+    artistEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InteractionCreateOrConnectWithoutAlbumEditedInput = {
+    where: InteractionWhereUniqueInput
+    create: XOR<InteractionCreateWithoutAlbumEditedInput, InteractionUncheckedCreateWithoutAlbumEditedInput>
+  }
+
+  export type InteractionCreateManyAlbumEditedInputEnvelope = {
+    data: InteractionCreateManyAlbumEditedInput | InteractionCreateManyAlbumEditedInput[]
   }
 
   export type UserUpsertWithoutAlbumsInput = {
@@ -11024,6 +13312,7 @@ export namespace Prisma {
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
     following?: UserUpdateManyWithoutFollowersNestedInput
     followers?: UserUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAlbumsInput = {
@@ -11041,6 +13330,23 @@ export namespace Prisma {
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
     following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type InteractionUpsertWithWhereUniqueWithoutAlbumEditedInput = {
+    where: InteractionWhereUniqueInput
+    update: XOR<InteractionUpdateWithoutAlbumEditedInput, InteractionUncheckedUpdateWithoutAlbumEditedInput>
+    create: XOR<InteractionCreateWithoutAlbumEditedInput, InteractionUncheckedCreateWithoutAlbumEditedInput>
+  }
+
+  export type InteractionUpdateWithWhereUniqueWithoutAlbumEditedInput = {
+    where: InteractionWhereUniqueInput
+    data: XOR<InteractionUpdateWithoutAlbumEditedInput, InteractionUncheckedUpdateWithoutAlbumEditedInput>
+  }
+
+  export type InteractionUpdateManyWithWhereWithoutAlbumEditedInput = {
+    where: InteractionScalarWhereInput
+    data: XOR<InteractionUpdateManyMutationInput, InteractionUncheckedUpdateManyWithoutAlbumEditedInput>
   }
 
   export type UserCreateWithoutArtistsInput = {
@@ -11057,6 +13363,7 @@ export namespace Prisma {
     albums?: AlbumEditedCreateNestedManyWithoutUserInput
     following?: UserCreateNestedManyWithoutFollowersInput
     followers?: UserCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutArtistsInput = {
@@ -11074,11 +13381,40 @@ export namespace Prisma {
     albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
     following?: UserUncheckedCreateNestedManyWithoutFollowersInput
     followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutArtistsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutArtistsInput, UserUncheckedCreateWithoutArtistsInput>
+  }
+
+  export type InteractionCreateWithoutArtistEditedInput = {
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutInteractionsInput
+    trackEdited?: TrackEditedCreateNestedOneWithoutInteractionsInput
+    albumEdited?: AlbumEditedCreateNestedOneWithoutInteractionsInput
+  }
+
+  export type InteractionUncheckedCreateWithoutArtistEditedInput = {
+    id?: number
+    userId: number
+    trackEditedId?: number | null
+    albumEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InteractionCreateOrConnectWithoutArtistEditedInput = {
+    where: InteractionWhereUniqueInput
+    create: XOR<InteractionCreateWithoutArtistEditedInput, InteractionUncheckedCreateWithoutArtistEditedInput>
+  }
+
+  export type InteractionCreateManyArtistEditedInputEnvelope = {
+    data: InteractionCreateManyArtistEditedInput | InteractionCreateManyArtistEditedInput[]
   }
 
   export type UserUpsertWithoutArtistsInput = {
@@ -11106,6 +13442,7 @@ export namespace Prisma {
     albums?: AlbumEditedUpdateManyWithoutUserNestedInput
     following?: UserUpdateManyWithoutFollowersNestedInput
     followers?: UserUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutArtistsInput = {
@@ -11123,6 +13460,483 @@ export namespace Prisma {
     albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
     following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type InteractionUpsertWithWhereUniqueWithoutArtistEditedInput = {
+    where: InteractionWhereUniqueInput
+    update: XOR<InteractionUpdateWithoutArtistEditedInput, InteractionUncheckedUpdateWithoutArtistEditedInput>
+    create: XOR<InteractionCreateWithoutArtistEditedInput, InteractionUncheckedCreateWithoutArtistEditedInput>
+  }
+
+  export type InteractionUpdateWithWhereUniqueWithoutArtistEditedInput = {
+    where: InteractionWhereUniqueInput
+    data: XOR<InteractionUpdateWithoutArtistEditedInput, InteractionUncheckedUpdateWithoutArtistEditedInput>
+  }
+
+  export type InteractionUpdateManyWithWhereWithoutArtistEditedInput = {
+    where: InteractionScalarWhereInput
+    data: XOR<InteractionUpdateManyMutationInput, InteractionUncheckedUpdateManyWithoutArtistEditedInput>
+  }
+
+  export type UserCreateWithoutInteractionsInput = {
+    email: string
+    name?: string | null
+    password: string
+    imageUrl?: string | null
+    imageStorageKey?: string | null
+    passwordUpdatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    tracks?: TrackEditedCreateNestedManyWithoutUserInput
+    albums?: AlbumEditedCreateNestedManyWithoutUserInput
+    artists?: ArtistEditedCreateNestedManyWithoutUserInput
+    following?: UserCreateNestedManyWithoutFollowersInput
+    followers?: UserCreateNestedManyWithoutFollowingInput
+  }
+
+  export type UserUncheckedCreateWithoutInteractionsInput = {
+    id?: number
+    email: string
+    name?: string | null
+    password: string
+    imageUrl?: string | null
+    imageStorageKey?: string | null
+    passwordUpdatedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    tracks?: TrackEditedUncheckedCreateNestedManyWithoutUserInput
+    albums?: AlbumEditedUncheckedCreateNestedManyWithoutUserInput
+    artists?: ArtistEditedUncheckedCreateNestedManyWithoutUserInput
+    following?: UserUncheckedCreateNestedManyWithoutFollowersInput
+    followers?: UserUncheckedCreateNestedManyWithoutFollowingInput
+  }
+
+  export type UserCreateOrConnectWithoutInteractionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutInteractionsInput, UserUncheckedCreateWithoutInteractionsInput>
+  }
+
+  export type TrackEditedCreateWithoutInteractionsInput = {
+    idTrack: string
+    idAlbum: string
+    idArtist: string
+    strTrack: string
+    strAlbum: string
+    strArtist: string
+    strGenre?: string | null
+    strMood?: string | null
+    strStyle?: string | null
+    intDuration?: string | null
+    strDescriptionEN?: string | null
+    strTrackThumb?: string | null
+    strMusicVid?: string | null
+    strMusicVidDirector?: string | null
+    strMusicVidCompany?: string | null
+    intMusicVidViews?: string | null
+    intMusicVidLikes?: string | null
+    intTrackNumber?: string | null
+    commentary: string
+    tag: string
+    rating: string
+    includesMetadata?: boolean
+    public?: boolean
+    User?: UserCreateNestedOneWithoutTracksInput
+  }
+
+  export type TrackEditedUncheckedCreateWithoutInteractionsInput = {
+    id?: number
+    idTrack: string
+    idAlbum: string
+    idArtist: string
+    strTrack: string
+    strAlbum: string
+    strArtist: string
+    strGenre?: string | null
+    strMood?: string | null
+    strStyle?: string | null
+    intDuration?: string | null
+    strDescriptionEN?: string | null
+    strTrackThumb?: string | null
+    strMusicVid?: string | null
+    strMusicVidDirector?: string | null
+    strMusicVidCompany?: string | null
+    intMusicVidViews?: string | null
+    intMusicVidLikes?: string | null
+    intTrackNumber?: string | null
+    commentary: string
+    tag: string
+    rating: string
+    includesMetadata?: boolean
+    userId?: number | null
+    public?: boolean
+  }
+
+  export type TrackEditedCreateOrConnectWithoutInteractionsInput = {
+    where: TrackEditedWhereUniqueInput
+    create: XOR<TrackEditedCreateWithoutInteractionsInput, TrackEditedUncheckedCreateWithoutInteractionsInput>
+  }
+
+  export type AlbumEditedCreateWithoutInteractionsInput = {
+    idAlbum: string
+    idArtist: string
+    strAlbum: string
+    strArtist: string
+    intYearReleased: string
+    strGenre?: string | null
+    strStyle?: string | null
+    strLabel?: string | null
+    strReleaseFormat?: string | null
+    strAlbumThumb?: string | null
+    strAlbumBack?: string | null
+    strAlbumCDart?: string | null
+    strAlbum3DThumb?: string | null
+    strDescriptionEN?: string | null
+    strMood?: string | null
+    strSpeed?: string | null
+    strWikipediaID?: string | null
+    commentary: string
+    tag: string
+    rating: string
+    includesMetadata?: boolean
+    public?: boolean
+    User?: UserCreateNestedOneWithoutAlbumsInput
+  }
+
+  export type AlbumEditedUncheckedCreateWithoutInteractionsInput = {
+    id?: number
+    idAlbum: string
+    idArtist: string
+    strAlbum: string
+    strArtist: string
+    intYearReleased: string
+    strGenre?: string | null
+    strStyle?: string | null
+    strLabel?: string | null
+    strReleaseFormat?: string | null
+    strAlbumThumb?: string | null
+    strAlbumBack?: string | null
+    strAlbumCDart?: string | null
+    strAlbum3DThumb?: string | null
+    strDescriptionEN?: string | null
+    strMood?: string | null
+    strSpeed?: string | null
+    strWikipediaID?: string | null
+    commentary: string
+    tag: string
+    rating: string
+    includesMetadata?: boolean
+    userId?: number | null
+    public?: boolean
+  }
+
+  export type AlbumEditedCreateOrConnectWithoutInteractionsInput = {
+    where: AlbumEditedWhereUniqueInput
+    create: XOR<AlbumEditedCreateWithoutInteractionsInput, AlbumEditedUncheckedCreateWithoutInteractionsInput>
+  }
+
+  export type ArtistEditedCreateWithoutInteractionsInput = {
+    idArtist: string
+    strArtist: string
+    strArtistAlternate?: string | null
+    strLabel?: string | null
+    intFormedYear?: string | null
+    strGenre?: string | null
+    strStyle?: string | null
+    strMood?: string | null
+    strCountry?: string | null
+    intMembers?: string | null
+    strWebsite?: string | null
+    strBiographyEN?: string | null
+    strArtistThumb?: string | null
+    strArtistLogo?: string | null
+    strArtistClearart?: string | null
+    strArtistWideThumb?: string | null
+    strArtistFanart?: string | null
+    strArtistBanner?: string | null
+    commentary: string
+    tag: string
+    rating: string
+    includesMetadata?: boolean
+    public?: boolean
+    User?: UserCreateNestedOneWithoutArtistsInput
+  }
+
+  export type ArtistEditedUncheckedCreateWithoutInteractionsInput = {
+    id?: number
+    idArtist: string
+    strArtist: string
+    strArtistAlternate?: string | null
+    strLabel?: string | null
+    intFormedYear?: string | null
+    strGenre?: string | null
+    strStyle?: string | null
+    strMood?: string | null
+    strCountry?: string | null
+    intMembers?: string | null
+    strWebsite?: string | null
+    strBiographyEN?: string | null
+    strArtistThumb?: string | null
+    strArtistLogo?: string | null
+    strArtistClearart?: string | null
+    strArtistWideThumb?: string | null
+    strArtistFanart?: string | null
+    strArtistBanner?: string | null
+    commentary: string
+    tag: string
+    rating: string
+    includesMetadata?: boolean
+    userId?: number | null
+    public?: boolean
+  }
+
+  export type ArtistEditedCreateOrConnectWithoutInteractionsInput = {
+    where: ArtistEditedWhereUniqueInput
+    create: XOR<ArtistEditedCreateWithoutInteractionsInput, ArtistEditedUncheckedCreateWithoutInteractionsInput>
+  }
+
+  export type UserUpsertWithoutInteractionsInput = {
+    update: XOR<UserUpdateWithoutInteractionsInput, UserUncheckedUpdateWithoutInteractionsInput>
+    create: XOR<UserCreateWithoutInteractionsInput, UserUncheckedCreateWithoutInteractionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutInteractionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutInteractionsInput, UserUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type UserUpdateWithoutInteractionsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    imageStorageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordUpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    tracks?: TrackEditedUpdateManyWithoutUserNestedInput
+    albums?: AlbumEditedUpdateManyWithoutUserNestedInput
+    artists?: ArtistEditedUpdateManyWithoutUserNestedInput
+    following?: UserUpdateManyWithoutFollowersNestedInput
+    followers?: UserUpdateManyWithoutFollowingNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutInteractionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    imageStorageKey?: NullableStringFieldUpdateOperationsInput | string | null
+    passwordUpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    tracks?: TrackEditedUncheckedUpdateManyWithoutUserNestedInput
+    albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
+    artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
+    following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
+    followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+  }
+
+  export type TrackEditedUpsertWithoutInteractionsInput = {
+    update: XOR<TrackEditedUpdateWithoutInteractionsInput, TrackEditedUncheckedUpdateWithoutInteractionsInput>
+    create: XOR<TrackEditedCreateWithoutInteractionsInput, TrackEditedUncheckedCreateWithoutInteractionsInput>
+    where?: TrackEditedWhereInput
+  }
+
+  export type TrackEditedUpdateToOneWithWhereWithoutInteractionsInput = {
+    where?: TrackEditedWhereInput
+    data: XOR<TrackEditedUpdateWithoutInteractionsInput, TrackEditedUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type TrackEditedUpdateWithoutInteractionsInput = {
+    idTrack?: StringFieldUpdateOperationsInput | string
+    idAlbum?: StringFieldUpdateOperationsInput | string
+    idArtist?: StringFieldUpdateOperationsInput | string
+    strTrack?: StringFieldUpdateOperationsInput | string
+    strAlbum?: StringFieldUpdateOperationsInput | string
+    strArtist?: StringFieldUpdateOperationsInput | string
+    strGenre?: NullableStringFieldUpdateOperationsInput | string | null
+    strMood?: NullableStringFieldUpdateOperationsInput | string | null
+    strStyle?: NullableStringFieldUpdateOperationsInput | string | null
+    intDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    strDescriptionEN?: NullableStringFieldUpdateOperationsInput | string | null
+    strTrackThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strMusicVid?: NullableStringFieldUpdateOperationsInput | string | null
+    strMusicVidDirector?: NullableStringFieldUpdateOperationsInput | string | null
+    strMusicVidCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    intMusicVidViews?: NullableStringFieldUpdateOperationsInput | string | null
+    intMusicVidLikes?: NullableStringFieldUpdateOperationsInput | string | null
+    intTrackNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    commentary?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    User?: UserUpdateOneWithoutTracksNestedInput
+  }
+
+  export type TrackEditedUncheckedUpdateWithoutInteractionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idTrack?: StringFieldUpdateOperationsInput | string
+    idAlbum?: StringFieldUpdateOperationsInput | string
+    idArtist?: StringFieldUpdateOperationsInput | string
+    strTrack?: StringFieldUpdateOperationsInput | string
+    strAlbum?: StringFieldUpdateOperationsInput | string
+    strArtist?: StringFieldUpdateOperationsInput | string
+    strGenre?: NullableStringFieldUpdateOperationsInput | string | null
+    strMood?: NullableStringFieldUpdateOperationsInput | string | null
+    strStyle?: NullableStringFieldUpdateOperationsInput | string | null
+    intDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    strDescriptionEN?: NullableStringFieldUpdateOperationsInput | string | null
+    strTrackThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strMusicVid?: NullableStringFieldUpdateOperationsInput | string | null
+    strMusicVidDirector?: NullableStringFieldUpdateOperationsInput | string | null
+    strMusicVidCompany?: NullableStringFieldUpdateOperationsInput | string | null
+    intMusicVidViews?: NullableStringFieldUpdateOperationsInput | string | null
+    intMusicVidLikes?: NullableStringFieldUpdateOperationsInput | string | null
+    intTrackNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    commentary?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    public?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AlbumEditedUpsertWithoutInteractionsInput = {
+    update: XOR<AlbumEditedUpdateWithoutInteractionsInput, AlbumEditedUncheckedUpdateWithoutInteractionsInput>
+    create: XOR<AlbumEditedCreateWithoutInteractionsInput, AlbumEditedUncheckedCreateWithoutInteractionsInput>
+    where?: AlbumEditedWhereInput
+  }
+
+  export type AlbumEditedUpdateToOneWithWhereWithoutInteractionsInput = {
+    where?: AlbumEditedWhereInput
+    data: XOR<AlbumEditedUpdateWithoutInteractionsInput, AlbumEditedUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type AlbumEditedUpdateWithoutInteractionsInput = {
+    idAlbum?: StringFieldUpdateOperationsInput | string
+    idArtist?: StringFieldUpdateOperationsInput | string
+    strAlbum?: StringFieldUpdateOperationsInput | string
+    strArtist?: StringFieldUpdateOperationsInput | string
+    intYearReleased?: StringFieldUpdateOperationsInput | string
+    strGenre?: NullableStringFieldUpdateOperationsInput | string | null
+    strStyle?: NullableStringFieldUpdateOperationsInput | string | null
+    strLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    strReleaseFormat?: NullableStringFieldUpdateOperationsInput | string | null
+    strAlbumThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strAlbumBack?: NullableStringFieldUpdateOperationsInput | string | null
+    strAlbumCDart?: NullableStringFieldUpdateOperationsInput | string | null
+    strAlbum3DThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strDescriptionEN?: NullableStringFieldUpdateOperationsInput | string | null
+    strMood?: NullableStringFieldUpdateOperationsInput | string | null
+    strSpeed?: NullableStringFieldUpdateOperationsInput | string | null
+    strWikipediaID?: NullableStringFieldUpdateOperationsInput | string | null
+    commentary?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    User?: UserUpdateOneWithoutAlbumsNestedInput
+  }
+
+  export type AlbumEditedUncheckedUpdateWithoutInteractionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idAlbum?: StringFieldUpdateOperationsInput | string
+    idArtist?: StringFieldUpdateOperationsInput | string
+    strAlbum?: StringFieldUpdateOperationsInput | string
+    strArtist?: StringFieldUpdateOperationsInput | string
+    intYearReleased?: StringFieldUpdateOperationsInput | string
+    strGenre?: NullableStringFieldUpdateOperationsInput | string | null
+    strStyle?: NullableStringFieldUpdateOperationsInput | string | null
+    strLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    strReleaseFormat?: NullableStringFieldUpdateOperationsInput | string | null
+    strAlbumThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strAlbumBack?: NullableStringFieldUpdateOperationsInput | string | null
+    strAlbumCDart?: NullableStringFieldUpdateOperationsInput | string | null
+    strAlbum3DThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strDescriptionEN?: NullableStringFieldUpdateOperationsInput | string | null
+    strMood?: NullableStringFieldUpdateOperationsInput | string | null
+    strSpeed?: NullableStringFieldUpdateOperationsInput | string | null
+    strWikipediaID?: NullableStringFieldUpdateOperationsInput | string | null
+    commentary?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    public?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ArtistEditedUpsertWithoutInteractionsInput = {
+    update: XOR<ArtistEditedUpdateWithoutInteractionsInput, ArtistEditedUncheckedUpdateWithoutInteractionsInput>
+    create: XOR<ArtistEditedCreateWithoutInteractionsInput, ArtistEditedUncheckedCreateWithoutInteractionsInput>
+    where?: ArtistEditedWhereInput
+  }
+
+  export type ArtistEditedUpdateToOneWithWhereWithoutInteractionsInput = {
+    where?: ArtistEditedWhereInput
+    data: XOR<ArtistEditedUpdateWithoutInteractionsInput, ArtistEditedUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type ArtistEditedUpdateWithoutInteractionsInput = {
+    idArtist?: StringFieldUpdateOperationsInput | string
+    strArtist?: StringFieldUpdateOperationsInput | string
+    strArtistAlternate?: NullableStringFieldUpdateOperationsInput | string | null
+    strLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    intFormedYear?: NullableStringFieldUpdateOperationsInput | string | null
+    strGenre?: NullableStringFieldUpdateOperationsInput | string | null
+    strStyle?: NullableStringFieldUpdateOperationsInput | string | null
+    strMood?: NullableStringFieldUpdateOperationsInput | string | null
+    strCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    intMembers?: NullableStringFieldUpdateOperationsInput | string | null
+    strWebsite?: NullableStringFieldUpdateOperationsInput | string | null
+    strBiographyEN?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistLogo?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistClearart?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistWideThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistFanart?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistBanner?: NullableStringFieldUpdateOperationsInput | string | null
+    commentary?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    User?: UserUpdateOneWithoutArtistsNestedInput
+  }
+
+  export type ArtistEditedUncheckedUpdateWithoutInteractionsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idArtist?: StringFieldUpdateOperationsInput | string
+    strArtist?: StringFieldUpdateOperationsInput | string
+    strArtistAlternate?: NullableStringFieldUpdateOperationsInput | string | null
+    strLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    intFormedYear?: NullableStringFieldUpdateOperationsInput | string | null
+    strGenre?: NullableStringFieldUpdateOperationsInput | string | null
+    strStyle?: NullableStringFieldUpdateOperationsInput | string | null
+    strMood?: NullableStringFieldUpdateOperationsInput | string | null
+    strCountry?: NullableStringFieldUpdateOperationsInput | string | null
+    intMembers?: NullableStringFieldUpdateOperationsInput | string | null
+    strWebsite?: NullableStringFieldUpdateOperationsInput | string | null
+    strBiographyEN?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistLogo?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistClearart?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistWideThumb?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistFanart?: NullableStringFieldUpdateOperationsInput | string | null
+    strArtistBanner?: NullableStringFieldUpdateOperationsInput | string | null
+    commentary?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    rating?: StringFieldUpdateOperationsInput | string
+    includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    userId?: NullableIntFieldUpdateOperationsInput | number | null
+    public?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type SessionCreateManyUserInput = {
@@ -11155,6 +13969,7 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
   }
 
   export type AlbumEditedCreateManyUserInput = {
@@ -11180,6 +13995,7 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
   }
 
   export type ArtistEditedCreateManyUserInput = {
@@ -11206,6 +14022,17 @@ export namespace Prisma {
     tag: string
     rating: string
     includesMetadata?: boolean
+    public?: boolean
+  }
+
+  export type InteractionCreateManyUserInput = {
+    id?: number
+    trackEditedId?: number | null
+    albumEditedId?: number | null
+    artistEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
   }
 
   export type SessionUpdateWithoutUserInput = {
@@ -11249,6 +14076,8 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    interactions?: InteractionUpdateManyWithoutTrackEditedNestedInput
   }
 
   export type TrackEditedUncheckedUpdateWithoutUserInput = {
@@ -11275,6 +14104,8 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    interactions?: InteractionUncheckedUpdateManyWithoutTrackEditedNestedInput
   }
 
   export type TrackEditedUncheckedUpdateManyWithoutUserInput = {
@@ -11301,6 +14132,7 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AlbumEditedUpdateWithoutUserInput = {
@@ -11325,6 +14157,8 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    interactions?: InteractionUpdateManyWithoutAlbumEditedNestedInput
   }
 
   export type AlbumEditedUncheckedUpdateWithoutUserInput = {
@@ -11350,6 +14184,8 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    interactions?: InteractionUncheckedUpdateManyWithoutAlbumEditedNestedInput
   }
 
   export type AlbumEditedUncheckedUpdateManyWithoutUserInput = {
@@ -11375,6 +14211,7 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ArtistEditedUpdateWithoutUserInput = {
@@ -11400,6 +14237,8 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    interactions?: InteractionUpdateManyWithoutArtistEditedNestedInput
   }
 
   export type ArtistEditedUncheckedUpdateWithoutUserInput = {
@@ -11426,6 +14265,8 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    interactions?: InteractionUncheckedUpdateManyWithoutArtistEditedNestedInput
   }
 
   export type ArtistEditedUncheckedUpdateManyWithoutUserInput = {
@@ -11452,6 +14293,7 @@ export namespace Prisma {
     tag?: StringFieldUpdateOperationsInput | string
     rating?: StringFieldUpdateOperationsInput | string
     includesMetadata?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUpdateWithoutFollowersInput = {
@@ -11468,6 +14310,7 @@ export namespace Prisma {
     albums?: AlbumEditedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
     following?: UserUpdateManyWithoutFollowersNestedInput
+    interactions?: InteractionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowersInput = {
@@ -11485,6 +14328,7 @@ export namespace Prisma {
     albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
     following?: UserUncheckedUpdateManyWithoutFollowersNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutFollowersInput = {
@@ -11513,6 +14357,7 @@ export namespace Prisma {
     albums?: AlbumEditedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUpdateManyWithoutUserNestedInput
     followers?: UserUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFollowingInput = {
@@ -11530,6 +14375,7 @@ export namespace Prisma {
     albums?: AlbumEditedUncheckedUpdateManyWithoutUserNestedInput
     artists?: ArtistEditedUncheckedUpdateManyWithoutUserNestedInput
     followers?: UserUncheckedUpdateManyWithoutFollowingNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutFollowingInput = {
@@ -11542,6 +14388,152 @@ export namespace Prisma {
     passwordUpdatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUpdateWithoutUserInput = {
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    trackEdited?: TrackEditedUpdateOneWithoutInteractionsNestedInput
+    albumEdited?: AlbumEditedUpdateOneWithoutInteractionsNestedInput
+    artistEdited?: ArtistEditedUpdateOneWithoutInteractionsNestedInput
+  }
+
+  export type InteractionUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    trackEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    artistEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    trackEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    artistEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionCreateManyTrackEditedInput = {
+    id?: number
+    userId: number
+    albumEditedId?: number | null
+    artistEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InteractionUpdateWithoutTrackEditedInput = {
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutInteractionsNestedInput
+    albumEdited?: AlbumEditedUpdateOneWithoutInteractionsNestedInput
+    artistEdited?: ArtistEditedUpdateOneWithoutInteractionsNestedInput
+  }
+
+  export type InteractionUncheckedUpdateWithoutTrackEditedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    albumEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    artistEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUncheckedUpdateManyWithoutTrackEditedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    albumEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    artistEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionCreateManyAlbumEditedInput = {
+    id?: number
+    userId: number
+    trackEditedId?: number | null
+    artistEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InteractionUpdateWithoutAlbumEditedInput = {
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutInteractionsNestedInput
+    trackEdited?: TrackEditedUpdateOneWithoutInteractionsNestedInput
+    artistEdited?: ArtistEditedUpdateOneWithoutInteractionsNestedInput
+  }
+
+  export type InteractionUncheckedUpdateWithoutAlbumEditedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    trackEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    artistEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUncheckedUpdateManyWithoutAlbumEditedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    trackEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    artistEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionCreateManyArtistEditedInput = {
+    id?: number
+    userId: number
+    trackEditedId?: number | null
+    albumEditedId?: number | null
+    comment?: string | null
+    liked?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InteractionUpdateWithoutArtistEditedInput = {
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutInteractionsNestedInput
+    trackEdited?: TrackEditedUpdateOneWithoutInteractionsNestedInput
+    albumEdited?: AlbumEditedUpdateOneWithoutInteractionsNestedInput
+  }
+
+  export type InteractionUncheckedUpdateWithoutArtistEditedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    trackEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUncheckedUpdateManyWithoutArtistEditedInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    trackEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    albumEditedId?: NullableIntFieldUpdateOperationsInput | number | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    liked?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
