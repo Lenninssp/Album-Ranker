@@ -8,16 +8,12 @@ interface ArtistCardProps {
 
 export const ArtistCard = ({ artist, simplified }: ArtistCardProps) => {
   let metadata: UserMetadata | undefined;
-  console.log(artist)
   if (artist.includesMetadata) {
-  console.log("It includes it")
-
     metadata = {
       commentary: artist.commentary,
       tag: artist.tag,
       rating: artist.rating
     };
-    console.log(metadata)
   }
   return (
     <BaseMediaCard

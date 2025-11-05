@@ -29,6 +29,7 @@ export const NavBar = () => {
       ]
     : [
         { href: "/", label: "HOME" },
+        { href: "/community", label: "COMMUNITY" },
         { href: "/search", label: "SEARCH" },
         { href: "/library", label: "LIBRARY" },
         { href: "/my-account", label: "MY ACCOUNT" },
