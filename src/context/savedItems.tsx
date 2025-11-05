@@ -9,6 +9,7 @@ type State = {
   tags: string[];
 
   subscriptions: string[];
+  subscribers: string[];
 };
 
 type Actions = {
@@ -31,6 +32,7 @@ type Actions = {
   loadUserData: (userId: number) => Promise<void>;
 
   getTags: () => string[];
+  getSubscribers:() => string[];
 
   getSubscriptions: () => string[];
   addSubscription: (userId: number, creatorId: number) => Promise<void>;
@@ -54,20 +56,23 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
   savedAlbums: [],
   tags: [],
   subscriptions: [],
+  subscribers: [],
 
   loadUserData: async (userId: Number) => {
-    const [artistRes, albumRes, trackRes, subsRes] = await Promise.all([
+    const [artistRes, albumRes, trackRes, subsRes, subscribersRes] = await Promise.all([
       fetch(`/api/elements/artists?userId=${userId}`),
       fetch(`/api/elements/albums?userId=${userId}`),
       fetch(`/api/elements/tracks?userId=${userId}`),
       fetch(`/api/community/users/follow/${userId}`),
+      fetch(`/api/community/users/follower/${userId}`),
     ]);
 
-    const [artists, albums, tracks, subsResult] = await Promise.all([
+    const [artists, albums, tracks, subsResult, subscribersResult] = await Promise.all([
       artistRes.json(),
       albumRes.json(),
       trackRes.json(),
       subsRes.json(),
+      subscribersRes.json(),
     ]);
 
     set((state) => {
@@ -77,6 +82,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
         savedAlbums: albums,
         savedTracks: tracks,
         subscriptions: subsResult,
+        subscribers: subscribersResult,
       };
 
       return {
@@ -228,4 +234,5 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
   getTags: () => get().tags,
   getSubscriptions: () => get().subscriptions,
   isSubscribed: (creatorId: string) => get().subscriptions.includes(creatorId),
+  getSubscribers: ()=>get().subscribers,
 }));

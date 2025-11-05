@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 
 export const AccountEdit = () => {
   const { data: session } = useSession();
-  const { getAlbums, getArtists, getTracks } = useSavedItems();
+  const { getAlbums, getArtists, getTracks, getSubscribers } = useSavedItems();
   const [previousPassword, setPreviousPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -32,7 +32,8 @@ export const AccountEdit = () => {
     } catch (error: any) {
       throw new Error("There was an error:", error);
     }
-  };
+  }
+
 
   return (
     <div className=" h-full w-full flex items-center justify-center gap-4">
@@ -53,6 +54,12 @@ export const AccountEdit = () => {
           <div className=" font-bold"># rated songs:</div>
           <div>
             {getAlbums().length + getArtists().length + getTracks().length}
+          </div>
+        </div>
+         <div className="flex gap-2">
+          <div className=" font-bold">Subscribers:</div>
+          <div>
+            {getSubscribers().length}
           </div>
         </div>
 
