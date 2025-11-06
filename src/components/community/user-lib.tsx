@@ -71,6 +71,7 @@ export const UserLib = ({ user }: { user: UserWithMedia }) => {
                 ?.filter(
                   (a) => a.rating === Rating.Adore || a.rating === Rating.Love
                 )
+                .filter((b) => b.public === true)
                 .map((album) => (
                   <AlbumCard key={album.idAlbum} album={album} simplified />
                 ))}
@@ -79,6 +80,7 @@ export const UserLib = ({ user }: { user: UserWithMedia }) => {
                 ?.filter(
                   (t) => t.rating === Rating.Adore || t.rating === Rating.Love
                 )
+                .filter((b) => b.public === true)
                 .map((track) => (
                   <TrackCard key={track.idTrack} track={track} simplified />
                 ))}
