@@ -9,6 +9,7 @@ import { AlbumsSection } from "./album-section";
 import { TracksSection } from "./tracks-section";
 import { ArtistsSection } from "./artists-section";
 import { TagsFilter } from "./tags-filter";
+import { MediaCardProvider, Renderer } from "@/context/media-card-context";
 
 export const LibraryComponent = ({ className }: LibraryComponentProps) => {
   const { savedArtists, savedAlbums, savedTracks } = useSavedItems();
@@ -34,29 +35,30 @@ export const LibraryComponent = ({ className }: LibraryComponentProps) => {
           onFilterChange={setSelectedFilter}
         />
       </div>
+      <MediaCardProvider renderer={Renderer.LIBRARY}>
+        <AlbumsSection
+          selectedFilter={selectedFilter}
+          selectedFolder={selectedFolder}
+          simplifiedState={state}
+          dispatch={dispatch}
+        />
 
-      <AlbumsSection
-        selectedFilter={selectedFilter}
-        selectedFolder={selectedFolder}
-        simplifiedState={state}
-        dispatch={dispatch}
-      />
+        <TracksSection
+          selectedFilter={selectedFilter}
+          selectedFolder={selectedFolder}
+          simplifiedState={state}
+          dispatch={dispatch}
+          state={state}
+        />
 
-      <TracksSection
-        selectedFilter={selectedFilter}
-        selectedFolder={selectedFolder}
-        simplifiedState={state}
-        dispatch={dispatch}
-        state={state}
-      />
-
-      <ArtistsSection
-        selectedFilter={selectedFilter}
-        selectedFolder={selectedFolder}
-        simplifiedState={state}
-        dispatch={dispatch}
-        state={state}
-      />
+        <ArtistsSection
+          selectedFilter={selectedFilter}
+          selectedFolder={selectedFolder}
+          simplifiedState={state}
+          dispatch={dispatch}
+          state={state}
+        />
+      </MediaCardProvider>
     </div>
   );
 };

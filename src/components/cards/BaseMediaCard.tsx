@@ -9,8 +9,14 @@ import { CardActions } from "./CardActions";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
 import { useBaseMediaCard } from "@/hooks/useBaseMediaCard";
-import { AllElements, AllElementsEdited, TypeOfElement, UserMetadata } from "@/types/music";
+import {
+  AllElements,
+  AllElementsEdited,
+  TypeOfElement,
+  UserMetadata,
+} from "@/types/music";
 import { extractMetadata, MediaCardConfig } from "@/types/mediaCard";
+import { Renderer, useMediaCardContext } from "@/context/media-card-context";
 
 interface BaseMediaCardProps {
   type: TypeOfElement;
@@ -27,8 +33,9 @@ export const BaseMediaCard = ({
   simplified,
   children,
 }: BaseMediaCardProps) => {
+  const { renderer } = useMediaCardContext();
   const metadata = extractMetadata(element);
-  
+
   const {
     selectedColor,
     handleChangeSelectedColor,
@@ -50,19 +57,21 @@ export const BaseMediaCard = ({
           RatingDimmerBackground[selectedColor]
         )}
       >
-        <CardActions
-          handleSelectColor={(key) => handleChangeSelectedColor(key)}
-          addTag={addTag}
-          tag={tag}
-          handleModifyTag={(value) => handleChangeTag(value)}
-          handleSaveTag={handleSaveTag}
-          handleActivateTag={toggleTag}
-          commentary={commentary}
-          handleSaveCommentary={(value) => handleSaveCommentary(value)}
-          handleDeleteElement={handleDeleteElement}
-          simplified={simplified}
-        />
-        
+        {renderer === Renderer.LIBRARY && (
+          <CardActions
+            handleSelectColor={(key) => handleChangeSelectedColor(key)}
+            addTag={addTag}
+            tag={tag}
+            handleModifyTag={(value) => handleChangeTag(value)}
+            handleSaveTag={handleSaveTag}
+            handleActivateTag={toggleTag}
+            commentary={commentary}
+            handleSaveCommentary={(value) => handleSaveCommentary(value)}
+            handleDeleteElement={handleDeleteElement}
+            simplified={simplified}
+          />
+        )}
+
         <div className="flex gap-4">
           {config.headerImage ? (
             <img
@@ -83,7 +92,7 @@ export const BaseMediaCard = ({
               No image available
             </div>
           )}
-          
+
           <div
             className={cn(
               "flex flex-col flex-1 justify-center",
@@ -92,15 +101,19 @@ export const BaseMediaCard = ({
           >
             <div className="text-3xl font-bold truncate">{config.title}</div>
             {config.subtitle && <div>{config.subtitle}</div>}
-            {config.year && <div className="text-sm opacity-80">{config.year}</div>}
+            {config.year && (
+              <div className="text-sm opacity-80">{config.year}</div>
+            )}
           </div>
         </div>
-        
+
         <div className="flex flex-col gap-2">
-          <div className={cn(
-            "text-sm leading-relaxed max-h-44 overflow-auto",
-            simplified && "max-h-28"
-          )}>
+          <div
+            className={cn(
+              "text-sm leading-relaxed max-h-44 overflow-auto",
+              simplified && "max-h-28"
+            )}
+          >
             {config.description}
           </div>
           {config.genre && <div className="opacity-75">{config.genre}</div>}
