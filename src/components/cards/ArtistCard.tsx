@@ -1,35 +1,17 @@
-import { Artist, TypeOfElement, UserMetadata } from "@/types/music";
-import { BaseMediaCard } from "./BaseMediaCard";
+import { Artist, ArtistEdited, TypeOfElement } from "@/types/music";
+import { MediaCard } from "./MediaCard";
 
 interface ArtistCardProps {
-  artist: Artist;
+  artist: ArtistEdited;
   simplified?: boolean;
 }
 
 export const ArtistCard = ({ artist, simplified }: ArtistCardProps) => {
-  let metadata: UserMetadata | undefined;
-  if (artist.includesMetadata) {
-    metadata = {
-      commentary: artist.commentary,
-      tag: artist.tag,
-      rating: artist.rating
-    };
-  }
   return (
-    <BaseMediaCard
+    <MediaCard
       type={TypeOfElement.ARTIST}
       element={artist}
-      headerImage={artist.strArtistThumb}
-      title={artist.strArtist}
-      subtitle={artist.strLabel}
-      year={artist.intFormedYear}
-      metadata={metadata}
       simplified={simplified}
-    >
-      <div className="text-sm leading-relaxed max-h-44 overflow-auto">
-        {artist.strBiographyEN || artist.includesMetadata && artist.commentary || "No biography available."}
-      </div>
-      <div className="opacity-75">{artist.strGenre}</div>
-    </BaseMediaCard>
+    />
   );
 };

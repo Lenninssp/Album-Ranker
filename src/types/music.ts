@@ -1,9 +1,11 @@
+import { Interaction } from "@/generated/prisma";
 import { Rating } from "./ratingColor";
 
 export interface UserMetadata {
   commentary: string;
   tag: string;
   rating: Rating;
+  public: boolean;
 }
 
 export interface AlbumResponse {
@@ -82,13 +84,13 @@ export interface RawArtistBase {
 }
 
 
-export type RawAlbum = RawAlbumBase & { includesMetadata: false };
-export type RawTrack = RawTrackBase & { includesMetadata: false };
-export type RawArtist = RawArtistBase & { includesMetadata: false };
+export type RawAlbum = RawAlbumBase
+export type RawTrack = RawTrackBase
+export type RawArtist = RawArtistBase
 
-export type AlbumEdited = RawAlbumBase & UserMetadata & { includesMetadata: true };
-export type TrackEdited = RawTrackBase & UserMetadata & { includesMetadata: true };
-export type ArtistEdited = RawArtistBase & UserMetadata & { includesMetadata: true };
+export type AlbumEdited = RawAlbumBase & UserMetadata
+export type TrackEdited = RawTrackBase & UserMetadata
+export type ArtistEdited = RawArtistBase & UserMetadata
 
 
 export type Artist = RawArtist | ArtistEdited;

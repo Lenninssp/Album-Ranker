@@ -7,7 +7,9 @@ import { DefaultFrame } from "@/components/default-frame";
 import { RadioSearch } from "@/components/search/radio-search";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AudioDBResponse, Track } from "@/types/music";
+import { AlbumEdited } from "@/generated/prisma";
+import { Album, AudioDBResponse, Track } from "@/types/music";
+import { Rating } from "@/types/ratingColor";
 import { useState } from "react";
 
 export type SearchType = "album" | "track" | "artist";
@@ -56,6 +58,14 @@ const Search = () => {
     }
   };
 
+  const elements = {
+    commentary: "",
+    tag: "",
+    rating: Rating.Undefined,
+    public: false,
+    includesMetadata: false
+  };
+
   return (
     <DefaultFrame className="flex flex-col items-center justify-center gap-4">
       <div className="flex-1 w-full justify-end flex-col flex">
@@ -96,17 +106,17 @@ const Search = () => {
       <div className="flex-2 w-full max-w-6xl overflow-auto">
         {result?.type === "artist" &&
           Array.isArray(result.artists) &&
-          result.artists[0] && <ArtistCard artist={result.artists[0]} />}
+          result.artists[0] && <ArtistCard artist={{...result.artists[0], ...elements}} />}
 
         {result?.type === "album" &&
           Array.isArray(result.album) &&
           result.album[0] && (
             <div className="flex flex-col gap-6">
-              <AlbumCard album={result.album[0]} />
+              <AlbumCard album={{...result.album[0], ...elements}} />
               {albumTracks && albumTracks.length > 0 && (
                 <div className="flex flex-col gap-2">
                   {albumTracks.map((track) => (
-                    <TrackCard key={track.idTrack} track={track} fallBackImage={result?.album?.[0]?.strAlbum3DThumb ?? undefined} simplified />
+                    <TrackCard key={track.idTrack} track={{...track, ...elements}} fallbackImage={result?.album?.[0]?.strAlbum3DThumb ?? undefined} simplified />
                   ))}
                 </div>
               )}
@@ -116,7 +126,7 @@ const Search = () => {
         {/* Track */}
         {result?.type === "track" &&
           Array.isArray(result.track) &&
-          result.track[0] && <TrackCard track={result.track[0]} />}
+          result.track[0] && <TrackCard track={{...result.track[0], ...elements}} />}
       </div>
     </DefaultFrame>
   );

@@ -1,36 +1,17 @@
-import { Album, AlbumEdited, RawAlbum, TypeOfElement, UserMetadata } from "@/types/music";
-import { BaseMediaCard } from "./BaseMediaCard";
+import { AlbumEdited, TypeOfElement } from "@/types/music";
+import { MediaCard } from "./MediaCard";
 
 interface AlbumCardProps {
-  album: Album;
+  album: AlbumEdited;
   simplified?: boolean;
 }
 
 export const AlbumCard = ({ album, simplified }: AlbumCardProps) => {
-    let metadata: UserMetadata | undefined;
-    if (album.includesMetadata) {
-      metadata = {
-        commentary: (album as AlbumEdited).commentary,
-        tag: (album as AlbumEdited).tag,
-        rating: (album as AlbumEdited).rating
-      };
-    }
-    
   return (
-    <BaseMediaCard
+    <MediaCard
       type={TypeOfElement.ALBUM}
       element={album}
-      headerImage={album.strAlbumThumb}
-      title={album.strAlbum}
-      subtitle={album.strArtist}
-      year={album.intYearReleased}
-      metadata={metadata}
       simplified={simplified}
-    >
-      <div className="text-sm max-h-44 overflow-auto">
-        {album.strDescriptionEN ||  album.includesMetadata && album.commentary  || "No description available."}
-      </div>
-      <div className="opacity-75">{album.strGenre}</div>
-    </BaseMediaCard>
+    />
   );
 };

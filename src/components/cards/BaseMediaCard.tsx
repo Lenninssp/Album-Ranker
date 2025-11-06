@@ -9,31 +9,26 @@ import { CardActions } from "./CardActions";
 import { Dialog } from "../ui/dialog";
 import { toast } from "sonner";
 import { useBaseMediaCard } from "@/hooks/useBaseMediaCard";
-import { AllElements, TypeOfElement, UserMetadata } from "@/types/music";
+import { AllElements, AllElementsEdited, TypeOfElement, UserMetadata } from "@/types/music";
+import { extractMetadata, MediaCardConfig } from "@/types/mediaCard";
 
 interface BaseMediaCardProps {
-  children: ReactNode;
   type: TypeOfElement;
-  element: AllElements;
-  headerImage?: string | null;
-  title: string;
-  subtitle?: string | null;
-  year?: string | number | null;
-  metadata?: UserMetadata;
+  element: AllElementsEdited;
+  config: MediaCardConfig;
   simplified?: boolean;
+  children?: ReactNode;
 }
 
 export const BaseMediaCard = ({
-  children,
-  headerImage,
-  title,
-  subtitle,
-  year,
   type,
   element,
-  metadata,
+  config,
   simplified,
+  children,
 }: BaseMediaCardProps) => {
+  const metadata = extractMetadata(element);
+  
   const {
     selectedColor,
     handleChangeSelectedColor,
@@ -46,6 +41,7 @@ export const BaseMediaCard = ({
     toggleTag,
     handleDeleteElement,
   } = useBaseMediaCard(type, element, metadata);
+
   return (
     <Dialog>
       <div
@@ -54,26 +50,24 @@ export const BaseMediaCard = ({
           RatingDimmerBackground[selectedColor]
         )}
       >
-
-          <CardActions
-            handleSelectColor={(key) => handleChangeSelectedColor(key)}
-            addTag={addTag}
-            tag={tag}
-            handleModifyTag={(value) => handleChangeTag(value)}
-            handleSaveTag={handleSaveTag}
-            handleActivateTag={toggleTag}
-            commentary={commentary}
-            handleSaveCommentary={(value) => handleSaveCommentary(value)}
-            handleDeleteElement={handleDeleteElement}
-            simplified={simplified}
-          />
-
-
+        <CardActions
+          handleSelectColor={(key) => handleChangeSelectedColor(key)}
+          addTag={addTag}
+          tag={tag}
+          handleModifyTag={(value) => handleChangeTag(value)}
+          handleSaveTag={handleSaveTag}
+          handleActivateTag={toggleTag}
+          commentary={commentary}
+          handleSaveCommentary={(value) => handleSaveCommentary(value)}
+          handleDeleteElement={handleDeleteElement}
+          simplified={simplified}
+        />
+        
         <div className="flex gap-4">
-          {headerImage ? (
+          {config.headerImage ? (
             <img
-              src={headerImage}
-              alt={title}
+              src={config.headerImage}
+              alt={config.title}
               className={cn(
                 "h-32 w-32 rounded object-cover",
                 simplified && "h-16 w-16"
@@ -89,19 +83,29 @@ export const BaseMediaCard = ({
               No image available
             </div>
           )}
+          
           <div
             className={cn(
               "flex flex-col flex-1 justify-center",
               simplified && "gap-4 flex-row items-center justify-start"
             )}
           >
-            <div className="text-3xl font-bold truncate">{title}</div>
-            {subtitle && <div>{subtitle}</div>}
-            {year && <div className="text-sm opacity-80">{year}</div>}
+            <div className="text-3xl font-bold truncate">{config.title}</div>
+            {config.subtitle && <div>{config.subtitle}</div>}
+            {config.year && <div className="text-sm opacity-80">{config.year}</div>}
           </div>
         </div>
-
-        <div className="flex flex-col gap-2">{children}</div>
+        
+        <div className="flex flex-col gap-2">
+          <div className={cn(
+            "text-sm leading-relaxed max-h-44 overflow-auto",
+            simplified && "max-h-28"
+          )}>
+            {config.description}
+          </div>
+          {config.genre && <div className="opacity-75">{config.genre}</div>}
+          {children}
+        </div>
       </div>
     </Dialog>
   );

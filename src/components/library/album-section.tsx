@@ -68,7 +68,7 @@ export const AlbumsSection = ({
                               key={track.idTrack}
                               track={track}
                               simplified
-                              fallBackImage={album.strAlbumThumb ?? undefined}
+                              fallbackImage={album.strAlbumThumb ?? undefined}
                             />
                           ))}
                       </div>

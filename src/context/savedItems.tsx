@@ -1,9 +1,6 @@
-import {
-  AlbumEdited,
-  ArtistEdited,
-  Interaction,
-  TrackEdited,
-} from "@/generated/prisma";
+
+import { Interaction } from "@/generated/prisma";
+import { AlbumEdited, ArtistEdited, TrackEdited } from "@/types/music";
 import { create } from "zustand";
 
 type State = {
