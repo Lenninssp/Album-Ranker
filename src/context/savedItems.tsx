@@ -1,5 +1,10 @@
+import {
+  AlbumEdited,
+  ArtistEdited,
+  Interaction,
+  TrackEdited,
+} from "@/generated/prisma";
 import { create } from "zustand";
-import type { ArtistEdited, AlbumEdited, TrackEdited } from "@/types/music";
 
 type State = {
   savedArtists: ArtistEdited[];
@@ -10,6 +15,8 @@ type State = {
 
   subscriptions: string[];
   subscribers: string[];
+
+  interactions: Interaction[];
 };
 
 type Actions = {
@@ -32,12 +39,15 @@ type Actions = {
   loadUserData: (userId: number) => Promise<void>;
 
   getTags: () => string[];
-  getSubscribers:() => string[];
+  getSubscribers: () => string[];
 
   getSubscriptions: () => string[];
   addSubscription: (userId: number, creatorId: number) => Promise<void>;
   removeSubscription: (userId: number, creatorId: number) => Promise<void>;
   isSubscribed: (creatorId: string) => boolean;
+
+  getInteractions: () => Interaction[];
+  setInteraction: (interaction: Interaction) => void;
 };
 
 function extractAllTags(state: State) {
@@ -57,22 +67,39 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
   tags: [],
   subscriptions: [],
   subscribers: [],
+  interactions: [],
 
   loadUserData: async (userId: Number) => {
-    const [artistRes, albumRes, trackRes, subsRes, subscribersRes] = await Promise.all([
+    const [
+      artistRes,
+      albumRes,
+      trackRes,
+      subsRes,
+      subscribersRes,
+      interactionRes,
+    ] = await Promise.all([
       fetch(`/api/elements/artists?userId=${userId}`),
       fetch(`/api/elements/albums?userId=${userId}`),
       fetch(`/api/elements/tracks?userId=${userId}`),
       fetch(`/api/community/users/follow/${userId}`),
       fetch(`/api/community/users/follower/${userId}`),
+      fetch(`/api/community/posts/interactions/${userId}`),
     ]);
 
-    const [artists, albums, tracks, subsResult, subscribersResult] = await Promise.all([
+    const [
+      artists,
+      albums,
+      tracks,
+      subsResult,
+      subscribersResult,
+      interactionResul,
+    ] = await Promise.all([
       artistRes.json(),
       albumRes.json(),
       trackRes.json(),
       subsRes.json(),
       subscribersRes.json(),
+      interactionRes.json(),
     ]);
 
     set((state) => {
@@ -83,6 +110,7 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
         savedTracks: tracks,
         subscriptions: subsResult,
         subscribers: subscribersResult,
+        interactions: interactionResul,
       };
 
       return {
@@ -234,5 +262,62 @@ export const useSavedItems = create<State & Actions>((set, get) => ({
   getTags: () => get().tags,
   getSubscriptions: () => get().subscriptions,
   isSubscribed: (creatorId: string) => get().subscriptions.includes(creatorId),
-  getSubscribers: ()=>get().subscribers,
+  getSubscribers: () => get().subscribers,
+  getInteractions: () => get().interactions,
+  setInteraction: async (interaction: Interaction) => {
+    const {
+      userId,
+      trackEditedId,
+      albumEditedId,
+      artistEditedId,
+      liked,
+      comment,
+    } = interaction;
+    set((state) => {
+      const exists = state.interactions.some((i) => i.id === interaction.id);
+
+      return {
+        interactions: exists
+          ? state.interactions.map((i) =>
+              i.id === interaction.id ? interaction : i
+            )
+          : [...state.interactions, interaction],
+      };
+    });
+
+    try {
+      const response = await fetch("/api/community/posts/interactions/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId,
+          liked,
+          comment,
+          trackEditedId,
+          albumEditedId,
+          artistEditedId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("There was an error fetching the data");
+      }
+
+      const result: Interaction = await response.json();
+
+      if (result) {
+        set((state) => ({
+          interactions: state.interactions.map((i) =>
+            i.id === interaction.id ? result : i
+          ),
+        }));
+      }
+    } catch (error) {
+      console.error("Failed to persist interaction:", error);
+
+      set((state) => ({
+        interactions: state.interactions.filter((i) => i.id !== interaction.id),
+      }));
+    }
+  },
 }));
