@@ -37,6 +37,7 @@ export async function POST(req: Request) {
       strTrack: data.strTrack,
       strAlbum: data.strAlbum,
       strTrackThumb: data.strTrackThumb,
+      public: data.public,
     };
 
     const newTrack = await prisma.trackEdited.upsert({

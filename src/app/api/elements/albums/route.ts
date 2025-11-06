@@ -35,6 +35,7 @@ export async function POST(req: Request) {
       strAlbumThumb: data.strAlbumThumb,
       intYearReleased: data.intYearReleased,
       userId: data.userId,
+      public: data.public,
     };
 
     const newAlbum = await prisma.albumEdited.upsert({

@@ -47,6 +47,8 @@ export const BaseMediaCard = ({
     handleChangeTag,
     toggleTag,
     handleDeleteElement,
+    publicPost,
+    handleChangePublicStatus,
   } = useBaseMediaCard(type, element, metadata);
 
   return (
@@ -69,6 +71,8 @@ export const BaseMediaCard = ({
             handleSaveCommentary={(value) => handleSaveCommentary(value)}
             handleDeleteElement={handleDeleteElement}
             simplified={simplified}
+            publicPost={publicPost}
+            changePublic={handleChangePublicStatus}
           />
         )}
 

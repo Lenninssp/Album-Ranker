@@ -32,6 +32,7 @@ export async function POST(req: Request) {
       strCountry: data.strCountry,
       strArtistThumb: data.strArtistThumb,
       userId: data.userId,
+      public: data.public,
     };
 
     const newArtist = await prisma.artistEdited.upsert({

@@ -32,7 +32,8 @@ interface CardActionsProps {
   commentary: string;
   handleSaveCommentary: (value: string) => void;
   handleDeleteElement: () => void;
-
+  publicPost: boolean,
+  changePublic: (newPublic?: boolean) => void;
   simplified?: boolean;
 }
 export const CardActions = ({
@@ -45,6 +46,8 @@ export const CardActions = ({
   commentary,
   handleSaveCommentary,
   handleDeleteElement,
+  publicPost,
+  changePublic,
   simplified,
 }: CardActionsProps) => {
   const [newDialog, setNewDialog] = useState<string>(commentary);
@@ -117,6 +120,10 @@ export const CardActions = ({
             </Button>
           </DialogFooter>
         </DialogContent>
+        
+        <Button onClick={() => changePublic()} className="cursor-pointer">
+          <Icon icon={publicPost ? "material-symbols:public" : "material-symbols:public-off"} />
+        </Button>
       </div>
     </div>
   );

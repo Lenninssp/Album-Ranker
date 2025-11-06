@@ -25,7 +25,7 @@ export const useBaseMediaCard = (
     deleteArtist,
     deleteTrack,
   } = useSavedItems();
-  const {data: session} = useSession();
+  const { data: session } = useSession();
 
   const [selectedColor, setSelectedColor] = useState<Rating>(
     metadata?.rating ?? Rating.Undefined
@@ -35,19 +35,27 @@ export const useBaseMediaCard = (
   const [commentary, setCommentary] = useState<string>(
     metadata?.commentary ?? ""
   );
+  const [publicPost, setPublicPost] = useState<boolean>(
+    metadata?.public ?? false
+  );
 
   const saveProgress = (
-    overrides?: Partial<{ tag: string; commentary: string; rating: Rating }>
+    overrides?: Partial<{
+      tag: string;
+      commentary: string;
+      rating: Rating;
+      public: boolean;
+    }>
   ) => {
     const baseData = {
       ...element,
       commentary: overrides?.commentary ?? commentary,
       tag: overrides?.tag ?? tag,
       rating: overrides?.rating ?? selectedColor,
-      includesMetadata: true,
+      public: overrides?.public ?? publicPost,
     };
     const myUserId = Number(session?.user.id);
-    console.log(session)
+    console.log(session);
     if (!myUserId) return;
     switch (type) {
       case TypeOfElement.ALBUM:
@@ -106,6 +114,18 @@ export const useBaseMediaCard = (
     toast("Deleted!", { description: "Item deleted successfully." });
   };
 
+  const handleChangePublicStatus = (newPublic?: boolean) => {
+    const updated = newPublic ?? !publicPost;
+
+    setPublicPost(updated);
+    console.log(updated)
+    saveProgress({ public: updated });
+
+    toast("Success", {
+      description: "Your post visibility status has changed",
+    });
+  };
+
   return {
     handleSaveTag,
     handleSaveCommentary,
@@ -116,6 +136,8 @@ export const useBaseMediaCard = (
     handleChangeSelectedColor,
     handleChangeTag,
     toggleTag,
-    handleDeleteElement
+    handleDeleteElement,
+    publicPost,
+    handleChangePublicStatus,
   };
 };
