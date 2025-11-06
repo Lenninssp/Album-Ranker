@@ -16,7 +16,6 @@ open -a "Google Chrome" https://docs.google.com/document/d/17OTnQRYqKeNIpfIkrurb
 open -a "Google Chrome" http://localhost:3000/
 open -a "Google Chrome" https://calendar.google.com/
 
-
  */
 
 export default function Home() {

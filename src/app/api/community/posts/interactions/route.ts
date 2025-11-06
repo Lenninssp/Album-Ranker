@@ -1,11 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-
-
-export async function POST(
-  req: NextRequest,
-){
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
@@ -19,18 +15,18 @@ export async function POST(
     } = body;
 
     if (!userId) {
-      return NextResponse.json(
-        {error: "Missing userId"},
-        { status: 400 }
-      )
+      return NextResponse.json({ error: "Missing userId" }, { status: 400 });
     }
 
     const ids = [trackEditedId, albumEditedId, artistEditedId].filter(Boolean);
     if (ids.length !== 1) {
       return NextResponse.json(
-        { error: "Proide exactly one of trackEditedId, albumEditedId, or artistEditedId"},
+        {
+          error:
+            "Proide exactly one of trackEditedId, albumEditedId, or artistEditedId",
+        },
         { status: 500 }
-      )
+      );
     }
 
     const interaction = await prisma.interaction.upsert({
@@ -55,18 +51,19 @@ export async function POST(
         comment: comment ?? null,
       },
       include: {
-        user: { select: { id: true, name: true }}
-      }
+        user: { select: { id: true, name: true } },
+      },
     });
 
-    return NextResponse.json({ message: "Interaction saved", interaction}, { status: 200 })
-
-  }
-  catch (err) {
     return NextResponse.json(
-      { success: false, message: "Failed to create interaction"},
+      { message: "Interaction saved", interaction },
+      { status: 200 }
+    );
+  } catch (err) {
+    return NextResponse.json(
+      { success: false, message: "Failed to create interaction" },
       { status: 500 }
-    )
+    );
   }
 }
 
