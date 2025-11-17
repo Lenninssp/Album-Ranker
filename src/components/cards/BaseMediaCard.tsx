@@ -17,6 +17,7 @@ import {
 } from "@/types/music";
 import { extractMetadata, MediaCardConfig } from "@/types/mediaCard";
 import { Renderer, useMediaCardContext } from "@/context/media-card-context";
+import {CommunityCardActions } from "./community-actions";
 
 interface BaseMediaCardProps {
   type: TypeOfElement;
@@ -59,7 +60,7 @@ export const BaseMediaCard = ({
           RatingDimmerBackground[selectedColor]
         )}
       >
-        {renderer === Renderer.LIBRARY && (
+        {renderer === Renderer.LIBRARY ? (
           <CardActions
             handleSelectColor={(key) => handleChangeSelectedColor(key)}
             addTag={addTag}
@@ -74,7 +75,11 @@ export const BaseMediaCard = ({
             publicPost={publicPost}
             changePublic={handleChangePublicStatus}
           />
-        )}
+        )
+      :
+      (
+        <CommunityCardActions element={element} type={type} />
+      )}
 
         <div className="flex gap-4">
           {config.headerImage ? (
