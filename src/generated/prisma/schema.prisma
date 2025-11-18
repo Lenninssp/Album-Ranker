@@ -38,7 +38,8 @@ model User {
   following User[] @relation("UserFollows")
   followers User[] @relation("UserFollows")
 
-  interactions Interaction[]
+  interactions     Interaction[]
+  UserCreatedTrack UserCreatedTrack[]
 }
 
 model TrackEdited {
@@ -154,11 +155,37 @@ model Interaction {
   comment String?
   liked   Boolean @default(false)
 
-  createdAt DateTime @default(now())
+  createdAt          DateTime          @default(now())
+  UserCreatedTrack   UserCreatedTrack? @relation(fields: [userCreatedTrackId], references: [id])
+  userCreatedTrackId Int?
 
   @@unique([userId, trackEditedId, albumEditedId, artistEditedId])
   @@index([userId])
   @@index([trackEditedId])
   @@index([albumEditedId])
   @@index([artistEditedId])
+}
+
+model UserCreatedTrack {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  title       String
+  artist      String?
+  album       String?
+  duration    Int?
+  genre       String?
+  mood        String?
+  description String?
+
+  rating     Int?
+  commentary String?
+  tag        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  public    Boolean  @default(false)
+
+  interactions Interaction[]
 }

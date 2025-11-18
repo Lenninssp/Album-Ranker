@@ -227,7 +227,26 @@ exports.Prisma.InteractionScalarFieldEnum = {
   artistEditedId: 'artistEditedId',
   comment: 'comment',
   liked: 'liked',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  userCreatedTrackId: 'userCreatedTrackId'
+};
+
+exports.Prisma.UserCreatedTrackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  artist: 'artist',
+  album: 'album',
+  duration: 'duration',
+  genre: 'genre',
+  mood: 'mood',
+  description: 'description',
+  rating: 'rating',
+  commentary: 'commentary',
+  tag: 'tag',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  public: 'public'
 };
 
 exports.Prisma.SortOrder = {
@@ -247,7 +266,8 @@ exports.Prisma.ModelName = {
   TrackEdited: 'TrackEdited',
   AlbumEdited: 'AlbumEdited',
   ArtistEdited: 'ArtistEdited',
-  Interaction: 'Interaction'
+  Interaction: 'Interaction',
+  UserCreatedTrack: 'UserCreatedTrack'
 };
 
 /**
