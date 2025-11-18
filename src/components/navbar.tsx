@@ -32,6 +32,7 @@ export const NavBar = () => {
         { href: "/community", label: "COMMUNITY" },
         { href: "/search", label: "SEARCH" },
         { href: "/library", label: "LIBRARY" },
+        { href: "/custom-created", label: "CUSTOM" },
         { href: "/my-account", label: "MY ACCOUNT" },
         { href: "/youtube-library", label: "YTLIB", icon: <YoutubeIcon/>},
       ];

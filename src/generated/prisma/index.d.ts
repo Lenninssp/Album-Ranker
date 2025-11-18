@@ -9533,14 +9533,12 @@ export namespace Prisma {
     id: number | null
     userId: number | null
     duration: number | null
-    rating: number | null
   }
 
   export type UserCreatedTrackSumAggregateOutputType = {
     id: number | null
     userId: number | null
     duration: number | null
-    rating: number | null
   }
 
   export type UserCreatedTrackMinAggregateOutputType = {
@@ -9553,7 +9551,7 @@ export namespace Prisma {
     genre: string | null
     mood: string | null
     description: string | null
-    rating: number | null
+    rating: string | null
     commentary: string | null
     tag: string | null
     createdAt: Date | null
@@ -9571,7 +9569,7 @@ export namespace Prisma {
     genre: string | null
     mood: string | null
     description: string | null
-    rating: number | null
+    rating: string | null
     commentary: string | null
     tag: string | null
     createdAt: Date | null
@@ -9603,14 +9601,12 @@ export namespace Prisma {
     id?: true
     userId?: true
     duration?: true
-    rating?: true
   }
 
   export type UserCreatedTrackSumAggregateInputType = {
     id?: true
     userId?: true
     duration?: true
-    rating?: true
   }
 
   export type UserCreatedTrackMinAggregateInputType = {
@@ -9764,7 +9760,7 @@ export namespace Prisma {
     genre: string | null
     mood: string | null
     description: string | null
-    rating: number | null
+    rating: string | null
     commentary: string | null
     tag: string | null
     createdAt: Date
@@ -9897,7 +9893,7 @@ export namespace Prisma {
       genre: string | null
       mood: string | null
       description: string | null
-      rating: number | null
+      rating: string | null
       commentary: string | null
       tag: string | null
       createdAt: Date
@@ -10337,7 +10333,7 @@ export namespace Prisma {
     readonly genre: FieldRef<"UserCreatedTrack", 'String'>
     readonly mood: FieldRef<"UserCreatedTrack", 'String'>
     readonly description: FieldRef<"UserCreatedTrack", 'String'>
-    readonly rating: FieldRef<"UserCreatedTrack", 'Int'>
+    readonly rating: FieldRef<"UserCreatedTrack", 'String'>
     readonly commentary: FieldRef<"UserCreatedTrack", 'String'>
     readonly tag: FieldRef<"UserCreatedTrack", 'String'>
     readonly createdAt: FieldRef<"UserCreatedTrack", 'DateTime'>
@@ -11733,7 +11729,7 @@ export namespace Prisma {
     genre?: StringNullableFilter<"UserCreatedTrack"> | string | null
     mood?: StringNullableFilter<"UserCreatedTrack"> | string | null
     description?: StringNullableFilter<"UserCreatedTrack"> | string | null
-    rating?: IntNullableFilter<"UserCreatedTrack"> | number | null
+    rating?: StringNullableFilter<"UserCreatedTrack"> | string | null
     commentary?: StringNullableFilter<"UserCreatedTrack"> | string | null
     tag?: StringNullableFilter<"UserCreatedTrack"> | string | null
     createdAt?: DateTimeFilter<"UserCreatedTrack"> | Date | string
@@ -11776,7 +11772,7 @@ export namespace Prisma {
     genre?: StringNullableFilter<"UserCreatedTrack"> | string | null
     mood?: StringNullableFilter<"UserCreatedTrack"> | string | null
     description?: StringNullableFilter<"UserCreatedTrack"> | string | null
-    rating?: IntNullableFilter<"UserCreatedTrack"> | number | null
+    rating?: StringNullableFilter<"UserCreatedTrack"> | string | null
     commentary?: StringNullableFilter<"UserCreatedTrack"> | string | null
     tag?: StringNullableFilter<"UserCreatedTrack"> | string | null
     createdAt?: DateTimeFilter<"UserCreatedTrack"> | Date | string
@@ -11822,7 +11818,7 @@ export namespace Prisma {
     genre?: StringNullableWithAggregatesFilter<"UserCreatedTrack"> | string | null
     mood?: StringNullableWithAggregatesFilter<"UserCreatedTrack"> | string | null
     description?: StringNullableWithAggregatesFilter<"UserCreatedTrack"> | string | null
-    rating?: IntNullableWithAggregatesFilter<"UserCreatedTrack"> | number | null
+    rating?: StringNullableWithAggregatesFilter<"UserCreatedTrack"> | string | null
     commentary?: StringNullableWithAggregatesFilter<"UserCreatedTrack"> | string | null
     tag?: StringNullableWithAggregatesFilter<"UserCreatedTrack"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"UserCreatedTrack"> | Date | string
@@ -12656,7 +12652,7 @@ export namespace Prisma {
     genre?: string | null
     mood?: string | null
     description?: string | null
-    rating?: number | null
+    rating?: string | null
     commentary?: string | null
     tag?: string | null
     createdAt?: Date | string
@@ -12676,7 +12672,7 @@ export namespace Prisma {
     genre?: string | null
     mood?: string | null
     description?: string | null
-    rating?: number | null
+    rating?: string | null
     commentary?: string | null
     tag?: string | null
     createdAt?: Date | string
@@ -12693,7 +12689,7 @@ export namespace Prisma {
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    rating?: NullableStringFieldUpdateOperationsInput | string | null
     commentary?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12713,7 +12709,7 @@ export namespace Prisma {
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    rating?: NullableStringFieldUpdateOperationsInput | string | null
     commentary?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12732,7 +12728,7 @@ export namespace Prisma {
     genre?: string | null
     mood?: string | null
     description?: string | null
-    rating?: number | null
+    rating?: string | null
     commentary?: string | null
     tag?: string | null
     createdAt?: Date | string
@@ -12748,7 +12744,7 @@ export namespace Prisma {
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    rating?: NullableStringFieldUpdateOperationsInput | string | null
     commentary?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12766,7 +12762,7 @@ export namespace Prisma {
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    rating?: NullableStringFieldUpdateOperationsInput | string | null
     commentary?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13483,7 +13479,6 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     duration?: SortOrder
-    rating?: SortOrder
   }
 
   export type UserCreatedTrackMaxOrderByAggregateInput = {
@@ -13526,7 +13521,6 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     duration?: SortOrder
-    rating?: SortOrder
   }
 
   export type UserCreateNestedOneWithoutSessionsInput = {
@@ -14810,7 +14804,7 @@ export namespace Prisma {
     genre?: string | null
     mood?: string | null
     description?: string | null
-    rating?: number | null
+    rating?: string | null
     commentary?: string | null
     tag?: string | null
     createdAt?: Date | string
@@ -14828,7 +14822,7 @@ export namespace Prisma {
     genre?: string | null
     mood?: string | null
     description?: string | null
-    rating?: number | null
+    rating?: string | null
     commentary?: string | null
     tag?: string | null
     createdAt?: Date | string
@@ -15119,7 +15113,7 @@ export namespace Prisma {
     genre?: StringNullableFilter<"UserCreatedTrack"> | string | null
     mood?: StringNullableFilter<"UserCreatedTrack"> | string | null
     description?: StringNullableFilter<"UserCreatedTrack"> | string | null
-    rating?: IntNullableFilter<"UserCreatedTrack"> | number | null
+    rating?: StringNullableFilter<"UserCreatedTrack"> | string | null
     commentary?: StringNullableFilter<"UserCreatedTrack"> | string | null
     tag?: StringNullableFilter<"UserCreatedTrack"> | string | null
     createdAt?: DateTimeFilter<"UserCreatedTrack"> | Date | string
@@ -15763,7 +15757,7 @@ export namespace Prisma {
     genre?: string | null
     mood?: string | null
     description?: string | null
-    rating?: number | null
+    rating?: string | null
     commentary?: string | null
     tag?: string | null
     createdAt?: Date | string
@@ -15782,7 +15776,7 @@ export namespace Prisma {
     genre?: string | null
     mood?: string | null
     description?: string | null
-    rating?: number | null
+    rating?: string | null
     commentary?: string | null
     tag?: string | null
     createdAt?: Date | string
@@ -16058,7 +16052,7 @@ export namespace Prisma {
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    rating?: NullableStringFieldUpdateOperationsInput | string | null
     commentary?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16077,7 +16071,7 @@ export namespace Prisma {
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    rating?: NullableStringFieldUpdateOperationsInput | string | null
     commentary?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16327,7 +16321,7 @@ export namespace Prisma {
     genre?: string | null
     mood?: string | null
     description?: string | null
-    rating?: number | null
+    rating?: string | null
     commentary?: string | null
     tag?: string | null
     createdAt?: Date | string
@@ -16734,7 +16728,7 @@ export namespace Prisma {
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    rating?: NullableStringFieldUpdateOperationsInput | string | null
     commentary?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16752,7 +16746,7 @@ export namespace Prisma {
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    rating?: NullableStringFieldUpdateOperationsInput | string | null
     commentary?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16770,7 +16764,7 @@ export namespace Prisma {
     genre?: NullableStringFieldUpdateOperationsInput | string | null
     mood?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    rating?: NullableStringFieldUpdateOperationsInput | string | null
     commentary?: NullableStringFieldUpdateOperationsInput | string | null
     tag?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

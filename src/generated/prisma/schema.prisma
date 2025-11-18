@@ -179,7 +179,7 @@ model UserCreatedTrack {
   mood        String?
   description String?
 
-  rating     Int?
+  rating     String?
   commentary String?
   tag        String?
 
